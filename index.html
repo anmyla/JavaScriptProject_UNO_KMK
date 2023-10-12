@@ -1,12 +1,131 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset='utf-8'>
-		<link rel="stylesheet" type="text/css" href=".css/style.css">
-	</head>
-	<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enter Player Names</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container mt-5" id="playersInTheGame">
+      <h1>Welcome to a game of Uno!</h1>
+      <h4>Before we can start, we need some players:</h4>
+      <div class="container mt-5" id="collectNames">
+        <button class="btn btn-primary" id="openModal1" data-target="nameModal">
+          Enter Player Names
+        </button>
+      </div>
+      <div class="container mt-5" id="collectNamesForRoom">
+        <button
+          class="btn btn-primary"
+          id="openModal2"
+          data-target="nameModalRoom"
+        >
+          Join a Multiplayer Room
+        </button>
+      </div>
+    </div>
 
-		<!-- Fügen Sie hier ihr HTML ein -->
-		<script src="./script/main.js"></script>
-	</body>
+    <!-- Modal -->
+    <div class="modal" id="nameModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Enter Player Names</h4>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form id="nameForm">
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="player1Name"
+                  class="form-control mb-2"
+                  placeholder="Player 1"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="player2Name"
+                  class="form-control mb-2"
+                  placeholder="Player 2"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="player3Name"
+                  class="form-control mb-2"
+                  placeholder="Player 3"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="player4Name"
+                  class="form-control mb-2"
+                  placeholder="Player 4"
+                />
+              </div>
+              <button type="submit" class="btn btn-success">START GAME</button>
+            </form>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="nameModalRoom">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Enter your name:</h4>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form id="nameFormRoom">
+              <div class="join-group">
+                <input
+                  type="text"
+                  id="roomPlayerName"
+                  class="form-control mb-2"
+                  placeholder="Enter a unique name to join:"
+                />
+              </div>
+
+              <button type="submit" class="btn btn-success">
+                Lem'me Join!
+              </button>
+            </form>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script src="./js/main.js"></script>
+  </body>
 </html>

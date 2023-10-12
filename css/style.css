@@ -8,7 +8,7 @@
 
   h1, .h1 {
     font-family: 'HarryPFont', sans-serif;
-    font-size: 6rem;
+    font-size: 6rem !important;
   }
 
   h2, h3, h4 {

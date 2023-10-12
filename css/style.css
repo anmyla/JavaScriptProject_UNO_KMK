@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'HarryPFont';
+    src: url('HarryPotter.ttf') format('opentype');
+    /* Weitere Formatoptionen können hinzugefügt werden, wenn nötig */
+    font-weight: normal;
+    font-style: normal;
+  }
+
+
+  body {
+    font-family: 'HarryPFont', sans-serif;
+  }

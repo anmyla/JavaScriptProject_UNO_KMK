@@ -70,7 +70,8 @@ function displayPlayersList() {
 
 // Function to check for duplicate names in an array
 function hasDuplicates(array) {
-    return (new Set(array)).size !== array.length;
+    const lowerCaseNames = array.map(name => name.toLowerCase());
+    return (new Set(lowerCaseNames)).size !== lowerCaseNames.length;
 }
 
 // Function to display the list of players in the specified div

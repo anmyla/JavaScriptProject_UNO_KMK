@@ -3,7 +3,6 @@ const socket = io()
 */
 
 let playersList = [];
-let playersListRoom = [];
 
 // Open the Modal dialog when the button is clicked
 document.getElementById('openModal1').addEventListener('click', function () {
@@ -37,43 +36,6 @@ document.getElementById('nameForm').addEventListener('submit', function (e) {
   displayPlayersList();
 
 });
-
-// Handle form submission
-document.getElementById('nameFormRoom').addEventListener('submit', function (e) {
-  e.preventDefault(); // Prevent the form from submitting traditionally
-
-  const roomPlayerName = document.getElementById('roomPlayerName').value;
-
-  // Add the names to the playersList array
-  playersListRoom = [roomPlayerName];
-
-  // Close the Modal dialog
-  $('#nameModalRoom').modal('hide');
-
-  // You can use the playersList array as needed
-  console.log('Player Names:', playersListRoom);
-
-});
-
-
-document.getElementById('nameFormRoom').addEventListener('submit', function (e) {
-  e.preventDefault(); // Prevent the form from submitting traditionally
-
-  const roomPlayerName = document.getElementById('roomPlayerName').value;
-
-  // Add the names to the playersList array
-  playersListRoom = [roomPlayerName];
-
-  // Close the Modal dialog
-  $('#nameModalRoom').modal('hide');
-
-  // Redirect to room.html
-  window.location.href = 'room.html'; // Change 'room.html' to the actual URL you want to redirect to
-});
-
-
-
-
 
 
 // Function to display the list of players in the specified div

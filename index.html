@@ -11,20 +11,11 @@
   </head>
   <body>
     <div class="container mt-5" id="playersInTheGame">
-      <h1>Welcome to a game of Uno!</h1>
-      <h4>Before we can start, we need some players:</h4>
+      <h1>Welcome to the Wizarding World!</h1>
+      <h4>Wizards, witches, and muggles alike! Come and challenge the best of the best!</h4>
       <div class="container mt-5" id="collectNames">
         <button class="btn btn-primary" id="openModal1" data-target="nameModal">
-          Enter Player Names
-        </button>
-      </div>
-      <div class="container mt-5" id="collectNamesForRoom">
-        <button
-          class="btn btn-primary"
-          id="openModal2"
-          data-target="nameModalRoom"
-        >
-          Join a Multiplayer Room
+            Join the Hogwart's Uno Cup!
         </button>
       </div>
     </div>
@@ -86,46 +77,11 @@
       </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal" id="nameModalRoom">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h4 class="modal-title">Enter your name:</h4>
-            <button type="button" class="close" data-dismiss="modal">
-              &times;
-            </button>
-          </div>
-          <!-- Modal body -->
-          <div class="modal-body">
-            <form id="nameFormRoom">
-              <div class="join-group">
-                <input
-                  type="text"
-                  id="roomPlayerName"
-                  class="form-control mb-2"
-                  placeholder="Enter a unique name to join:"
-                />
-              </div>
-
-              <button type="submit" class="btn btn-success">
-                Lem'me Join!
-              </button>
-            </form>
-          </div>
-
-          <!-- Modal footer -->
-          <div class="modal-footer"></div>
-        </div>
-      </div>
-    </div>
-
     <!-- Bootstrap JS and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+
     <script src="./js/main.js"></script>
   </body>
 </html>

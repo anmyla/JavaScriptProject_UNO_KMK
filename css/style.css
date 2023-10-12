@@ -6,6 +6,15 @@
     font-style: normal;
   }
 
+  body { 
+    background: url(../img/hp_uno_bg.png) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+  
+
   h1, .h1 {
     font-family: 'HarryPFont', sans-serif;
     font-size: 6rem !important;

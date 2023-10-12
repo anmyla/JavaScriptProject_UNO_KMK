@@ -6,7 +6,11 @@
     font-style: normal;
   }
 
+  h1, .h1 {
+    font-family: 'HarryPFont', sans-serif;
+    font-size: 6rem;
+  }
 
-  body {
+  h2, h3, h4 {
     font-family: 'HarryPFont', sans-serif;
   }

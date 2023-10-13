@@ -1,8 +1,7 @@
 "use strict";
-
 let playersList = [];
 let playersGlobal = [];
-let result = Object();
+let globalResult = Object();
 
 // Open the Modal dialog when the button is clicked
 document.getElementById('openModal1').addEventListener('click', function () {
@@ -81,8 +80,8 @@ document.getElementById('okButton').addEventListener('click', async function () 
 
     //nueues spiel starten!
     await startNewGame();
-    displayPlayersList();
-    displayPlayersCards();
+    //displayPlayersList();
+    displayPlayersCardAfterGameStarts();
 });
 
 //--------CODES ABOVE ARE WORKING PERFECTLY------------------------------------------
@@ -90,42 +89,49 @@ document.getElementById('okButton').addEventListener('click', async function () 
 // Async function necessary for Promise
 async function startNewGame() {
 
-    // We start the connection request 
-    // then wait for promise (alternatively fetch, then notation)
-    let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/start", {
-        method: 'POST',
-        body: JSON.stringify(playersList), // Send the names entered in the form
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        }
-    });
+    try {
+        // We start the connection request 
+        // then wait for promise (alternatively fetch, then notation)
+        let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/start", {
+            method: 'POST',
+            body: JSON.stringify(playersList), // Send the names entered in the form
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            }
+        });
 
-    if (response.ok) {
-        let result = await response.json();
-        playersGlobal = playersList; // Replace the player names with the names entered in the form
-    } else {
-        alert("HTTP-Error: " + response.status);
+        if (response.ok) {
+            globalResult = await response.json(); // Assign the response data to globalResult
+            playersGlobal = playersList; // Replace the player names with the names entered in the form
+            return globalResult;
+        } else {
+            alert("HTTP-Error: " + response.status);
+        }
+    }
+    catch {
+        console.error("Error in startNewGame:", error);
     }
 }
 
+/*
 // Function to display the list of players in the specified div
 async function displayPlayersList() {
     // Clear the existing content of the playersDiv
-    let playersDiv = document.querySelector('#playersInTheGame');
+    let playersDiv = document.querySelector('#homeMessage');
     playersDiv.innerHTML = '';
-
+    
     // Create an unordered list element
     const ul = document.createElement('ul');
-
+ 
     // Positionierung für die einzelnen Spieler
     const playerPositions = [
         'top-center', // Spieler 1 oben in der Mitte
         'top-right',   // Spieler 2 oben rechts
         'bottom-center', // Spieler 3 unten in der Mitte
         'top-left'    // Spieler 4 oben links
-
+ 
     ];
-
+ 
     // Loop through the playersList array and create list items
     playersGlobal.forEach(playerName => {
         const li = document.createElement('li');
@@ -134,58 +140,63 @@ async function displayPlayersList() {
         playersDiv.appendChild(li);
         span.textContent = playerName;
     });
-
+ 
     // Append the unordered list to the playersDiv
     playersDiv.appendChild(ul);
 }
+ 
+*/
 
-
-function displayPlayersCards() {
-    //alle Karten ausgeben
-    let playerListOnPage = document.getElementById("gameCourt");
-    console.log("Show all cards");
-
+async function showThisPlayerCards(playerID, htmlID) {
+    let playerSection = document.getElementById(htmlID);
     let i = 0;
-    while (i < result.Players[i].Cards.length) {
-        //console.log(result.Players[0].Cards[i]);
-        //karten zur Liste hinzufügen----
+
+    while (i < globalResult.Players[playerID].Cards.length) {
         const li = document.createElement('li');
-        //console.log('li: ', li);
         const span = document.createElement('span');
-        //console.log('span: ', span);
         li.appendChild(span);
-        playerListOnPage.appendChild(li);
-        span.textContent = 'Card:, ' + result.Players[0].Cards[i].Text + " " + result.Players[0].Cards[i].Color;
+        console.log('HtmlID: ' + htmlID);
+        console.log('Player Section: ' + playerSection);
+        playerSection.appendChild(li);
+        span.textContent = globalResult.Players[playerID].Cards[i].Text + " " + globalResult.Players[playerID].Cards[i].Color;
         i++;
     }
 }
 
-/*
-// Function to display the list of players in the specified div
-function displayPlayersList() {
-    // Clear the existing content of the playersDiv
-    let playersDiv = document.querySelector('#playersInTheGame');
-    playersDiv.innerHTML = '';
-
-    // Create an unordered list element
-    const ul = document.createElement('ul');
-
-    // Loop through the playersList array and create list items
-    playersList.forEach(function (playerName, index) {
-        const li = document.createElement('li');
-        li.textContent = playerName;
-
-        // Apply different font size to the heading and list items
-        if (index === 0) {
-            const headingPlayerList = document.createElement('h3');
-            headingPlayerList.textContent = 'Player List:';
-            playersDiv.appendChild(headingPlayerList);
-        }
-
-        ul.appendChild(li);
+async function displayPlayersCardAfterGameStarts() {
+    playersGlobal.forEach(playerName => {
+        const li = document.createElement("li");
+        const span = document.createElement("span");
+        li.appendChild(span);
+        span.textContent = playerName;
     });
 
-    // Append the unordered list to the playersDiv
-    playersDiv.appendChild(ul);
+    let cleanThisDiv = document.querySelector('#homeMessage');
+    cleanThisDiv.innerHTML = '';
+
+    displayPlayerDivHeaders();
+    showThisPlayerCards(0, "player0div")
+    showThisPlayerCards(1, "player1div")
+    showThisPlayerCards(2, "player2div")
+    showThisPlayerCards(3, "player3div")
 }
-*/
+
+async function displayPlayerDivHeaders() {
+    let i = 0;
+    while (i < playersGlobal.length) {
+        // Create a base ID for each player div
+        let baseId = `player${i}div`;
+        let gameCourt = document.getElementById('gameCourt');
+
+        let playerDiv = document.createElement('div');
+        // Set the unique ID for the div
+        playerDiv.id = baseId;
+
+        gameCourt.appendChild(playerDiv);
+        let playerDivHeader = document.createElement('h2');
+        playerDiv.appendChild(playerDivHeader);
+        playerDivHeader.textContent = globalResult.Players[i].Player;
+
+        i++;
+    }
+}

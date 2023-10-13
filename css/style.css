@@ -68,7 +68,7 @@
 }
 
 
-#playersInTheGame{
+#homeMessage {
   font-family: 'HarryPFont', sans-serif;
   font-size: x-large;
 }
@@ -118,4 +118,8 @@
 
 ul{
   list-style: none;
+}
+
+#gameCourt {
+  padding: 30px;
 }

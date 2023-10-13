@@ -33,6 +33,8 @@ document.getElementById('nameForm').addEventListener('submit', function (e) {
 
     // Add the names to the playersList array
     playersList = [player1Name, player2Name, player3Name, player4Name];
+    playersGlobal = [document.getElementById("player1Name").value, document.getElementById("player2Name").value, document.getElementById("player3Name").value, document.getElementById("player4Name").value];
+
 
 
     // Assign players to different teams (Hogwart Houses)
@@ -47,6 +49,7 @@ function hasDuplicates(array) {
     const lowerCaseNames = array.map(name => name.toLowerCase());
     return (new Set(lowerCaseNames)).size !== lowerCaseNames.length;
 }
+
 
 // Function to assign players to different teams
 function assignTeams(players) {
@@ -72,7 +75,7 @@ function displayTeams(teams) {
 }
 
 
-// Handle "OK" button click to close the modal
+// Handle "OK" button click to close the modal and start game
 document.getElementById('okButton').addEventListener('click', async function () {
     $('#nameModal').modal('hide');
 
@@ -91,7 +94,7 @@ async function startNewGame() {
     // then wait for promise (alternatively fetch, then notation)
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/start", {
         method: 'POST',
-        body: JSON.stringify([players[0].Name, players[1].Name, players[2].Name, players[3].Name]),
+        body: JSON.stringify(playersList), // Send the names entered in the form
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
         }
@@ -99,18 +102,11 @@ async function startNewGame() {
 
     if (response.ok) {
         let result = await response.json();
-        alert(JSON.stringify(result));
+        playersGlobal = playersList; // Replace the player names with the names entered in the form
     } else {
         alert("HTTP-Error: " + response.status);
     }
 }
-
-// returns player names
-function getPlayerNames() {
-    return [document.getElementById("player1Name").value, document.getElementById("player2Name").value, document.getElementById("player3Name").value, document.getElementById("player4Name").value];
-}
-
-playersGlobal = getPlayerNames();
 
 // Function to display the list of players in the specified div
 async function displayPlayersList() {
@@ -137,11 +133,11 @@ async function displayPlayersList() {
 
 function displayPlayersCards() {
     //alle Karten ausgeben
-    playerliste_html_ul = document.getElementById("gameCourt");
+    let playerListOnPage = document.getElementById("gameCourt");
     console.log("Show all cards");
 
     let i = 0;
-    while (i < result.Players[0].Cards.length) {
+    while (i < result.Players[i].Cards.length) {
         //console.log(result.Players[0].Cards[i]);
         //karten zur Liste hinzufügen----
         const li = document.createElement('li');
@@ -149,7 +145,7 @@ function displayPlayersCards() {
         const span = document.createElement('span');
         //console.log('span: ', span);
         li.appendChild(span);
-        playerliste_html_ul.appendChild(li);
+        playerListOnPage.appendChild(li);
         span.textContent = 'Card:, ' + result.Players[0].Cards[i].Text + " " + result.Players[0].Cards[i].Color;
         i++;
     }

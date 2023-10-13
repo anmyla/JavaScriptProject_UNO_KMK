@@ -46,7 +46,6 @@
 
 }
 
- 
 
 #openModal1:hover,
 
@@ -56,7 +55,6 @@
 
 }
 
- 
 
 .btn.btn-success,
 
@@ -76,7 +74,6 @@
 
 }
 
- 
 
 #player1Name::placeholder,
 
@@ -92,7 +89,6 @@
 
 }
 
- 
 
 #playersInTheGame{
 
@@ -102,12 +98,75 @@
 
 }
 
- 
 
 #playerTeamMessage {
 
   font-family: 'HarryPFont', sans-serif;
 
   font-size: x-large;
+
+}
+
+.top-center {
+
+  text-align: center;
+
+  position: absolute;
+
+  top: 150px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+}
+
+ 
+
+.top-right {
+
+  position: absolute;
+
+  top: 50%;
+
+  right: 250px;
+
+}
+
+ 
+
+.top-left {
+
+  text-align: left;
+
+  position: absolute;
+
+  top:50%;
+
+  left: 220px;
+
+}
+
+ 
+
+.bottom-center {
+
+  text-align: center;
+
+  position: absolute;
+
+  bottom: 150px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+}
+
+ 
+
+ul{
+
+  list-style: none;
 
 }

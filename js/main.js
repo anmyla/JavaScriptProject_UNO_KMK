@@ -117,6 +117,15 @@ async function displayPlayersList() {
     // Create an unordered list element
     const ul = document.createElement('ul');
 
+    // Positionierung für die einzelnen Spieler
+    const playerPositions = [
+        'top-center', // Spieler 1 oben in der Mitte
+        'top-right',   // Spieler 2 oben rechts
+        'bottom-center', // Spieler 3 unten in der Mitte
+        'top-left'    // Spieler 4 oben links
+
+    ];
+
     // Loop through the playersList array and create list items
     playersGlobal.forEach(playerName => {
         const li = document.createElement('li');

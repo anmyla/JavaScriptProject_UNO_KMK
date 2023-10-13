@@ -84,7 +84,6 @@ document.getElementById('okButton').addEventListener('click', async function () 
     displayPlayersCardAfterGameStarts();
 });
 
-//--------CODES ABOVE ARE WORKING PERFECTLY------------------------------------------
 
 // Async function necessary for Promise
 async function startNewGame() {
@@ -200,3 +199,6 @@ async function displayPlayerDivHeaders() {
         i++;
     }
 }
+
+
+//--------CODES ABOVE ARE WORKING PERFECTLY------------------------------------------

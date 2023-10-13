@@ -34,144 +34,93 @@
 /*------------------------------------------*/
 
 #openModal1 {
-
   padding: 5px 40px;
-
   font-size: 22px;
-
   font-family: 'HarryPFont', sans-serif;
-
   background-color: rgb(64, 56, 56);
-
   border: none;
-
   border-radius: 5px;
 
 }
 
 
 #openModal1:hover,
-
 .btn.btn-success:hover {
-
   background-color: #511313;
-
 }
 
 
 .btn.btn-success,
-
 .btn.btn-success.active,
-
 .btn.btn-success:focus,
-
 .btn.btn-success:active {
 
   font-family: 'HarryPFont', sans-serif;
-
   background-color: rgb(64, 56, 56);
-
   border: none;
-
   border-radius: 5px;
-
 }
 
 
 #player1Name::placeholder,
-
 #player2Name::placeholder,
-
 #player3Name::placeholder,
-
 #player4Name::placeholder {
-
   font-family: 'HarryPFont', sans-serif;
-
   font-size: x-large;
-
 }
 
 
 #playersInTheGame{
-
   font-family: 'HarryPFont', sans-serif;
-
   font-size: x-large;
-
 }
 
 
 #playerTeamMessage {
-
   font-family: 'HarryPFont', sans-serif;
-
   font-size: x-large;
-
 }
 
 .top-center {
-
   text-align: center;
-
   position: absolute;
-
   top: 150px;
-
   left: 50%;
-
   transform: translateX(-50%);
-
 }
 
  
 
 .top-right {
-
   position: absolute;
-
   top: 50%;
-
   right: 250px;
-
 }
 
  
 
 .top-left {
-
   text-align: left;
-
   position: absolute;
-
   top:50%;
-
   left: 220px;
-
 }
 
  
 
 .bottom-center {
-
   text-align: center;
-
   position: absolute;
-
   bottom: 150px;
-
   left: 50%;
-
   transform: translateX(-50%);
-
 }
 
  
 
 ul{
-
   list-style: none;
-
 }
 
 /*-----------------------------------*/

@@ -7,7 +7,7 @@
   }
 
   body { 
-    background: url(../img/hp_uno_bg.png) no-repeat center center fixed; 
+    background: url(../img/hp_uno_bg1.png) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -22,5 +22,9 @@
 
   h2, h3, h4 {
     font-family: 'HarryPFont', sans-serif;
+  }
+
+  h4 {
+    font-size: 3rem !important;
   }
 

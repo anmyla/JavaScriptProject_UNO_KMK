@@ -1,0 +1,56 @@
+@font-face {
+    font-family: 'HarryPFont';
+    src: url('HarryPotter.ttf') format('opentype');
+    /* Weitere Formatoptionen können hinzugefügt werden, wenn nötig */
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  body { 
+    background: url(../img/hp_uno_bg1.png) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin-bottom: 250px;
+    margin-right: 300px;
+    margin-left: 50px;
+  }
+  
+
+  h1, .h1 {
+    font-family: 'HarryPFont', sans-serif;
+    font-size: 6rem !important;
+  }
+
+  h2, h3, h4 {
+    font-family: 'HarryPFont', sans-serif;
+  }
+
+  h4 {
+    font-size: 3.5rem !important;
+  }
+
+/*------------------------------------------*/
+
+h5 {
+  font-family: 'HarryPFont', sans-serif;
+  font-size: 3rem !important;
+}
+
+
+div{
+  margin-right: 300px;
+  font-family: 'HarryPFont', sans-serif;
+  font-size: x-large;
+}
+
+th{
+  font-family: 'HarryPFont', sans-serif;
+  font-size: x-large;
+}
+
+td{
+  font-family: 'HarryPFont', sans-serif;
+  font-size: x-large;
+}

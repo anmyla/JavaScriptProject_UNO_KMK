@@ -12,6 +12,9 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    margin-bottom: 250px;
+    margin-right: 300px;
+    margin-left: 50px;
   }
   
 
@@ -169,4 +172,29 @@ ul{
 
   list-style: none;
 
+}
+
+/*-----------------------------------*/
+
+
+h5 {
+  font-family: 'HarryPFont', sans-serif;
+  font-size: 3rem !important;
+}
+
+
+div{
+  margin-right: 300px;
+  font-family: 'HarryPFont', sans-serif;
+  font-size: x-large;
+}
+
+th{
+  font-family: 'HarryPFont', sans-serif;
+  font-size: x-large;
+}
+
+td{
+  font-family: 'HarryPFont', sans-serif;
+  font-size: x-large;
 }

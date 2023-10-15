@@ -147,21 +147,42 @@ async function displayPlayersList() {
  
 */
 
+
 async function showThisPlayerCards(playerID, htmlID) {
+    const baseUrl = "./img/cards/";
+
+    class Card {
+        constructor(color, number) {
+            this.Color = color;
+            this.Number = number;
+        }
+    }
+
     let playerSection = document.getElementById(htmlID);
+    let cardContainer = document.createElement('div');
+    playerSection.appendChild(cardContainer);
+    cardContainer.id = "cardContainer";
+    cardContainer.class = "card-container";
+
+    let newCard;
     let i = 0;
 
     while (i < globalResult.Players[playerID].Cards.length) {
-        const li = document.createElement('li');
-        const span = document.createElement('span');
-        li.appendChild(span);
-        console.log('HtmlID: ' + htmlID);
-        console.log('Player Section: ' + playerSection);
-        playerSection.appendChild(li);
-        span.textContent = globalResult.Players[playerID].Cards[i].Text + " " + globalResult.Players[playerID].Cards[i].Color;
+        const cardimg = document.createElement('img');
+        cardimg.classList.add('card'); // Apply a CSS class for styling
+
+        let colorInput = globalResult.Players[playerID].Cards[i].Color;
+        let numberInput = Number(globalResult.Players[playerID].Cards[i].Value);
+        newCard = new Card(colorInput, numberInput);
+        let cardImageUrl = `${baseUrl}${newCard.Color}${newCard.Number}.png`;
+        cardimg.src = cardImageUrl;
+
+        cardContainer.appendChild(cardimg);
         i++;
     }
 }
+
+
 
 async function displayPlayersCardAfterGameStarts() {
     playersGlobal.forEach(playerName => {
@@ -227,6 +248,7 @@ async function displayTopCard() {
 
 }
 
+/*
 
 //-------for testting porposes-------
 // saves response from start game request
@@ -274,3 +296,4 @@ function resetGame() {
         alert("No game data available. Please start a new game first.");
     }
 }
+*/

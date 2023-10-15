@@ -123,3 +123,16 @@ ul{
 #gameCourt {
   padding: 30px;
 }
+
+/* Add CSS for the card container */
+#cardContainer {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent wrapping to the next line */
+  overflow-x: auto; /* Enable horizontal scroll if needed */
+}
+
+.card {
+  max-width: 80px; /* Set the maximum width for the images */
+  margin-right: 5px; /* Adjust the margin to control spacing between cards */
+  flex-shrink: 0; /* Prevent images from shrinking beyond their max width */
+}

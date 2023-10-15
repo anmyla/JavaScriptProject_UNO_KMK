@@ -82,6 +82,7 @@ document.getElementById('okButton').addEventListener('click', async function () 
     await startNewGame();
     //displayPlayersList();
     displayPlayersCardAfterGameStarts();
+    displayTopCard();
 });
 
 
@@ -178,6 +179,7 @@ async function displayPlayersCardAfterGameStarts() {
     showThisPlayerCards(1, "player1div")
     showThisPlayerCards(2, "player2div")
     showThisPlayerCards(3, "player3div")
+
 }
 
 async function displayPlayerDivHeaders() {
@@ -202,3 +204,73 @@ async function displayPlayerDivHeaders() {
 
 
 //--------CODES ABOVE ARE WORKING PERFECTLY------------------------------------------
+
+async function displayTopCard() {
+
+    let gameCourt = document.getElementById('gameCourt');
+    let topCardDiv = document.createElement('div');
+    // Set the unique ID for the div
+    topCardDiv.id = "topCardDiv"
+    let discardDeck = document.createElement('h2');
+    discardDeck.textContent = "Discard Deck";
+    topCardDiv.appendChild(discardDeck);
+
+    gameCourt.appendChild(topCardDiv);
+
+
+    const li = document.createElement('li');
+    const span = document.createElement('span');
+    li.appendChild(span);
+
+    topCardDiv.appendChild(li);
+    span.textContent = globalResult.TopCard.Text + " " + globalResult.TopCard.Color;
+
+}
+
+
+//-------for testting porposes-------
+// saves response from start game request
+function saveServerResponseForCurrentGame(result) {
+    if (testing) {
+        console.log(result);
+    }
+
+    serverState.id = result.Id;
+    serverState.TopCard = result.TopCard;
+    serverState.chosenColor = result.TopCard.Color;
+
+    if (serverState.TopCard.Value === CardFace.Reverse) {
+        reverseDirection();
+    }
+
+    console.log("topCard at beginning: " + serverState.TopCard);
+
+    for (let playerId = 0; playerId <= 3; playerId++) {
+        players[playerId].Cards = result.Players[playerId].Cards;
+        players[playerId].Cards.sort(compareCard);
+        players[playerId].Score = result.Players[playerId].Score;
+    }
+
+    serverState.Player = result.Player;
+    serverState.NextPlayer = result.NextPlayer;
+}
+
+// Add an event listener for the "Test" button
+document.getElementById('testButton').addEventListener('click', function () {
+    resetGame();
+});
+
+// Function to reset the game with the existing data
+function resetGame() {
+    // Make sure you have the globalResult data
+    if (globalResult) {
+        // Reset the game state with the globalResult data
+        saveServerResponseForCurrentGame(globalResult);
+
+        // Display the player cards and top card
+        displayPlayersCardAfterGameStarts();
+        displayTopCard();
+    } else {
+        alert("No game data available. Please start a new game first.");
+    }
+}

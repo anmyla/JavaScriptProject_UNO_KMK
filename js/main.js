@@ -70,7 +70,6 @@ function assignTeams(players) {
     return assignedTeams;
 }
 
-
 // Function to display assigned teams in the modal
 function displayTeams(teams) {
     let formSection = document.querySelector('#formSection');
@@ -80,9 +79,7 @@ function displayTeams(teams) {
     document.getElementById('okButton').style.display = 'block';
 }
 
-
 // Handle "OK" button click to close the modal and start game
-
 document.getElementById('okButton').addEventListener('click', async function () {
     $('#nameModal').modal('hide');
     //nueues spiel starten!
@@ -94,6 +91,7 @@ document.getElementById('okButton').addEventListener('click', async function () 
     displayPlayersCardAfterGameStarts();
     displayTopCard();
     setupDrawPile();
+    showCurrentPlayer();
 
 });
 
@@ -138,7 +136,7 @@ async function showThisPlayerCards(playerID, htmlID) {
     let playerSection = document.getElementById(htmlID);
     let cardContainer = document.createElement('div');
     playerSection.appendChild(cardContainer);
-    cardContainer.id = "cardContainer";
+    cardContainer.id = 'cardContainer' + playerID;
     cardContainer.class = "card-container";
 
     let newCard;
@@ -187,15 +185,21 @@ async function displayPlayerDivHeaders() {
         let gameCourt = document.getElementById('gameCourt');
 
         let playerDiv = document.createElement('div');
-        // Set the unique ID for the div
-        playerDiv.id = baseId;
+        playerDiv.id = baseId;  // Set the unique ID for the div
         playerDiv.classList.add('player-div');    //---KATA
 
         gameCourt.appendChild(playerDiv);
         let playerDivHeader = document.createElement('h3');
-        playerDiv.appendChild(playerDivHeader);
         playerDivHeader.textContent = globalResult.Players[i].Player;
 
+        playerDiv.appendChild(playerDivHeader);
+
+        //div for player's score
+        let playerScoreDiv = document.createElement('div');
+        playerScoreDiv.id = `playerScore${i}`;
+        playerScoreDiv.textContent = 'Score'; //temporary: placeholder
+
+        playerDiv.appendChild(playerScoreDiv);
         i++;
     }
 }
@@ -255,14 +259,82 @@ function setupDrawPile() {
     gameCourt.appendChild(drawPileDiv);
 }
 
+// returns ID of Current Player
+function getCurrentPlayerID() {
+    for (let playerID = 0; playerID <= 3; playerID++) {
+        if (globalResult.Player === playersList[playerID].Name) {
+            return playerID;
+        }
+    }
+}
+
+// show only current player cards
+async function showCurrentPlayerCards(playerID) {
+    let baseUrl = './img/cards/';
+    let currentPlayerCardDiv = document.getElementById('cardContainer' + playerID);
+    currentPlayerCardDiv.innerHTML = '';
+
+    currentPlayerCardDiv.id = 'cardContainer' + playerID;
+    currentPlayerCardDiv.classList.add = 'card-container';
+
+    let newCard;
+    let i = 0;
+
+    while (i < globalResult.Players[playerID].Cards.length) {
+        const cardimg = document.createElement('img');
+        cardimg.classList.add('card'); // Apply a CSS class for styling
+
+        let colorInput = globalResult.Players[playerID].Cards[i].Color;
+        let numberInput = Number(globalResult.Players[playerID].Cards[i].Value);
+        newCard = new Card(colorInput, numberInput);
+        let cardImageUrl = `${baseUrl}${newCard.Color}${newCard.Number}.png`;
+        cardimg.src = cardImageUrl;
+
+        currentPlayerCardDiv.appendChild(cardimg);
+        i++;
+    }
+}
+
+// hide notCurrentPlayer's cards
+function putThisPlayerCardsUpsideDown(playerID) {
+    let notCurrentPlayerCardDiv = document.getElementById('cardContainer' + playerID);
+    notCurrentPlayerCardDiv.innerHTML = '';
+
+    notCurrentPlayerCardDiv.id = 'cardContainer' + playerID;
+    notCurrentPlayerCardDiv.classList.add = 'card-container';
+
+    let i = 0;
+
+    while (i < globalResult.Players[playerID].Cards.length) {
+        const backCardImg = document.createElement('img');
+        backCardImg.classList.add('card'); // Apply a CSS class for styling
+        backCardImg.src = './img/cards/back0.png';
+
+        notCurrentPlayerCardDiv.appendChild(backCardImg);
+        i++;
+    }
+}
+
+// To show/hide players' hand
+function showCurrentPlayer() {
+    let playerIndex = getCurrentPlayerID();
+
+    for (let playerID = 0; playerID <= 3; playerID++) {
+        if (playerID === playerIndex) {
+            showCurrentPlayerCards(playerID);
+
+        } else {
+            putThisPlayerCardsUpsideDown(playerID)
+        }
+    }
+}
+
+
 //--------CODES ABOVE ARE WORKING PERFECTLY------------------------------------------
 
-// Get CurrentPlayer
-function getNextPlayer() {
-    if (globalResult.NextPlayer == null) {
-        alert("For some unknown reason, the globalResult.nextPlayer resturns UNDEFINED so we cannot switch");
-    }
 
-    let CurrentPlayer = globalResult.NextPlayer;
-    console.log(CurrentPlayer);
+
+//LOGIC for when a player plays a card
+function playerPlaysACard() {
+
 }

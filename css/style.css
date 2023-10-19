@@ -91,7 +91,7 @@ padding: 30px;
 }
 
 /* Add CSS for the card container */
-#cardContainer {
+#cardContainer0, #cardContainer1, #cardContainer2, #cardContainer3 {
 display: flex;
 flex-wrap: nowrap; /* Prevent wrapping to the next line */
 overflow-x: auto; /* Enable horizontal scroll if needed */
@@ -110,12 +110,25 @@ nav{
 font-family: 'HarryPFont', sans-serif;
 }
 
-#discardCardDiv {
-position: absolute;
-top: 65%;
-left: 50%;
-transform: translate(-50%, -50%);
-text-align: center;
+.discardCard {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  max-width: 75px;
+  /* Set the maximum width for the images */
+  margin-right: 5px
+}
+
+.drawPileCard {
+  position: absolute;
+  top: 65%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  max-width: 75px;
+  margin-right: 5px
 }
 
 /* Positionieren der Player-Divs */
@@ -171,11 +184,3 @@ transform: translateY(-50%);
 }
 
  
-
-#drawPileDiv {
-  position: absolute;
-  top: 65%;
-  left: 40%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}

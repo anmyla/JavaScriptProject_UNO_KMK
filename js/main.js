@@ -3,6 +3,13 @@ let playersList = [];
 let playersGlobal = [];
 let globalResult = Object();
 
+class Card {
+    constructor(color, number) {
+        this.Color = color;
+        this.Number = number;
+    }
+}
+
 // Open the Modal dialog when the button is clicked
 document.getElementById('openModal1').addEventListener('click', function () {
     $('#nameModal').modal('show');
@@ -151,12 +158,6 @@ async function displayPlayersList() {
 async function showThisPlayerCards(playerID, htmlID) {
     const baseUrl = "./img/cards/";
 
-    class Card {
-        constructor(color, number) {
-            this.Color = color;
-            this.Number = number;
-        }
-    }
 
     let playerSection = document.getElementById(htmlID);
     let cardContainer = document.createElement('div');
@@ -228,25 +229,33 @@ async function displayPlayerDivHeaders() {
 //--------CODES ABOVE ARE WORKING PERFECTLY------------------------------------------
 
 async function displayTopCard() {
+    const baseUrl = "./img/cards/";
+
+    //construct card image
+    let discardCard;
+    const discardimg = document.createElement('img');
+    discardimg.classList.add('card'); // Apply a CSS class for styling
+
+    let colorInput = globalResult.TopCard.Color;
+    let numberInput = Number(globalResult.TopCard.Value);
+    discardCard = new Card(colorInput, numberInput);
+    let discardImageUrl = `${baseUrl}${discardCard.Color}${discardCard.Number}.png`;
+    discardimg.src = discardImageUrl;
 
     let gameCourt = document.getElementById('gameCourt');
-    let topCardDiv = document.createElement('div');
-    // Set the unique ID for the div
-    topCardDiv.id = "topCardDiv"
-    let discardDeck = document.createElement('h2');
-    discardDeck.textContent = "Discard Deck";
-    topCardDiv.appendChild(discardDeck);
+    let discardCardDiv = document.createElement('div');
 
-    gameCourt.appendChild(topCardDiv);
+    //construct discard Div Heading
+    discardCardDiv.id = "discardCardDiv"
+    let discardDeckHeading = document.createElement('h2');
+    discardDeckHeading.textContent = "Discard Deck";
+    discardCardDiv.appendChild(discardDeckHeading);
+    gameCourt.appendChild(discardCardDiv);
 
-
-    const li = document.createElement('li');
-    const span = document.createElement('span');
-    li.appendChild(span);
-
-    topCardDiv.appendChild(li);
-    span.textContent = globalResult.TopCard.Text + " " + globalResult.TopCard.Color;
-
+   //construct div for the card image
+    let discardCardImageDiv = document.createElement('div');
+    discardCardImageDiv.appendChild(discardimg);
+    discardCardDiv.appendChild(discardCardImageDiv);
 }
 
 /*

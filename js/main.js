@@ -41,8 +41,6 @@ document.getElementById('nameForm').addEventListener('submit', function (e) {
     playersList = [player1Name, player2Name, player3Name, player4Name];
     playersGlobal = [document.getElementById("player1Name").value, document.getElementById("player2Name").value, document.getElementById("player3Name").value, document.getElementById("player4Name").value];
 
-
-
     // Assign players to different teams (Hogwart Houses)
     const teams = assignTeams([player1Name, player2Name, player3Name, player4Name]);
 
@@ -50,11 +48,13 @@ document.getElementById('nameForm').addEventListener('submit', function (e) {
     displayTeams(teams);
 });
 
+
 // Function to check for duplicate names in an array
 function hasDuplicates(array) {
     const lowerCaseNames = array.map(name => name.toLowerCase());
     return (new Set(lowerCaseNames)).size !== lowerCaseNames.length;
 }
+
 
 // Function to assign players to different teams
 function assignTeams(players) {
@@ -69,6 +69,7 @@ function assignTeams(players) {
 
     return assignedTeams;
 }
+
 
 // Function to display assigned teams in the modal
 function displayTeams(teams) {
@@ -95,7 +96,6 @@ document.getElementById('okButton').addEventListener('click', async function () 
 
 // Async function necessary for Promise
 async function startNewGame() {
-
     try {
         // We start the connection request 
         // then wait for promise (alternatively fetch, then notation)
@@ -124,7 +124,6 @@ async function startNewGame() {
 async function showThisPlayerCards(playerID, htmlID) {
     const baseUrl = "./img/cards/";
 
-
     let playerSection = document.getElementById(htmlID);
     let cardContainer = document.createElement('div');
     playerSection.appendChild(cardContainer);
@@ -150,7 +149,6 @@ async function showThisPlayerCards(playerID, htmlID) {
 }
 
 
-
 async function displayPlayersCardAfterGameStarts() {
     playersGlobal.forEach(playerName => {
         const li = document.createElement("li");
@@ -167,8 +165,8 @@ async function displayPlayersCardAfterGameStarts() {
     showThisPlayerCards(1, "player1div")
     showThisPlayerCards(2, "player2div")
     showThisPlayerCards(3, "player3div")
-
 }
+
 
 async function displayPlayerDivHeaders() {
     let i = 0;
@@ -190,6 +188,7 @@ async function displayPlayerDivHeaders() {
         i++;
     }
 }
+
 
 async function displayTopCard() {
     const baseUrl = "./img/cards/";
@@ -244,8 +243,15 @@ function setupDrawPile() {
     gameCourt.appendChild(drawPileDiv);
 }
 
-
 //--------CODES ABOVE ARE WORKING PERFECTLY------------------------------------------
+
+
+
+
+
+
+
+
 
 
 

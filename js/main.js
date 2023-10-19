@@ -207,7 +207,7 @@ async function displayTopCard() {
     //construct card image
     let discardCard;
     const discardimg = document.createElement('img');
-    discardimg.classList.add('card'); // Apply a CSS class for styling
+    discardimg.classList.add('discardCard'); // Apply a CSS class for styling
 
     let colorInput = globalResult.TopCard.Color;
     let numberInput = Number(globalResult.TopCard.Value);
@@ -248,7 +248,7 @@ function setupDrawPile() {
     */
 
     let drawPileImg = document.createElement('img');
-    drawPileImg.classList.add('card');
+    drawPileImg.classList.add('drawPileCard');
     drawPileImg.src = './img/cards/back0.png';
 
     drawPileDiv.appendChild(drawPileImg)

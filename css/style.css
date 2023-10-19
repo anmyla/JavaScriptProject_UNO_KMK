@@ -164,3 +164,18 @@ transform: translateY(-50%);
 .modal-title{
   color: #656464;
 }
+
+.card:hover {
+  transform: scale(1.06);
+  cursor: pointer;
+}
+
+ 
+
+#drawPileDiv {
+  position: absolute;
+  top: 65%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}

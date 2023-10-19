@@ -258,6 +258,27 @@ async function displayTopCard() {
     discardCardDiv.appendChild(discardCardImageDiv);
 }
 
+// create elements and show card for Draw Pile
+function setupDrawPileUI() {   //Draw Pile
+    const drawPile = document.getElementById("draw-pile");
+    let img = document.createElement("img");
+    img.src = "img/cards/back.png";
+    drawPile.appendChild(img);
+    drawPile.addEventListener('click', function () {
+        animateDrawPile(img);
+        drawCardServer().then();
+    })
+}
+
+
+
+
+
+
+
+
+
+
 /*
 
 //-------for testting porposes-------

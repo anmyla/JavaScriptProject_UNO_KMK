@@ -213,6 +213,7 @@ async function displayPlayerDivHeaders() {
         let playerDiv = document.createElement('div');
         // Set the unique ID for the div
         playerDiv.id = baseId;
+        playerDiv.classList.add('player-div');    //---KATA
 
         gameCourt.appendChild(playerDiv);
         let playerDivHeader = document.createElement('h2');

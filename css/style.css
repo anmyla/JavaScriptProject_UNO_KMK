@@ -1,49 +1,50 @@
 @font-face {
-    font-family: 'HarryPFont';
-    src: url('HarryPotter.ttf') format('opentype');
-    /* Weitere Formatoptionen können hinzugefügt werden, wenn nötig */
-    font-weight: normal;
-    font-style: normal;
-  }
+  font-family: 'HarryPFont';
+  src: url('HarryPotter.ttf') format('opentype');
+  /* Weitere Formatoptionen können hinzugefügt werden, wenn nötig */
+  font-weight: normal;
+  font-style: normal;
+}
 
-  body { 
-    background: url(../img/hp_uno_bg1.png) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  }
-  
+body { 
+  background: url(../img/hp_uno_bg1.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 
-  h1, .h1 {
-    font-family: 'HarryPFont', sans-serif;
-    font-size: 6rem !important;
-  }
 
-  h2, h3, h4 {
-    font-family: 'HarryPFont', sans-serif;
-  }
+h1, .h1 {
+  font-family: 'HarryPFont', sans-serif;
+  font-size: 6rem !important;
+}
 
-  h4 {
-    font-size: 3.5rem !important;
-  }
+h2, h3, h4 {
+  font-family: 'HarryPFont', sans-serif;
+}
+
+h4 {
+  font-size: 3.5rem !important;
+}
 
 /*------------------------------------------*/
 
 #openModal1 {
-  padding: 5px 40px;
-  font-size: 22px;
-  font-family: 'HarryPFont', sans-serif;
-  background-color: rgb(64, 56, 56);
-  border: none;
-  border-radius: 5px;
+padding: 5px 40px;
+font-size: 22px;
+font-family: 'HarryPFont', sans-serif;
+background-color: rgb(64, 56, 56);
+border: none;
+border-radius: 5px;
 
 }
 
+/*----------------------------------- ich habe hier top-center, top-right, bottom-center, top-left gelöscht --- wir brauchen es nicht*/
 
 #openModal1:hover,
 .btn.btn-success:hover {
-  background-color: #511313;
+background-color: #511313;
 }
 
 
@@ -52,10 +53,10 @@
 .btn.btn-success:focus,
 .btn.btn-success:active {
 
-  font-family: 'HarryPFont', sans-serif;
-  background-color: rgb(64, 56, 56);
-  border: none;
-  border-radius: 5px;
+font-family: 'HarryPFont', sans-serif;
+background-color: rgb(64, 56, 56);
+border: none;
+border-radius: 5px;
 }
 
 
@@ -63,76 +64,88 @@
 #player2Name::placeholder,
 #player3Name::placeholder,
 #player4Name::placeholder {
-  font-family: 'HarryPFont', sans-serif;
-  font-size: x-large;
+font-family: 'HarryPFont', sans-serif;
+font-size: x-large;
 }
 
 
 #homeMessage {
-  font-family: 'HarryPFont', sans-serif;
-  font-size: x-large;
+font-family: 'HarryPFont', sans-serif;
+font-size: x-large;
 }
 
 
 #playerTeamMessage {
-  font-family: 'HarryPFont', sans-serif;
-  font-size: x-large;
+font-family: 'HarryPFont', sans-serif;
+font-size: x-large;
 }
 
-.top-center {
-  text-align: center;
-  position: absolute;
-  top: 150px;
-  left: 50%;
-  transform: translateX(-50%);
-}
 
- 
-
-.top-right {
-  position: absolute;
-  top: 50%;
-  right: 250px;
-}
-
- 
-
-.top-left {
-  text-align: left;
-  position: absolute;
-  top:50%;
-  left: 220px;
-}
-
- 
-
-.bottom-center {
-  text-align: center;
-  position: absolute;
-  bottom: 150px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
- 
-
-ul{
-  list-style: none;
+ul, li{      /*-------------------------------ich habe hier li dazugeschrieben------------------------*/
+list-style: none;
 }
 
 #gameCourt {
-  padding: 30px;
+padding: 30px;
 }
 
 /* Add CSS for the card container */
 #cardContainer {
-  display: flex;
-  flex-wrap: nowrap; /* Prevent wrapping to the next line */
-  overflow-x: auto; /* Enable horizontal scroll if needed */
+display: flex;
+flex-wrap: nowrap; /* Prevent wrapping to the next line */
+overflow-x: auto; /* Enable horizontal scroll if needed */
 }
 
 .card {
-  max-width: 80px; /* Set the maximum width for the images */
-  margin-right: 5px; /* Adjust the margin to control spacing between cards */
-  flex-shrink: 0; /* Prevent images from shrinking beyond their max width */
+max-width: 50px; /* Set the maximum width for the images */
+margin-right: 5px; /* Adjust the margin to control spacing between cards */
+flex-shrink: 0; /* Prevent images from shrinking beyond their max width */
+flex-grow: 1; /* Allow cards to grow and use available space */
 }
+
+
+/*---------------------------------------------  so habe ich unten ---------------------------------*/
+nav{
+font-family: 'HarryPFont', sans-serif;
+}
+
+#topCardDiv {
+position: absolute;
+top: 65%;
+left: 50%;
+transform: translate(-50%, -50%);
+text-align: center;
+}
+
+/* Positionieren der Player-Divs */
+.player-div {
+position: absolute;
+width: 520px; /* Breite der Player-Divs anpassen */
+text-align: center; /* Text im Player-Div horizontal zentrieren */
+padding: 1px; /* Innenabstand anpassen */
+}
+
+#player0div {
+top: 30%; /* Abstand von oben anpassen */
+left: 50%; /* In der Mitte über dem Topcard-Div */
+transform: translateX(-50%);
+}
+
+#player1div {
+top: 65%; /* In der Mitte vertikal */
+right: 10px; /* Abstand von rechts anpassen */
+transform: translateY(-50%);
+}
+
+#player2div {
+bottom: 10px; /* Abstand von unten anpassen */
+left: 50%; /* In der Mitte unter dem Topcard-Div */
+transform: translateX(-50%);
+}
+
+#player3div {
+top: 65%; /* In der Mitte vertikal */
+left: 10px; /* Abstand von links anpassen */
+transform: translateY(-50%);
+}
+

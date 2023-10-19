@@ -239,6 +239,7 @@ async function displayTopCard() {
 function setupDrawPile() {
     let gameCourt = document.getElementById('gameCourt');
     let drawPileDiv = document.createElement('div');
+    drawPileDiv.id = 'drawPileDiv';
 
     /*
     let drawPileHeading = document.createElement('p');

@@ -247,7 +247,7 @@ function setupDrawPile() {
     */
 
     let drawPileImg = document.createElement('img');
-    drawPileImg.classList ='card';
+    drawPileImg.classList.add('card');
     drawPileImg.src = './img/cards/back0.png';
 
     drawPileDiv.appendChild(drawPileImg)
@@ -265,13 +265,6 @@ function getNextPlayer() {
     let CurrentPlayer = globalResult.NextPlayer;
     console.log(CurrentPlayer);
 }
-
-
-
-
-
-
-
 
 
 

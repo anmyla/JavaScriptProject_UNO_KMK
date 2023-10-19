@@ -78,6 +78,7 @@ font-size: x-large;
 #playerTeamMessage {
 font-family: 'HarryPFont', sans-serif;
 font-size: x-large;
+color: #656464;
 }
 
 
@@ -149,3 +150,17 @@ left: 10px; /* Abstand von links anpassen */
 transform: translateY(-50%);
 }
 
+.modal-background{
+  background-image: url(../img/modal_background.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.form-control.mb-2{
+  width: 25%;
+}
+
+.modal-title{
+  color: #656464;
+}

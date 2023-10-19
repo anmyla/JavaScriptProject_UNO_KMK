@@ -82,16 +82,27 @@ function displayTeams(teams) {
 
 
 // Handle "OK" button click to close the modal and start game
+
 document.getElementById('okButton').addEventListener('click', async function () {
     $('#nameModal').modal('hide');
-
     //nueues spiel starten!
+
     await startNewGame();
+    changeBackgroundImage();
+
     //displayPlayersList();
     displayPlayersCardAfterGameStarts();
     displayTopCard();
     setupDrawPile();
+
 });
+
+ 
+function changeBackgroundImage() {
+    // Hier setzt du das neue Hintergrundbild
+    document.body.style.backgroundImage = 'url("img/background_spiel.jpg")'; // Ersetze 'neues-bild.jpg' durch den Pfad zu deinem gewünschten Hintergrundbild
+    document.body.style.color = "white";
+}
 
 
 // Async function necessary for Promise
@@ -244,6 +255,16 @@ function setupDrawPile() {
 }
 
 //--------CODES ABOVE ARE WORKING PERFECTLY------------------------------------------
+
+// Get CurrentPlayer
+function getNextPlayer() {
+    if (globalResult.NextPlayer == null) {
+        alert("globalResult.nextPlayer undefined, cannot switch");
+    }
+
+    let CurrentPlayer = globalResult.NextPlayer;
+    console.log(CurrentPlayer);
+}
 
 
 

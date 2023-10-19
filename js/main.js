@@ -97,7 +97,7 @@ document.getElementById('okButton').addEventListener('click', async function () 
 
 });
 
- 
+
 function changeBackgroundImage() {
     // Hier setzt du das neue Hintergrundbild
     document.body.style.backgroundImage = 'url("img/background_spiel.jpg")'; // Ersetze 'neues-bild.jpg' durch den Pfad zu deinem gewünschten Hintergrundbild
@@ -219,16 +219,16 @@ async function displayTopCard() {
     let discardCardDiv = document.createElement('div');
     discardCardDiv.id = "discardCardDiv"
 
-   /*
-    //construct discard Div Heading
-    let discardDeckHeading = document.createElement('p');
-    discardDeckHeading.textContent = "Discard Deck";
-    discardCardDiv.appendChild(discardDeckHeading);
-    */
+    /*
+     //construct discard Div Heading
+     let discardDeckHeading = document.createElement('p');
+     discardDeckHeading.textContent = "Discard Deck";
+     discardCardDiv.appendChild(discardDeckHeading);
+     */
 
     gameCourt.appendChild(discardCardDiv);
 
-   //construct div for the card image
+    //construct div for the card image
     let discardCardImageDiv = document.createElement('div');
     discardCardImageDiv.appendChild(discardimg);
     discardCardDiv.appendChild(discardCardImageDiv);
@@ -259,62 +259,9 @@ function setupDrawPile() {
 // Get CurrentPlayer
 function getNextPlayer() {
     if (globalResult.NextPlayer == null) {
-        alert("globalResult.nextPlayer undefined, cannot switch");
+        alert("For some unknown reason, the globalResult.nextPlayer resturns UNDEFINED so we cannot switch");
     }
 
     let CurrentPlayer = globalResult.NextPlayer;
     console.log(CurrentPlayer);
 }
-
-
-
-
-/*
-
-//-------for testting porposes-------
-// saves response from start game request
-function saveServerResponseForCurrentGame(result) {
-    if (testing) {
-        console.log(result);
-    }
-
-    serverState.id = result.Id;
-    serverState.TopCard = result.TopCard;
-    serverState.chosenColor = result.TopCard.Color;
-
-    if (serverState.TopCard.Value === CardFace.Reverse) {
-        reverseDirection();
-    }
-
-    console.log("topCard at beginning: " + serverState.TopCard);
-
-    for (let playerId = 0; playerId <= 3; playerId++) {
-        players[playerId].Cards = result.Players[playerId].Cards;
-        players[playerId].Cards.sort(compareCard);
-        players[playerId].Score = result.Players[playerId].Score;
-    }
-
-    serverState.Player = result.Player;
-    serverState.NextPlayer = result.NextPlayer;
-}
-
-// Add an event listener for the "Test" button
-document.getElementById('testButton').addEventListener('click', function () {
-    resetGame();
-});
-
-// Function to reset the game with the existing data
-function resetGame() {
-    // Make sure you have the globalResult data
-    if (globalResult) {
-        // Reset the game state with the globalResult data
-        saveServerResponseForCurrentGame(globalResult);
-
-        // Display the player cards and top card
-        displayPlayersCardAfterGameStarts();
-        displayTopCard();
-    } else {
-        alert("No game data available. Please start a new game first.");
-    }
-}
-*/

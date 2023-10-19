@@ -56,7 +56,6 @@ function hasDuplicates(array) {
     return (new Set(lowerCaseNames)).size !== lowerCaseNames.length;
 }
 
-
 // Function to assign players to different teams
 function assignTeams(players) {
     const houses = ['Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin'];
@@ -90,6 +89,7 @@ document.getElementById('okButton').addEventListener('click', async function () 
     //displayPlayersList();
     displayPlayersCardAfterGameStarts();
     displayTopCard();
+    setupDrawPile();
 });
 
 
@@ -119,40 +119,6 @@ async function startNewGame() {
         console.error("Error in startNewGame:", error);
     }
 }
-
-/*
-// Function to display the list of players in the specified div
-async function displayPlayersList() {
-    // Clear the existing content of the playersDiv
-    let playersDiv = document.querySelector('#homeMessage');
-    playersDiv.innerHTML = '';
-    
-    // Create an unordered list element
-    const ul = document.createElement('ul');
- 
-    // Positionierung für die einzelnen Spieler
-    const playerPositions = [
-        'top-center', // Spieler 1 oben in der Mitte
-        'top-right',   // Spieler 2 oben rechts
-        'bottom-center', // Spieler 3 unten in der Mitte
-        'top-left'    // Spieler 4 oben links
- 
-    ];
- 
-    // Loop through the playersList array and create list items
-    playersGlobal.forEach(playerName => {
-        const li = document.createElement('li');
-        const span = document.createElement('span');
-        li.appendChild(span);
-        playersDiv.appendChild(li);
-        span.textContent = playerName;
-    });
- 
-    // Append the unordered list to the playersDiv
-    playersDiv.appendChild(ul);
-}
- 
-*/
 
 
 async function showThisPlayerCards(playerID, htmlID) {
@@ -217,16 +183,13 @@ async function displayPlayerDivHeaders() {
         playerDiv.classList.add('player-div');    //---KATA
 
         gameCourt.appendChild(playerDiv);
-        let playerDivHeader = document.createElement('h2');
+        let playerDivHeader = document.createElement('h3');
         playerDiv.appendChild(playerDivHeader);
         playerDivHeader.textContent = globalResult.Players[i].Player;
 
         i++;
     }
 }
-
-
-//--------CODES ABOVE ARE WORKING PERFECTLY------------------------------------------
 
 async function displayTopCard() {
     const baseUrl = "./img/cards/";
@@ -244,12 +207,15 @@ async function displayTopCard() {
 
     let gameCourt = document.getElementById('gameCourt');
     let discardCardDiv = document.createElement('div');
-
-    //construct discard Div Heading
     discardCardDiv.id = "discardCardDiv"
-    let discardDeckHeading = document.createElement('h2');
+
+   /*
+    //construct discard Div Heading
+    let discardDeckHeading = document.createElement('p');
     discardDeckHeading.textContent = "Discard Deck";
     discardCardDiv.appendChild(discardDeckHeading);
+    */
+
     gameCourt.appendChild(discardCardDiv);
 
    //construct div for the card image
@@ -258,24 +224,28 @@ async function displayTopCard() {
     discardCardDiv.appendChild(discardCardImageDiv);
 }
 
-// create elements and show card for Draw Pile
-function setupDrawPileUI() {   //Draw Pile
-    const drawPile = document.getElementById("draw-pile");
-    let img = document.createElement("img");
-    img.src = "img/cards/back.png";
-    drawPile.appendChild(img);
-    drawPile.addEventListener('click', function () {
-        animateDrawPile(img);
-        drawCardServer().then();
-    })
+
+//Construct draw pile and create div for draw pile
+function setupDrawPile() {
+    let gameCourt = document.getElementById('gameCourt');
+    let drawPileDiv = document.createElement('div');
+
+    /*
+    let drawPileHeading = document.createElement('p');
+    drawPileHeading.textContent = 'Draw Pile';
+    drawPileDiv.appendChild(drawPileHeading);
+    */
+
+    let drawPileImg = document.createElement('img');
+    drawPileImg.classList ='card';
+    drawPileImg.src = './img/cards/back0.png';
+
+    drawPileDiv.appendChild(drawPileImg)
+    gameCourt.appendChild(drawPileDiv);
 }
 
 
-
-
-
-
-
+//--------CODES ABOVE ARE WORKING PERFECTLY------------------------------------------
 
 
 

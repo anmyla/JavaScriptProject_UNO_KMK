@@ -292,10 +292,12 @@ async function showCurrentPlayerCards(playerID) {
 
         currentPlayerCardDiv.appendChild(cardimg);
 
+        /*
         cardimg.addEventListener('click', function () {
             playerPlaysACard(newCard);
         })
-
+         */
+           
         i++;
     }
 

@@ -1,7 +1,7 @@
+/*neue font verwenden*/
 @font-face {
   font-family: 'HarryPFont';
   src: url('HarryPotter.ttf') format('opentype');
-  /* Weitere Formatoptionen können hinzugefügt werden, wenn nötig */
   font-weight: normal;
   font-style: normal;
 }
@@ -13,7 +13,6 @@ body {
   -o-background-size: cover;
   background-size: cover;
 }
-
 
 h1, .h1 {
   font-family: 'HarryPFont', sans-serif;
@@ -28,8 +27,7 @@ h4 {
   font-size: 3.5rem !important;
 }
 
-/*------------------------------------------*/
-
+/*modaler dialog stylen*/
 #openModal1 {
 padding: 5px 40px;
 font-size: 22px;
@@ -37,28 +35,22 @@ font-family: 'HarryPFont', sans-serif;
 background-color: rgb(64, 56, 56);
 border: none;
 border-radius: 5px;
-
 }
-
-/*----------------------------------- ich habe hier top-center, top-right, bottom-center, top-left gelöscht --- wir brauchen es nicht*/
 
 #openModal1:hover,
 .btn.btn-success:hover {
 background-color: #511313;
 }
 
-
 .btn.btn-success,
 .btn.btn-success.active,
 .btn.btn-success:focus,
 .btn.btn-success:active {
-
 font-family: 'HarryPFont', sans-serif;
 background-color: rgb(64, 56, 56);
 border: none;
 border-radius: 5px;
 }
-
 
 #player1Name::placeholder,
 #player2Name::placeholder,
@@ -68,99 +60,23 @@ font-family: 'HarryPFont', sans-serif;
 font-size: x-large;
 }
 
-
 #homeMessage {
 font-family: 'HarryPFont', sans-serif;
 font-size: x-large;
 }
 
-
 #playerTeamMessage {
 font-family: 'HarryPFont', sans-serif;
 font-size: x-large;
-color: #656464;
+color: #807979;
 }
 
-
-ul, li{      /*-------------------------------ich habe hier li dazugeschrieben------------------------*/
+ul, li{     
 list-style: none;
 }
 
-#gameCourt {
-padding: 30px;
-}
-
-/* Add CSS for the card container */
-#cardContainer0, #cardContainer1, #cardContainer2, #cardContainer3 {
-display: flex;
-flex-wrap: nowrap; /* Prevent wrapping to the next line */
-overflow-x: auto; /* Enable horizontal scroll if needed */
-}
-
-.card {
-max-width: 50px; /* Set the maximum width for the images */
-margin-right: 5px; /* Adjust the margin to control spacing between cards */
-flex-shrink: 0; /* Prevent images from shrinking beyond their max width */
-flex-grow: 1; /* Allow cards to grow and use available space */
-}
-
-
-/*---------------------------------------------  so habe ich unten ---------------------------------*/
 nav{
 font-family: 'HarryPFont', sans-serif;
-}
-
-.discardCard {
-  position: absolute;
-  top: 65%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  max-width: 75px;
-  /* Set the maximum width for the images */
-  margin-right: 5px
-}
-
-.drawPileCard {
-  position: absolute;
-  top: 65%;
-  left: 40%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  max-width: 75px;
-  margin-right: 5px
-}
-
-/* Positionieren der Player-Divs */
-.player-div {
-position: absolute;
-width: 520px; /* Breite der Player-Divs anpassen */
-text-align: center; /* Text im Player-Div horizontal zentrieren */
-padding: 1px; /* Innenabstand anpassen */
-}
-
-#player0div {
-top: 30%; /* Abstand von oben anpassen */
-left: 50%; /* In der Mitte über dem Topcard-Div */
-transform: translateX(-50%);
-}
-
-#player1div {
-top: 65%; /* In der Mitte vertikal */
-right: 10px; /* Abstand von rechts anpassen */
-transform: translateY(-50%);
-}
-
-#player2div {
-bottom: 10px; /* Abstand von unten anpassen */
-left: 50%; /* In der Mitte unter dem Topcard-Div */
-transform: translateX(-50%);
-}
-
-#player3div {
-top: 65%; /* In der Mitte vertikal */
-left: 10px; /* Abstand von links anpassen */
-transform: translateY(-50%);
 }
 
 .modal-background{
@@ -171,7 +87,7 @@ transform: translateY(-50%);
 }
 
 .form-control.mb-2{
-  width: 25%;
+  width: 45%;
 }
 
 .modal-title{
@@ -183,4 +99,49 @@ transform: translateY(-50%);
   cursor: pointer;
 }
 
- 
+#gameCourt {
+  display: flex;
+  flex-direction: row; 
+}
+
+.card-container {
+  display: flex;
+  flex-direction: row; 
+  align-items: center; 
+  overflow-y: auto; 
+  max-height: 300px; 
+}
+
+#cardContainer0,
+#cardContainer1,
+#cardContainer2,
+#cardContainer3 {
+  display: flex;
+  flex-direction: row;
+}
+
+.card {
+  max-width: 50px;
+  margin-bottom: 5px; 
+  flex-shrink: 0;
+  flex-grow: 1;
+}
+
+.discardCard {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  max-width: 75px;
+  margin-left: 80px;
+}
+
+.drawPileCard {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  max-width: 75px;
+}

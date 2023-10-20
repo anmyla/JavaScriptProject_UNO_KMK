@@ -1,48 +1,47 @@
 <!DOCTYPE html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Enter Player Names</title>
 
-    <link rel="stylesheet" href="./css/style.css">
-    
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wizarding World</title>
 
-  
-  <body>
-    <nav>
-      <div></div>
-      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button onclick="window.location.href='index.html'" type="button" class="btn btn-outline-dark btn-lg">Home</button> 
-        <button id="testButton">Help</button>
-        <button id="testButton">Credits</button>
-        <button id="testButton">Test</button>
-      </div>
-    </nav>
-    <div id="greet"><h1>Welcome to the Wizarding World!</h1></div>
-    <div class="container mt-5" id="homeMessage">
-      <h4>"Wizards, witches, and muggles alike, <br>
-        Come and join the fairest of all fights!<br>
-        A game without magic, it's pure and quick,<br>
-        Your wit and humor will do the trick!"</h4>
-      <div class="container mt-5" id="collectNames">
-        <button class="btn btn-primary" id="openModal1" data-target="nameModal">
-            Join the Hogwart's Uno Cup!
-        </button>
-      </div>
+  <link rel="stylesheet" href="./css/style.css">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+
+
+<body>
+  <nav>
+    <div></div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <button onclick="window.location.href='index.html'" type="button"
+        class="btn btn-outline-dark btn-lg">Home</button>
+      <button id="testButton">Help</button>
+      <button id="testButton">Credits</button>
+      <button id="testButton">Test</button>
     </div>
+  </nav>
+  <div id="greet">
+    <h1>Welcome to the Wizarding World!</h1>
+  </div>
+  <div class="container mt-5" id="homeMessage">
+    <h4>"Wizards, witches, and muggles alike, <br>
+      Come and join the fairest of all fights!<br>
+      A game without magic, it's pure and quick,<br>
+      Your wit and humor will do the trick!"</h4>
+    <div class="container mt-5" id="collectNames">
+      <button class="btn btn-primary" id="openModal1" data-target="nameModal">
+        Join the Hogwart's Uno Cup!
+      </button>
+    </div>
+  </div>
 
-    <div id="gameCourt"></div>
-
-    <!-- Modal -->
-    <div class="modal" id="nameModal">
-      <div class="modal-dialog">
-        <div class="modal-background">
+  <!-- Modal -->
+  <div class="modal" id="nameModal">
+    <div class="modal-dialog">
+      <div class="modal-background">
         <div class="modal-content" style="background-color: transparent;">
           <!-- Modal Header -->
           <div class="modal-header" style="border: none;">
@@ -55,47 +54,24 @@
           <!-- Modal body -->
           <div class="modal-body">
             <div id="playerTeamMessage"></div>
-              <div id="formSection">
-            <form id="nameForm">
-              <div class="form-group">
-                <input
-                  type="text"
-                  id="player1Name"
-                  class="form-control mb-2"
-                  placeholder="Player 1"
-                  value="Kata";
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  id="player2Name"
-                  class="form-control mb-2"
-                  placeholder="Player 2"
-                  value="Myla";
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  id="player3Name"
-                  class="form-control mb-2"
-                  placeholder="Player 3"
-                  value="Ksenija";
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  id="player4Name"
-                  class="form-control mb-2"
-                  placeholder="Player 4"
-                  value="Nora";
-                />
-              </div>
-              <button type="submit" class="btn btn-success">START GAME</button>
-            </form>
-          </div>
+            <div id="formSection">
+              <form id="nameForm">
+                <div class="form-group">
+                  <input type="text" id="player1Name" class="form-control mb-2" placeholder="Player 1" value="Kata" ; />
+                </div>
+                <div class="form-group">
+                  <input type="text" id="player2Name" class="form-control mb-2" placeholder="Player 2" value="Myla" ; />
+                </div>
+                <div class="form-group">
+                  <input type="text" id="player3Name" class="form-control mb-2" placeholder="Player 3" value="Ksenija"
+                    ; />
+                </div>
+                <div class="form-group">
+                  <input type="text" id="player4Name" class="form-control mb-2" placeholder="Player 4" value="Nora" ; />
+                </div>
+                <button type="submit" class="btn btn-success">START GAME</button>
+              </form>
+            </div>
           </div>
 
           <!-- Modal footer -->
@@ -107,11 +83,50 @@
     </div>
   </div>
 
-    <!-- Bootstrap JS and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <div class="container">
+    <!-- erste zeile -->
+    <div class="row">
+      <div class="col-4"></div>
+      <div class="col-4 player-card" id="player1Place">
+        <h3 id="pl1Name"></h3>
+        <div id="score1"></div>
+        <!-- Hier werden die Karten von Spieler 1 angezeigt -->
+      </div>
+      <div class="col-4"></div>
+    </div>
 
-    <script src="./js/main.js"></script>
-  </body>
+    <!-- zweite zeile -->
+    <div class="row mt-3">
+      <div class="col-4 player-card" id="player4Place">
+        <h3 id="pl4Name"></h3>
+        <div id="score4"></div>
+        <!-- Hier werden die Karten von Spieler 4 angezeigt -->
+      </div>
+      <div class="col-4" id="gameCourt"></div>
+      <div class="col-4 player-card" id="player2Place">
+        <h3 id="pl2Name"></h3>
+        <div id="score2"></div>
+        <!-- Hier werden die Karten von Spieler 2 angezeigt -->
+      </div>
+    </div>
+    <!-- dritte zeile -->
+    <div class="row mt-3">
+      <div class="col-4"></div>
+      <div class="col-4 player-card" id="player3Place">
+        <h3 id="pl3Name"></h3>
+        <div id="score3"></div>
+        <!-- Hier werden die Karten von Spieler 3 angezeigt -->
+      </div>
+      <div class="col-4"></div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script src="./js/main.js"></script>
+</body>
+
 </html>

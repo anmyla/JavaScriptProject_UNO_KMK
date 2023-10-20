@@ -292,12 +292,10 @@ async function showCurrentPlayerCards(playerID) {
 
         currentPlayerCardDiv.appendChild(cardimg);
 
-        /*
         cardimg.addEventListener('click', function () {
             playerPlaysACard(newCard);
         })
-         */
-           
+
         i++;
     }
 
@@ -341,3 +339,197 @@ function showCurrentPlayer() {
 
 //--------CODES ABOVE ARE WORKING PERFECTLY------------------------------------------
 
+
+//LOGIC for when a player plays a card
+function playerPlaysACard(card) {
+
+    if (cardValidation(card)) {
+        let currentPlayerID = getCurrentPlayerID();
+        removePlayedCardFromPlayersHand(currentPlayerID, card)
+
+        if (card.Color === CardColor.Black) {
+            showChooseColor(card);
+
+        } else {
+            playCardServer(card, "").then();
+        }
+    } else {
+        showCardErrorFeedback(card);
+    }
+}
+
+// check if played card is valid
+function cardValidation(card) {
+    let topCard = globalResult.TopCard;
+    console.log('top card:' + topCard);
+    switch (card.Value) {
+        case 14:
+            // if Player doesn't have the Color, he can play Draw4
+            let hasNoCardWithSameColor = !hasCardWithSameColor(getCurrentPlayerID(), globalResult.chosenColor);
+            let draw4onTop = topCard.Value === value.Draw4;
+            let changeColorTop = topCard.Value === value.ChangeColor;
+            // if TopCard is Draw 4 or Wild card, you can't play a Draw4
+            console.log('player played: Darw4');
+            return hasNoCardWithSameColor
+                && !draw4onTop && !changeColorTop;
+
+        case 13:
+            // you can always play a Wild Card / ChangeColor
+            console.log('player played: changeColor');
+            return true;
+        default:
+            // if player doesn't play wild card or +4, return the value and color of the card
+            return card.Value === topCard.Value
+                || card.Color === globalResult.chosenColor;
+            console.log('card validation: default');    
+
+    }
+}
+
+// returns true if player has card with the same color as chosen color
+function hasCardWithSameColor(playerID, color) {
+    for (let i = 0; i < playersList[playerID].Cards.length; i++) {
+        if (playersList[playerID].Cards[i].Color === color) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function removePlayedCardFromPlayersHand(currentPlayerID, card) {
+    let cardToRemove = getCardID(currentPlayerID, card);
+    playersList[playerID].Cards.splice(cardToRemove, 1);
+
+    console.log('the played card should have been removed from the playerhand');
+}
+
+//return the searched card 
+function getCardID(playerID, card) {
+    for (let i = 0; i < players[playerID].Cards.length; i++) {
+        if (playersList[playerID].Cards[i].Color === card.Color && players[playerID].Cards[i].Value === card.Value) {
+            return i;
+        }
+    }
+
+    alert("for some unknown reason, there is no such card!");
+}
+
+function showChooseColor(card) {
+
+}
+
+function playCardServer(card) {
+
+}
+
+function showCardErrorFeedback(card) {
+
+}
+
+
+// if player clicks on a card they're allowed to play, send request to server
+async function playCardServer(card, wildColor) {
+    let id = globalResult.id;
+    let value = card.Value;
+    let color = card.Color;
+
+    oldTopCard = globalResult.TopCard;
+    console.log(oldTopCard);
+
+    let url = `https://nowaunoweb.azurewebsites.net/api/Game/PlayCard/${id}?value=${value}&color=${color}&wildColor=${wildColor}`;
+
+    let response = await fetch(url, {
+        method: "PUT", headers: {
+            "Content-type": "application/json; charset=UTF-8",
+        }
+    });
+
+    if (response.ok) {
+        let result = await response.json();
+        console.log("result from playCard");
+        console.log(result);
+
+        if (catchError(result) === undefined) {
+            let currentPlayerId = getCurrentPlayerID();
+
+            removeOneCardFromPlayer(currentPlayerId, card);
+
+            globalResult.TopCard = card;
+
+            //reverse
+            if (card.Value === 12) {
+
+            }
+
+            //skip
+            if (card.Value === 11) {
+
+            }
+            // if +2 or +4 is played, get all cards from server to update them and get the new drawn cards
+            if (value === 10 || value === 13) {
+
+                await updateAllCardsFromServer();
+            }
+
+            if (value === 13 || value === 14) {
+                globalResult.chosenColor = wildColor;
+            } else {
+                globalResult.chosenColor = card.Color;
+            }
+
+            proceedToGivenPlayer(result.Player);
+
+            //update the gamecourt
+            displayTopCard();
+            setupDrawPile();
+            showCurrentPlayer();
+
+        } else {
+            alert("card not played: " + catchError(result));
+        }
+
+    } else {
+        alert("HTTP-Error: " + response.status);
+    }
+}
+
+// catches error in server response
+function catchError(result) {
+    return result.error;
+}
+
+// updates all cards from each player
+async function updateAllCardsFromServer() {
+    for (let playerId = 0; playerId <= 3; playerId++) {
+        await getPlayerCardsFromServer(playerId);
+    }
+}
+
+// gets cards from server for a given player
+async function getPlayerCardsFromServer(playerId) {
+    let id = globalResult.id;
+    let name = players[playerId].Name;
+    let response = await fetch(`https://nowaunoweb.azurewebsites.net/api/Game/GetCards/${id}?playerName=${name}`, {
+        method: "GET", headers: {
+            "Content-type": "application/json; charset=UTF-8",
+        }
+    });
+
+    if (response.ok) {
+        let result = await response.json();
+        console.log(response);
+        console.log(players[playerId]);
+        playersList[playerId].Cards = result.Cards;
+        playersList[playerId].Cards.sort(compareCard);
+        playersList[playerId].Score = result.Score;
+
+    } else {
+        alert("HTTP-Error: " + response.status);
+    }
+}
+
+// saves player and next player
+function proceedToGivenPlayer(playerName) {
+    globalResult.Player = playerName;
+    globalResult.NextPlayer = null;
+}

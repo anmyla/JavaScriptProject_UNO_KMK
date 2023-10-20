@@ -192,56 +192,23 @@ async function displayPlayerDivHeaders() {
 
     let pl4Name = document.getElementById("pl4Name");
     pl4Name.innerHTML = player4Name;
+
     let scoreOne = document.getElementById("score1");
     score1.innerHTML = scoreOne;
     scoreOne.textContent = 'Score';
-
 
     let scoreTwo = document.getElementById("score2");
     score2.innerHTML = scoreTwo;
     scoreTwo.textContent = 'Score';
 
-
     let scoreThree = document.getElementById("score3");
     score3.innerHTML = scoreThree;
     scoreThree.textContent = 'Score';
-
  
     let scoreFour = document.getElementById("score4");
     score4.innerHTML = scoreFour;
     scoreFour.textContent = 'Score';
-
 }
-
-
-/*
-async function displayPlayerDivHeaders() {
-    let i = 0;
-    while (i < playersGlobal.length) {
-        // Create a base ID for each player div
-        let baseId = `player${i}div`;
-        let gameCourt = document.getElementById('gameCourt');
-
-        let playerDiv = document.createElement('div');
-        playerDiv.id = baseId;  // Set the unique ID for the div
-        playerDiv.classList.add('player-div');    //---KATA
-
-        gameCourt.appendChild(playerDiv);
-        let playerDivHeader = document.createElement('h3');
-        playerDivHeader.textContent = globalResult.Players[i].Player;
-
-        playerDiv.appendChild(playerDivHeader);
-
-        //div for player's score
-        let playerScoreDiv = document.createElement('div');
-        playerScoreDiv.id = `playerScore${i}`;
-        playerScoreDiv.textContent = 'Score'; //temporary: placeholder
-
-        playerDiv.appendChild(playerScoreDiv);
-        i++;
-    }
-} */
-
 
 async function displayTopCard() {
     const baseUrl = "./img/cards/";
@@ -261,13 +228,6 @@ async function displayTopCard() {
     let discardCardDiv = document.createElement('div');
     discardCardDiv.id = "discardCardDiv"
 
-    /*
-     //construct discard Div Heading
-     let discardDeckHeading = document.createElement('p');
-     discardDeckHeading.textContent = "Discard Deck";
-     discardCardDiv.appendChild(discardDeckHeading);
-     */
-
     gameCourt.appendChild(discardCardDiv);
 
     //construct div for the card image
@@ -282,12 +242,6 @@ function setupDrawPile() {
     let gameCourt = document.getElementById('gameCourt');
     let drawPileDiv = document.createElement('div');
     drawPileDiv.id = 'drawPileDiv';
-
-    /*
-    let drawPileHeading = document.createElement('p');
-    drawPileHeading.textContent = 'Draw Pile';
-    drawPileDiv.appendChild(drawPileHeading);
-    */
 
     let drawPileImg = document.createElement('img');
     drawPileImg.classList.add('drawPileCard');
@@ -371,7 +325,6 @@ function showCurrentPlayer() {
     }
 }
 
-
 //--------CODES ABOVE ARE WORKING PERFECTLY------------------------------------------
 
 //LOGIC for when a player plays a card
@@ -433,10 +386,7 @@ async function sendPlayedCardToAPI(card) {
     );
 
     if (response.ok) {
-
         apiResponseToPlayedCard = await response.json(); // alternativ response.text wenn nicht json gewünscht ist
-
-
         console.log("congratz card can be played");
         console.log(response);
 

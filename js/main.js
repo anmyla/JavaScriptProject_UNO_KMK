@@ -291,8 +291,15 @@ async function showCurrentPlayerCards(playerID) {
         cardimg.src = cardImageUrl;
 
         currentPlayerCardDiv.appendChild(cardimg);
+
+        cardimg.addEventListener('click', function () {
+            playerPlaysACard(newCard);
+        })
+
         i++;
     }
+
+
 }
 
 // hide notCurrentPlayer's cards
@@ -332,9 +339,3 @@ function showCurrentPlayer() {
 
 //--------CODES ABOVE ARE WORKING PERFECTLY------------------------------------------
 
-
-
-//LOGIC for when a player plays a card
-function playerPlaysACard() {
-
-}

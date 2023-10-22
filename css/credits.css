@@ -1,0 +1,5 @@
+body {
+    background: url(../img/BGCredits.jpg) no-repeat;
+    background-size: contain;
+    background-size: cover;
+  }

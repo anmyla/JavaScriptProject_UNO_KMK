@@ -4,15 +4,17 @@
   font-weight: normal;
   font-style: normal;
 }
-@font-face {     /*----------------------------dazugeschrieben--------------*/
+
+@font-face {
+  /*----------------------------dazugeschrieben--------------*/
   font-family: 'help';
   src: url('magic.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
 
-body { 
-  background: url(../img/hp_uno_bg1.png) no-repeat center center fixed; 
+body {
+  background: url(../img/hp_uno_bg1.png) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -22,13 +24,20 @@ body {
   margin-left: 50px;
 }
 
+nav > div {
+  font-family: 'HarryPFont', sans-serif;
+}
 
-h1, .h1 {
+
+h1,
+.h1 {
   font-family: 'HarryPFont', sans-serif;
   font-size: 6rem !important;
 }
 
-h2, h3, h4 {
+h2,
+h3,
+h4 {
   font-family: 'HarryPFont', sans-serif;
 }
 
@@ -36,26 +45,34 @@ h4 {
   font-size: 3.5rem !important;
 }
 
-/*------------------------------------------*/
-
 h5 {
-font-family: 'HarryPFont', sans-serif;
-font-size: 3rem !important;
+  font-family: 'HarryPFont', sans-serif;
+  font-size: 3rem !important;
 }
 
-
-div{
-margin-right: 300px;
-font-family: 'help', sans-serif;  /*-----------------ändert-------------------------*/
-font-size: x-large;
+div {
+  margin-right: 300px;
+  font-family: 'help', sans-serif;
+  font-size: x-large;
 }
 
-th{
-font-family: 'help', sans-serif;   /*--------------------ändert----------------------*/
-font-size: x-large;
+th {
+  font-family: 'help', sans-serif;
+  font-size: x-large;
 }
 
-td{
-font-family: 'help', sans-serif;  /*----------------------ändert--------------------*/
-font-size: x-large;
+td {
+  font-family: 'help', sans-serif;
+  font-size: x-large;
+}
+
+.home,
+.help,
+.credits {
+  margin-top: 2%;
+  margin: 10px;
+  border-radius: 10px;
+  width: 75px;
+  height: 40px;
+  font-size: 22px;
 }

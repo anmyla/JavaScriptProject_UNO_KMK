@@ -6,6 +6,7 @@
   <title>Wizarding World</title>
 
   <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
@@ -13,25 +14,34 @@
 
 
 <body>
+  <div id="audioContainer">
+    <audio id="myAudio" controls loop>
+      <source src="/UNO_KMK-main/css/introSong.mp3" type="audio/mpeg">
+      Dein Browser unterstützt das Audio-Element nicht.
+    </audio>
+  </div>
+  <img src="/UNO_KMK-main/img/Flugbesen.png" id="fliegendesBild" alt="Fliegendes Bild">
+
   <nav>
     <div></div>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-      <button onclick="window.location.href='index.html'" type="button"
-        class="btn btn-outline-dark btn-lg">Home</button>
-      <button id="testButton">Help</button>
-      <button id="testButton">Credits</button>
-      <button id="testButton">Test</button>
+      <button id="audioButton" onclick="playAudioLoop()"><i id="audioIcon" class="fas fa-volume-up"></i></button>
+      <button onclick="window.location.href='index.html'" type="button" class="home">Home</button>
+      <button class="help" id="testButton" onclick="window.location.href='help.html'">Help</button>
+      <button class="credits" id="testButton">Credits</button>
     </div>
   </nav>
+
+<br>
   <div id="greet">
-    <h1>Welcome to the Wizarding World!</h1>
+    <h1 id="gameMessage">Welcome to the Wizarding World!</h1>
   </div>
   <div class="container mt-5" id="homeMessage">
     <h4>"Wizards, witches, and muggles alike, <br>
       Come and join the fairest of all fights!<br>
       A game without magic, it's pure and quick,<br>
       Your wit and humor will do the trick!"</h4>
-    <div class="container mt-5" id="collectNames">
+    <div class="container mt-5 text-center" id="collectNames">
       <button class="btn btn-primary" id="openModal1" data-target="nameModal">
         Join the Hogwart's Uno Cup!
       </button>
@@ -41,7 +51,7 @@
   <!-- Modal -->
   <div class="modal" id="nameModal">
     <div class="modal-dialog">
-      <div class="modal-background">
+      <div class="modal-background" style="border-radius: 15px;">
         <div class="modal-content" style="background-color: transparent;">
           <!-- Modal Header -->
           <div class="modal-header" style="border: none;">
@@ -69,7 +79,7 @@
                 <div class="form-group">
                   <input type="text" id="player4Name" class="form-control mb-2" placeholder="Player 4" value="Nora" ; />
                 </div>
-                <button type="submit" class="btn btn-success">START GAME</button>
+                <button type="submit" class="btn btn-success" id="startGameButton">START GAME</button>
               </form>
             </div>
           </div>
@@ -88,7 +98,7 @@
     <div class="row">
       <div class="col-4"></div>
       <div class="col-4 player-card" id="player1Place">
-        <h3 id="pl1Name"></h3>
+        <h3 id="pl1Name" class="custom-margin"></h3>
         <div id="score1"></div>
         <!-- Hier werden die Karten von Spieler 1 angezeigt -->
       </div>
@@ -98,13 +108,13 @@
     <!-- zweite zeile -->
     <div class="row mt-3">
       <div class="col-4 player-card" id="player4Place">
-        <h3 id="pl4Name"></h3>
+        <h3 id="pl4Name" class="custom-margin"></h3>
         <div id="score4"></div>
         <!-- Hier werden die Karten von Spieler 4 angezeigt -->
       </div>
       <div class="col-4" id="gameCourt"></div>
       <div class="col-4 player-card" id="player2Place">
-        <h3 id="pl2Name"></h3>
+        <h3 id="pl2Name" class="custom-margin"></h3>
         <div id="score2"></div>
         <!-- Hier werden die Karten von Spieler 2 angezeigt -->
       </div>
@@ -113,13 +123,14 @@
     <div class="row mt-3">
       <div class="col-4"></div>
       <div class="col-4 player-card" id="player3Place">
-        <h3 id="pl3Name"></h3>
+        <h3 id="pl3Name" class="custom-margin"></h3>
         <div id="score3"></div>
         <!-- Hier werden die Karten von Spieler 3 angezeigt -->
       </div>
       <div class="col-4"></div>
     </div>
   </div>
+
 
   <!-- Bootstrap JS and jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

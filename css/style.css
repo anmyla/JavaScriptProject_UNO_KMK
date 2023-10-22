@@ -6,110 +6,123 @@
   font-style: normal;
 }
 
-body { 
-  background: url(../img/hp_uno_bg1.png) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+body {
+  background: url(../img/BGStart.png) no-repeat center center fixed;
+  background-size: contain;
   background-size: cover;
 }
 
-h1, .h1 {
+h1 {
   font-family: 'HarryPFont', sans-serif;
   font-size: 6rem !important;
+  margin-left: 50px;
+  text-align: center;
 }
 
-h2, h3, h4 {
+h2,
+h3,
+h4 {
   font-family: 'HarryPFont', sans-serif;
+  text-align: center;
+}
+
+#pl1Name,
+#pl2Name,
+#pl3Name,
+#pl4Name{
+  text-align: left;
 }
 
 h4 {
   font-size: 3.5rem !important;
 }
 
-/*modaler dialog stylen*/
 #openModal1 {
-padding: 5px 40px;
-font-size: 22px;
-font-family: 'HarryPFont', sans-serif;
-background-color: rgb(64, 56, 56);
-border: none;
-border-radius: 5px;
+  padding: 5px 40px;
+  font-size: 22px;
+  font-family: 'HarryPFont', sans-serif;
+  background-color: rgb(64, 56, 56);
+  border: none;
+  border-radius: 5px;
 }
 
 #openModal1:hover,
 .btn.btn-success:hover {
-background-color: #511313;
+  background-color: #511313;
 }
 
 .btn.btn-success,
 .btn.btn-success.active,
 .btn.btn-success:focus,
 .btn.btn-success:active {
-font-family: 'HarryPFont', sans-serif;
-background-color: rgb(64, 56, 56);
-border: none;
-border-radius: 5px;
+  font-family: 'HarryPFont', sans-serif;
+  background-color: rgb(64, 56, 56);
+  border: none;
+  border-radius: 5px;
 }
 
 #player1Name::placeholder,
 #player2Name::placeholder,
 #player3Name::placeholder,
 #player4Name::placeholder {
-font-family: 'HarryPFont', sans-serif;
-font-size: x-large;
+  font-family: 'HarryPFont', sans-serif;
+  font-size: x-large;
 }
 
 #homeMessage {
-font-family: 'HarryPFont', sans-serif;
-font-size: x-large;
+  font-family: 'HarryPFont', sans-serif;
+  font-size: x-large;
 }
 
 #playerTeamMessage {
-font-family: 'HarryPFont', sans-serif;
-font-size: x-large;
-color: #807979;
+  font-family: 'HarryPFont', sans-serif;
+  font-size: x-large;
+  color: azure;
 }
 
-ul, li{     
-list-style: none;
+ul,
+li {
+  list-style: none;
 }
 
-nav{
-font-family: 'HarryPFont', sans-serif;
+nav {
+  font-family: 'HarryPFont', sans-serif;
 }
 
-.modal-background{
-  background-image: url(../img/modal_background.jpg);
+.modal-background {
+  background-image: url(../img/BGModal.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-.form-control.mb-2{
+.form-control.mb-2 {
   width: 45%;
 }
 
-.modal-title{
-  color: #656464;
+.modal-title {
+  color: azure;
+  margin-top: 40px;
 }
 
-.card:hover {
+.card:hover,
+.discardCard,
+.drawPileCard {
   transform: scale(1.06);
   cursor: pointer;
 }
 
 #gameCourt {
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
 }
 
 .card-container {
   display: flex;
-  flex-direction: row; 
-  align-items: center; 
-  overflow-y: auto; 
-  max-height: 300px; 
+  flex-direction: row;
+  align-items: center;
+  overflow-y: auto;
+  max-height: 300px;
 }
 
 #cardContainer0,
@@ -117,12 +130,13 @@ font-family: 'HarryPFont', sans-serif;
 #cardContainer2,
 #cardContainer3 {
   display: flex;
-  flex-direction: row;
+  flex-direction: row; /* Standard: Karten werden in einer Reihe angezeigt */
+  flex-wrap: wrap
 }
 
 .card {
   max-width: 50px;
-  margin-bottom: 5px; 
+  margin-bottom: 5px;
   flex-shrink: 0;
   flex-grow: 1;
 }
@@ -143,5 +157,65 @@ font-family: 'HarryPFont', sans-serif;
   left: 40%;
   transform: translate(-50%, -50%);
   text-align: center;
-  max-width: 75px;
+  max-width: 85px;
+  border-radius: 0.25rem;
 }
+
+.modal-content {
+  border-radius: 10px;
+  /* Runde Ecken */
+}
+
+.home,
+.help,
+.credits,
+#audioButton {
+  margin-top: 2%;
+  margin: 5px;
+  border-radius: 10px;
+  width: 75px;
+  height: 40px;
+  font-size: 22px;
+}
+
+#audioButton {
+  width: 45px;
+  height: 40px;
+}
+
+.custom-margin {
+  margin-bottom: 0;
+}
+
+#audioContainer audio {
+  display: none;
+  /* Versteckt das Audio-Steuerungselement */
+}
+
+.container{
+  font-family: 'HarryPFont', sans-serif;
+}
+
+#fliegendesBild {
+  position: fixed;
+  width: 100px; /* Größe anpassen */
+  top: 0; /* Startposition oben */
+  right: 0; /* Startposition rechts */
+  transform: translate(0, 0); /* Startposition */
+  animation: fliege 6s linear infinite; /* Animation definieren */
+}
+
+@keyframes fliege {
+  from {
+    top: 0; /* Startposition oben */
+    right: 0; /* Startposition rechts */
+  }
+  to {
+    top: 100%; /* Endposition unten */
+    right: 100%; /* Endposition rechts */
+    transform: translate(-100%, -100%); /* Endposition links oben */
+  }
+}
+
+
+

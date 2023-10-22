@@ -584,10 +584,10 @@ async function updateAllCardsFromServer() {
 
 // changes direction if player plays Reverse card
 function reverseDirection() {
-    if (serverState.direction === Direction.CW) {
-        serverState.direction = Direction.CCW;
+    if (globalResult.direction === Direction.CW) {
+        globalResult.direction = Direction.CCW;
     } else {
-        serverState.direction = Direction.CW
+        globalResult.direction = Direction.CW
     }
 }
 

@@ -342,13 +342,14 @@ async function startNewGame() { // Async function necessary for Promise
     try {
         // We start the connection request 
         // then wait for promise (alternatively fetch, then notation)
-        let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/start", {
-            method: 'POST',
-            body: JSON.stringify(playersList), // Send the names entered in the form
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            }
-        });
+        let response = await fetch('https://nowaunoweb.azurewebsites.net/api/game/start',
+            {
+                method: 'POST',
+                body: JSON.stringify(playersList), // Send the names entered in the form
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                }
+            });
 
         if (response.ok) {
             globalResult = await response.json(); // Assign the response data to globalResult
@@ -430,10 +431,16 @@ async function setNextPlayer(thisPlayerIndex) {
         }
     }
 
-    globalResult.NextPlayer = playersList[newPlayerIndex];
-    console.log('Next player is the one with index:' + playersList[newPlayerIndex]);
+    globalResult.NextPlayer = playersGlobal[newPlayerIndex];
+    console.log('Next player is: ' + playersGlobal[newPlayerIndex]);
 }
 
+
+// saves player and next player
+function proceedToGivenPlayerByTheAPI(playerName) {
+    globalResult.Player = playerName;
+    globalResult.NextPlayer = playerName;
+}
 
 //-------------------------when wild card is played----------------
 // Get the modal element
@@ -525,7 +532,7 @@ async function sendPlayedCardToAPI(card) {
     let gameID = globalResult.Id;
     let URL = `https://nowaunoweb.azurewebsites.net/api/Game/PlayCard/${gameID}?value=${value}&color=${color}&wildColor=${wildColor}`;
 
-    const response = await fetch(URL,
+    let response = await fetch(URL,
         {
             method: "PUT",
             dataType: "json",
@@ -546,7 +553,6 @@ async function sendPlayedCardToAPI(card) {
         console.log(response);
 
         if (catchError(response) === undefined) { //there is no error
-
             afterSuccessfulTransmissionOfAValidCardToAPI(card);
             proceedToGivenPlayerByTheAPI(apiResponseToPlayedCard.Player);
             //update the gamecourt
@@ -579,7 +585,7 @@ function playerPlaysACard(card) {
 
         sendPlayedCardToAPI(card);
         console.log('playedCard sent to API');
-        
+
         removePlayedCardFromPlayersHand(currentPlayerID, card);
         console.log('removed played card');
 
@@ -591,12 +597,6 @@ function playerPlaysACard(card) {
 
 //--------------------------------------------------------------------------------
 
-//update each player's hand
-async function updateAllPlayersCards() {
-    for (let i = 0; i <= 3; i++) {
-        await getUpdatedPlayerCardsFromAPI(i);
-    }
-}
 //compare cards
 function compareCard(a, b) {
     if (a.Color < b.Color) {
@@ -612,11 +612,14 @@ function compareCard(a, b) {
 async function getUpdatedPlayerCardsFromAPI(playerID) {
     let id = globalResult.id;
     let name = playersList[playerID];
-    let response = await fetch(`https://nowaunoweb.azurewebsites.net/api/Game/GetCards/${id}?playerName=${name}`, {
-        method: "GET", headers: {
-            "Content-type": "application/json; charset=UTF-8",
-        }
-    });
+    let URL = `https://nowaunoweb.azurewebsites.net/api/Game/GetCards/${id}?playerName=${name}`;
+
+    let response = await fetch(URL,
+        {
+            method: "GET", headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            }
+        });
 
     if (response.ok) {
         globalResult = await response.json();
@@ -636,7 +639,7 @@ async function afterSuccessfulTransmissionOfAValidCardToAPI(card) {
     let currentPlayerIndex = getCurrentPlayerID();
 
     if (card.Value < 12) { //if card is a regular card
-        setNextPlayer();
+        setNextPlayer(currentPlayerIndex);
     }
     if (card.Value === 12) { //if card is reverse
         changeDirection(currentPlayerIndex);
@@ -646,19 +649,11 @@ async function afterSuccessfulTransmissionOfAValidCardToAPI(card) {
         skipNextPlayer(currentPlayerIndex);
     }
     if (card.Value === 10 || card.Value === 13) { //if card is +2 or +4
-        updateAllPlayersCards();
+        getUpdatedPlayerCardsFromAPI(currentPlayerIndex);
     }
     if (card.Value === 13 || card.Value === 14) { //if card is a wildcard
         colorPick = wildColor;
     } else {
         colorPick = card.Color;
     }
-    updateAllPlayersCards();
 }
-
-// saves player and next player
-function proceedToGivenPlayerByTheAPI(playerName) {
-    globalResult.Player = playerName;
-    globalResult.NextPlayer = playerName;
-}
-

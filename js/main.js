@@ -354,6 +354,11 @@ async function startNewGame() { // Async function necessary for Promise
         if (response.ok) {
             globalResult = await response.json(); // Assign the response data to globalResult
             playersGlobal = playersList; // Replace the player names with the names entered in the form
+
+            //FOR REFERENCE PURPOSES ONLY
+            let initialGlobalResult = globalResult;
+
+
             return globalResult;
         } else {
             alert("HTTP-Error: " + response.status);
@@ -362,6 +367,8 @@ async function startNewGame() { // Async function necessary for Promise
     catch {
         console.error("Error in startNewGame:", error);
     }
+
+
 }
 
 document.getElementById('okButton').addEventListener('click', async function () { // Handle "OK" button click to close the modal and start game
@@ -375,7 +382,10 @@ document.getElementById('okButton').addEventListener('click', async function () 
     displayTopCard();
     setupDrawPile();
     showCurrentPlayer();
-    console.log('FOR REFERENCE PURPOSES ONLY: ' + globalResult);
+
+
+
+
 
 });
 
@@ -441,52 +451,38 @@ async function setNextPlayer(thisPlayerIndex) {
 }
 
 
-// check if played card is valid
-function cardValidation(card) {
-    let topCard = globalResult.TopCard;
-    console.log('top card:' + topCard);
-    switch (card.Value) {
-        case 14:
-            // if Player doesn't have the Color, he can play Draw4
-            let hasNoCardWithSameColor = !hasCardWithSameColor(getCurrentPlayerID(), globalResult.chosenColor);
-            let draw4onTop = topCard.Value === value.Draw4;
-            let changeColorTop = topCard.Value === value.ChangeColor;
-            // if TopCard is Draw 4 or Wild card, you can't play a Draw4
-            console.log('player played: Darw4');
-            return hasNoCardWithSameColor
-                && !draw4onTop && !changeColorTop;
 
-        case 13:
-            // you can always play a Wild Card / ChangeColor
-            console.log('player played: changeColor');
-            return true;
-        default:
-            // if player doesn't play wild card or +4, return the value and color of the card
-            return card.Value === topCard.Value
-                || card.Color === globalResult.chosenColor;
-            console.log('card validation: default');
+function checkIfPlayerCanOnlyPlayDraw4() {
+    let color = globalResult.chosenColor;
+    let value = globalResult.TopCard.Value;
+    let currentPlayerIndex = getCurrentPlayerID();
 
-    }
-}
+    let currentPlayersHand = globalResult.Player[currentPlayerIndex].Cards;
 
-// returns true if player has card with the same color as chosen color
-function hasCardWithSameColor(playerID, color) {
-    for (let i = 0; i < playersList[playerID].Cards.length; i++) {
-        if (playersList[playerID].Cards[i].Color === color) {
-            return true;
+    for (let i = 0; i <= currentPlayersHand.length - 1; i++) {
+        if (globalResult[currentPlayerIndex].Cards[i].Color === color || globalResult[currentPlayerIndex].Cards[i].Color === value) {
+            return false;
         }
     }
-    return false;
+    return true;
 }
+
 
 
 
 function checkplayedCardValiditiyBeforeSendingToAPI(card) {
     let topCard = globalResult.TopCard;
 
-    if (topCard.Value === card.Value || topCard.Color === card.Color) {
+    if (topCard.Value === card.Value || topCard.Color === card.Color || card.Value === 13)  {
         console.log('card VALID based on global result');
         return true;
+    } else if (card.value === 14) {
+        if (checkIfPlayerCanOnlyPlayDraw4()) {
+            return true;
+        } else {
+            alert('you can not play this card because you have other options!!');
+            return;
+        }
     } else {
         console.log('card INVALID based on global result');
         return false;
@@ -579,7 +575,7 @@ async function updateAllPlayersCards() {
 // gets cards from server for a given player
 async function getUpdatedPlayerCardsFromAPI(playerID) {
     let id = globalResult.id;
-    let name = players[playerID].Name;
+    let name = playersList[playerID];
     let response = await fetch(`https://nowaunoweb.azurewebsites.net/api/Game/GetCards/${id}?playerName=${name}`, {
         method: "GET", headers: {
             "Content-type": "application/json; charset=UTF-8",
@@ -641,3 +637,4 @@ function playCardServer(card) {
 function showCardErrorFeedback(card) {
 
 }
+

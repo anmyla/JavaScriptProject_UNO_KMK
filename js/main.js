@@ -250,10 +250,7 @@ async function distributeCardsAfterGameStarts() {
 
 // return index of Current Player
 function getCurrentPlayerID() {
-    console.log('next player on the globalResult: ' + globalResult.NextPlayer);
-
     for (let i = 0; i <= 3; i++) {
-        console.log('next player on the playersList: ' + playersList[i]);
         if (globalResult.NextPlayer === playersList[i]) {
             return i;
         }

@@ -1,8 +1,11 @@
 "use strict";
+
+//START: Global variables-----------------------------------------------------------------
 let playersList = [];
 let playersGlobal = [];
 let globalResult = Object();
 let gameID;
+let direction = 1;
 let apiResponseToPlayedCard;
 let player1Name, player2Name, player3Name, player4Name;
 
@@ -13,13 +16,40 @@ class Card {
     }
 }
 
-// Open the Modal dialog when the button is clicked
-document.getElementById('openModal1').addEventListener('click', function () {
+
+
+//START: Modal and other functions to collect players' names------------------------------
+function hasDuplicates(array) { // Function to check for duplicate names
+    const lowerCaseNames = array.map(name => name.toLowerCase());
+    return (new Set(lowerCaseNames)).size !== lowerCaseNames.length;
+}
+
+function assignTeams(players) { // Function to assign players to different houses
+    const houses = ['Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin'];
+    const assignedTeams = [];
+    for (let i = 0; i < players.length; i++) {
+        const playerName = players[i];
+        const house = houses[i];
+        assignedTeams.push(`${playerName} goes to ${house}!`);
+    }
+    return assignedTeams;
+}
+
+function displayTeams(teams) { // Function to display assigned houses in the modal
+    let formSection = document.querySelector('#formSection');
+    formSection.innerHTML = '';
+    const teamsDisplay = teams.join('<br>'); // Use '<br>' for line breaks
+    document.getElementById('playerTeamMessage').innerHTML = teamsDisplay;
+    document.getElementById('okButton').style.display = 'block';
+}
+
+
+document.getElementById('openModal1').addEventListener('click', function () { // Open the Modal dialog when the button is clicked
     $('#nameModal').modal('show');
 });
 
-// Handle form submission
-document.getElementById('nameForm').addEventListener('submit', function (e) {
+
+document.getElementById('nameForm').addEventListener('submit', function (e) { // Handle form submission
     e.preventDefault(); // Prevent the form from submitting traditionally
 
     // Get player names from the input fields
@@ -51,8 +81,11 @@ document.getElementById('nameForm').addEventListener('submit', function (e) {
     displayTeams(teams);
 });
 
-//----------------------------------------------------------------------------------------------------------Kata: start
-function changeBGAfterStart() {
+
+
+
+//START: Functions for Design Elements---------------------------------------------------------------------Kata: start
+function changeBGAfterStart() { //change background when entering Game Court
     // Hier setzt du das neue Hintergrundbild
     document.body.style.backgroundImage = 'url("./img/BGSpiel.jpg")';
     // neue schriftfarbe
@@ -61,13 +94,10 @@ function changeBGAfterStart() {
     let gameMessageElement = document.getElementById("gameMessage");
     gameMessageElement.textContent = "May magic guide your way!";
 }
-
-
-//-------------------------------------------------------------------------------------------------Kata: audio function
 let audio = document.getElementById("myAudio");
 let audioIcon = document.getElementById("audioIcon");
 
-function toggleMute() {
+function toggleMute() { //audio button on nav bar
     if (audio.muted) {
         audio.muted = false;
         audioIcon.classList.remove("fa-volume-off");
@@ -85,7 +115,6 @@ function playAudioLoop() {
     toggleMute(); // Fügt das Toggle-Mute-Verhalten hinzu
 }
 
-
 // Finde das fliegende Bild und den Open Modal Button
 let flyingImage = document.getElementById("fliegendesBild");
 let okButton = document.getElementById("okButton");
@@ -96,94 +125,13 @@ okButton.addEventListener("click", function () {
     flyingImage.style.display = "none";
 });
 
-//----------------------------------------------------------------------------------------------------------Kata: ende
-
-// Function to check for duplicate names in an array
-function hasDuplicates(array) {
-    const lowerCaseNames = array.map(name => name.toLowerCase());
-    return (new Set(lowerCaseNames)).size !== lowerCaseNames.length;
-}
-
-
-// Function to assign players to different teams
-function assignTeams(players) {
-    const houses = ['Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin'];
-    const assignedTeams = [];
-
-    for (let i = 0; i < players.length; i++) {
-        const playerName = players[i];
-        const house = houses[i];
-        assignedTeams.push(`${playerName} goes to ${house}!`);
-    }
-
-    return assignedTeams;
-}
-
-// Function to display assigned teams in the modal
-function displayTeams(teams) {
-    let formSection = document.querySelector('#formSection');
-    formSection.innerHTML = '';
-    const teamsDisplay = teams.join('<br>'); // Use '<br>' for line breaks
-    document.getElementById('playerTeamMessage').innerHTML = teamsDisplay;
-    document.getElementById('okButton').style.display = 'block';
-}
-
-// Handle "OK" button click to close the modal and start game
-document.getElementById('okButton').addEventListener('click', async function () {
-    $('#nameModal').modal('hide');
-    //nueues spiel starten!
-
-    await startNewGame();
-    gameID = globalResult.id;
-    changeBGAfterStart();
-
-    //displayPlayersList();
-    displayPlayersCardAfterGameStarts();
-    displayTopCard();
-    setupDrawPile();
-    showCurrentPlayer();
-
-});
+//----------------------------------------------------------------------------------
 
 
 
 
-// Async function necessary for Promise
-async function startNewGame() {
-    try {
-        // We start the connection request 
-        // then wait for promise (alternatively fetch, then notation)
-        let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/start", {
-            method: 'POST',
-            body: JSON.stringify(playersList), // Send the names entered in the form
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            }
-        });
-
-        if (response.ok) {
-            globalResult = await response.json(); // Assign the response data to globalResult
-            playersGlobal = playersList; // Replace the player names with the names entered in the form
-            return globalResult;
-        } else {
-            alert("HTTP-Error: " + response.status);
-        }
-    }
-    catch {
-        console.error("Error in startNewGame:", error);
-    }
-}
-
-
-function changeBackgroundImage() {
-    // Hier setzt du das neue Hintergrundbild
-    document.body.style.backgroundImage = 'url("./img/background_spiel.jpg")'; // Ersetze 'neues-bild.jpg' durch den Pfad zu deinem gewünschten Hintergrundbild
-    document.body.style.color = "white";
-}
-
-
-//Construct draw pile and create div for draw pile
-function setupDrawPile() {
+//START: Functions to setup and initiate game-----------------------------------
+function setupDrawPile() { //Construct draw pile and create div for draw pile
     let gameCourt = document.getElementById('gameCourt');
     let drawPileDiv = document.createElement('div');
     drawPileDiv.id = 'drawPileDiv';
@@ -196,7 +144,7 @@ function setupDrawPile() {
     gameCourt.appendChild(drawPileDiv);
 }
 
-async function displayTopCard() {
+async function displayTopCard() { //Construct a discard pile and create div for discard pile
     const baseUrl = "./img/cards/";
 
     //construct card image
@@ -220,83 +168,6 @@ async function displayTopCard() {
     let discardCardImageDiv = document.createElement('div');
     discardCardImageDiv.appendChild(discardimg);
     discardCardDiv.appendChild(discardCardImageDiv);
-}
-
-// show only current player cards
-async function showCurrentPlayerCards(playerID) {
-    let baseUrl = './img/cards/';
-    let currentPlayerCardDiv = document.getElementById('cardContainer' + playerID);
-    currentPlayerCardDiv.innerHTML = '';
-
-    currentPlayerCardDiv.id = 'cardContainer' + playerID;
-    currentPlayerCardDiv.classList.add = 'card-container';
-
-    let newCard;
-
-    for (let i = 0; i < globalResult.Players[playerID].Cards.length; i++) {
-        const cardimg = document.createElement('img');
-        cardimg.classList.add('card'); // Apply a CSS class for styling
-
-        let colorInput = globalResult.Players[playerID].Cards[i].Color;
-        let numberInput = Number(globalResult.Players[playerID].Cards[i].Value);
-        newCard = new Card(colorInput, numberInput);
-        let cardImageUrl = `${baseUrl}${newCard.Color}${newCard.Number}.png`;
-        cardimg.src = cardImageUrl;
-
-        currentPlayerCardDiv.appendChild(cardimg);
-
-        cardimg.addEventListener('click', function () {
-            playerPlaysACard(globalResult.Players[playerID].Cards[i]);
-        })
-    }
-
-}
-
-
-async function showThisPlayerCards(playerID, htmlID) {
-    const baseUrl = "./img/cards/";
-
-    let playerSection = document.getElementById(htmlID);
-    let cardContainer = document.createElement('div');
-    playerSection.appendChild(cardContainer);
-    cardContainer.id = 'cardContainer' + playerID;
-    cardContainer.class = "card-container";
-
-    let newCard;
-    let i = 0;
-
-    while (i < globalResult.Players[playerID].Cards.length) {
-        const cardimg = document.createElement('img');
-        cardimg.classList.add('card'); // Apply a CSS class for styling
-
-        let colorInput = globalResult.Players[playerID].Cards[i].Color;
-        let numberInput = Number(globalResult.Players[playerID].Cards[i].Value);
-        newCard = new Card(colorInput, numberInput);
-        let cardImageUrl = `${baseUrl}${newCard.Color}${newCard.Number}.png`;
-        cardimg.src = cardImageUrl;
-
-        cardContainer.appendChild(cardimg);
-        i++;
-    }
-}
-
-
-async function displayPlayersCardAfterGameStarts() {
-    playersGlobal.forEach(playerName => {
-        const li = document.createElement("li");
-        const span = document.createElement("span");
-        li.appendChild(span);
-        span.textContent = playerName;
-    });
-
-    let cleanThisDiv = document.querySelector('#homeMessage');
-    cleanThisDiv.innerHTML = '';
-
-    displayPlayerDivHeaders();
-    showThisPlayerCards(0, "player1Place");
-    showThisPlayerCards(1, "player2Place");
-    showThisPlayerCards(2, "player3Place");
-    showThisPlayerCards(3, "player4Place");
 }
 
 async function displayPlayerDivHeaders() {
@@ -329,32 +200,111 @@ async function displayPlayerDivHeaders() {
     scoreFour.textContent = 'Score';
 }
 
-// returns ID of Current Player
+async function distributeCards(playerID, htmlID) {
+    const baseUrl = "./img/cards/";
+
+    let playerSection = document.getElementById(htmlID);
+    let cardContainer = document.createElement('div');
+    playerSection.appendChild(cardContainer);
+    cardContainer.id = 'cardContainer' + playerID;
+    cardContainer.class = "card-container";
+
+    let newCard;
+    let i = 0;
+
+    while (i < globalResult.Players[playerID].Cards.length) {
+        const cardimg = document.createElement('img');
+        cardimg.classList.add('card'); // Apply a CSS class for styling
+
+        let colorInput = globalResult.Players[playerID].Cards[i].Color;
+        let numberInput = Number(globalResult.Players[playerID].Cards[i].Value);
+        newCard = new Card(colorInput, numberInput);
+        let cardImageUrl = `${baseUrl}${newCard.Color}${newCard.Number}.png`;
+        cardimg.src = cardImageUrl;
+
+        cardContainer.appendChild(cardimg);
+        i++;
+    }
+}
+
+async function distributeCardsAfterGameStarts() {
+    playersGlobal.forEach(playerName => {
+        const li = document.createElement("li");
+        const span = document.createElement("span");
+        li.appendChild(span);
+        span.textContent = playerName;
+    });
+
+    let cleanThisDiv = document.querySelector('#homeMessage');
+    cleanThisDiv.innerHTML = '';
+
+    displayPlayerDivHeaders();
+    distributeCards(0, "player1Place");
+    distributeCards(1, "player2Place");
+    distributeCards(2, "player3Place");
+    distributeCards(3, "player4Place");
+}
+
+
+// return index of Current Player
 function getCurrentPlayerID() {
-    for (let playerID = 0; playerID <= 3; playerID++) {
-        if (globalResult.Player === playersList[playerID].Name) {
-            return playerID;
+    console.log('next player on the globalResult: ' + globalResult.NextPlayer);
+
+    for (let i = 0; i <= 3; i++) {
+        console.log('next player on the playersList: ' + playersList[i]);
+        if (globalResult.NextPlayer === playersList[i]) {
+            return i;
         }
     }
 }
 
-//search and return
+//search and return index of card
 function getCardID(playerID, card) {
     let searchedCard;
-    let playerCard;
 
     for (let i = 0; i < globalResult.Players[playerID].Cards.length; i++) {
         if (globalResult.Players[playerID].Cards[i].Color === card.Color && globalResult.Players[playerID].Cards[i].Value === card.Value) {
             searchedCard = new Card(globalResult.Players[playerID].Cards[i].Color, globalResult.Players[playerID].Cards[i].Value);
             console.log('this card must be removed from the players hand: ' + searchedCard);
             return i;
-        } else {
-            console.log("for some unknown reason, there is no such card!");
         }
+    }
+    if (searchedCard == undefined) {
+        alert('For some unknown reason, this card cant be found!');
     }
 }
 
-// hide notCurrentPlayer's cards
+// show the card of this player
+async function showThisPlayerCards(playerID) {
+    let baseUrl = './img/cards/';
+    let currentPlayerCardDiv = document.getElementById('cardContainer' + playerID);
+    currentPlayerCardDiv.innerHTML = '';
+
+    currentPlayerCardDiv.id = 'cardContainer' + playerID;
+    currentPlayerCardDiv.classList.add = 'card-container';
+
+    let newCard;
+
+    for (let i = 0; i < globalResult.Players[playerID].Cards.length; i++) {
+        const cardimg = document.createElement('img');
+        cardimg.classList.add('card'); // Apply a CSS class for styling
+
+        let colorInput = globalResult.Players[playerID].Cards[i].Color;
+        let numberInput = Number(globalResult.Players[playerID].Cards[i].Value);
+        newCard = new Card(colorInput, numberInput);
+        let cardImageUrl = `${baseUrl}${newCard.Color}${newCard.Number}.png`;
+        cardimg.src = cardImageUrl;
+
+        currentPlayerCardDiv.appendChild(cardimg);
+
+        cardimg.addEventListener('click', function () { //we add an eventListener for each image.
+            playerPlaysACard(globalResult.Players[playerID].Cards[i]);
+        });
+    }
+
+}
+
+// hide the cards of this player
 function putThisPlayerCardsUpsideDown(playerID) {
     let notCurrentPlayerCardDiv = document.getElementById('cardContainer' + playerID);
     notCurrentPlayerCardDiv.innerHTML = '';
@@ -380,7 +330,7 @@ function showCurrentPlayer() {
 
     for (let i = 0; i <= 3; i++) {
         if (i === playerIndex) {
-            showCurrentPlayerCards(i);
+            showThisPlayerCards(i);
 
         } else {
             putThisPlayerCardsUpsideDown(i)
@@ -388,7 +338,107 @@ function showCurrentPlayer() {
     }
 }
 
-//--------CODES ABOVE ARE WORKING PERFECTLY------------------------------------------
+
+async function startNewGame() { // Async function necessary for Promise
+    try {
+        // We start the connection request 
+        // then wait for promise (alternatively fetch, then notation)
+        let response = await fetch("https://nowaunoweb.azurewebsites.net/api/game/start", {
+            method: 'POST',
+            body: JSON.stringify(playersList), // Send the names entered in the form
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            }
+        });
+
+        if (response.ok) {
+            globalResult = await response.json(); // Assign the response data to globalResult
+            playersGlobal = playersList; // Replace the player names with the names entered in the form
+            return globalResult;
+        } else {
+            alert("HTTP-Error: " + response.status);
+        }
+    }
+    catch {
+        console.error("Error in startNewGame:", error);
+    }
+}
+
+document.getElementById('okButton').addEventListener('click', async function () { // Handle "OK" button click to close the modal and start game
+    $('#nameModal').modal('hide');
+    await startNewGame();
+    //gameID = globalResult.id;
+    changeBGAfterStart();
+
+    //displayPlayersList();
+    distributeCardsAfterGameStarts();
+    displayTopCard();
+    setupDrawPile();
+    showCurrentPlayer();
+    console.log('FOR REFERENCE PURPOSES ONLY: ' + globalResult);
+
+});
+
+
+
+//START: Functions for game rules and logic------------------------------------------
+
+async function changeDirection(currentPlayerIndex) {
+    let previousPlayerIndex = currentPlayerIndex;
+    let maxIndex = playersList.length - 1;
+
+    let newPlayerIndex = previousPlayerIndex + direction;
+
+    if (newPlayerIndex > maxIndex) {
+        newPlayerIndex = 0;
+    } else if (newPlayerIndex < 0) {
+        newPlayerIndex = maxIndex;
+    }
+
+    direction = direction * (-1); //change the value of the direction
+    globalResult.NextPlayer = playersList[newPlayerIndex];
+    console.log('Next player is the one with index:' + playersList[newPlayerIndex]);
+
+}
+
+
+async function skipNextPlayer(thisPlayerIndex) {
+    let newPlayerIndex;
+
+    if (thisPlayerIndex == 0) {
+        return newPlayerIndex = 2;
+    } else if (thisPlayerIndex == 1) {
+        return newPlayerIndex = 3;
+    } else if (thisPlayerIndex == 2) {
+        return newPlayerIndex = 0;
+    } else if (thisPlayerIndex == 3) {
+        return newPlayerIndex = 1;
+    }
+
+    globalResult.NextPlayer = playersList[newPlayerIndex];
+    console.log('Next player is the one with index:' + playersList[newPlayerIndex]);
+}
+
+async function setNextPlayer(thisPlayerIndex) {
+    let newPlayerIndex;
+    let maxIndex = 3;
+    let minIndex = 0;
+
+    if (direction === 1) {
+        newPlayerIndex = thisPlayerIndex + 1;
+        if (newPlayerIndex > maxIndex) {
+            newPlayerIndex = 0;
+        }
+    } else {
+        newPlayerIndex = thisPlayerIndex - 1;
+        if (newPlayerIndex < minIndex) {
+            newPlayerIndex = 3;
+        }
+    }
+
+    globalResult.NextPlayer = playersList[newPlayerIndex];
+    console.log('Next player is the one with index:' + playersList[newPlayerIndex]);
+}
 
 
 // check if played card is valid
@@ -457,7 +507,6 @@ async function sendPlayedCardToAPI(card) {
     let gameID = globalResult.Id;
     let URL = `https://nowaunoweb.azurewebsites.net/api/Game/PlayCard/${gameID}?value=${value}&color=${color}&wildColor=${wildColor}`;
 
-    // try {
     const response = await fetch(URL,
         {
             method: "PUT",
@@ -474,19 +523,17 @@ async function sendPlayedCardToAPI(card) {
     );
 
     if (response.ok) {
-        apiResponseToPlayedCard = await response.json(); // alternativ response.text wenn nicht json gewünscht ist
+        apiResponseToPlayedCard = await response.json();
         console.log("received response");
         console.log(response);
 
         if (catchError(response) === undefined) { //there is no error
 
             afterSuccessfulTransmissionOfAValidCardToAPI(card);
-            proceedToGivenPlayer(apiResponseToPlayedCard.Player);
+            proceedToGivenPlayerByTheAPI(apiResponseToPlayedCard.Player);
             //update the gamecourt
             displayTopCard();
-            setupDrawPile();
             showCurrentPlayer();
-
         } else {
             alert("card cannot be played: " + catchError(apiResponseToPlayedCard));
         }
@@ -495,10 +542,6 @@ async function sendPlayedCardToAPI(card) {
         alert("HTTP-Error: " + response.status);
     }
 
-    //}
-    //catch {
-    //    console.error("Error in sendPlayedCardToAPI");
-    //}
 }
 
 function removePlayedCardFromPlayersHand(currentPlayerID, card) {
@@ -509,24 +552,6 @@ function removePlayedCardFromPlayersHand(currentPlayerID, card) {
     console.log(globalResult.Players[currentPlayerID].Cards);
 }
 
-
-// saves player and next player
-function proceedToGivenPlayer(playerName) {
-    globalResult.Player = playerName;
-    globalResult.NextPlayer = null;
-}
-
-function showChooseColor(card) {
-
-}
-
-function playCardServer(card) {
-
-}
-
-function showCardErrorFeedback(card) {
-
-}
 
 
 //LOGIC for when a player plays a card
@@ -544,15 +569,15 @@ function playerPlaysACard(card) {
 
 //--------------------------------------------------------------------------------
 
-// updates all cards from each player
-async function updateAllCardsFromServer() {
-    for (let playerId = 0; playerId <= 3; playerId++) {
-        await getPlayerCardsFromServer(playerId);
+//update each player's hand
+async function updateAllPlayersCards() {
+    for (let i = 0; i <= 3; i++) {
+        await getUpdatedPlayerCardsFromAPI(i);
     }
 }
 
 // gets cards from server for a given player
-async function getPlayerCardsFromServer(playerID) {
+async function getUpdatedPlayerCardsFromAPI(playerID) {
     let id = globalResult.id;
     let name = players[playerID].Name;
     let response = await fetch(`https://nowaunoweb.azurewebsites.net/api/Game/GetCards/${id}?playerName=${name}`, {
@@ -573,44 +598,46 @@ async function getPlayerCardsFromServer(playerID) {
     }
 }
 
-
-
-// updates all cards from each player
-async function updateAllCardsFromServer() {
-    for (let i = 0; i <= 3; i++) {
-        await getPlayerCardsFromServer(i);
-    }
-}
-
-// changes direction if player plays Reverse card
-function reverseDirection() {
-    if (globalResult.direction === Direction.CW) {
-        globalResult.direction = Direction.CCW;
-    } else {
-        globalResult.direction = Direction.CW
-    }
-}
-
 function afterSuccessfulTransmissionOfAValidCardToAPI(card) {
     globalResult.TopCard = card; //put played card on top of the discard pile
+    let currentPlayerIndex = getCurrentPlayerID();
 
-    //reverse
-    if (card.Value === 12) {
-        reverseDirection();
+    if (card.Value < 12) { //if card is a regular card
+        setNextPlayer();
+    }
+    if (card.Value === 12) { //if card is reverse
+        changeDirection(currentPlayerIndex);
     }
 
-    //skip
-    if (card.Value === 11) {
+    if (card.Value === 11) { //if card is skip
+        skipNextPlayer(currentPlayerIndex);
     }
 
-    // if +2 or +4 is played, get all cards from server to update them and get the new drawn cards
-    if (card.Value === 10 || card.Value === 13) {
-        updateAllCardsFromServer();
+    if (card.Value === 10 || card.Value === 13) { //if card is +2 or +4
+        updateAllPlayersCards();
     }
-    if (card.Value === 13 || card.Value === 14) {
+    if (card.Value === 13 || card.Value === 14) { //if card is a wildcard
         globalResult.chosenColor = wildColor;
     } else {
         globalResult.chosenColor = card.Color;
     }
+
+}
+
+// saves player and next player
+function proceedToGivenPlayerByTheAPI(playerName) {
+    globalResult.Player = playerName;
+    globalResult.NextPlayer = playerName;
+}
+
+function showChooseColor(card) {
+
+}
+
+function playCardServer(card) {
+
+}
+
+function showCardErrorFeedback(card) {
 
 }

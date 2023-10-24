@@ -131,23 +131,37 @@
     </div>
   </div>
 
-      <!-- The Color Picker Modal -->
-      <div class="modal" id="colorPickModal">
-        <div class="modal-content">
-          <h2>Choose a Color</h2>
-          <ul class="color-options">
-            <li data-color="Red">Red</li>
-            <li data-color="Blue">Blue</li>
-            <li data-color="Yellow">Yellow</li>
-            <li data-color="Green">Green</li>
-          </ul>
-        </div>
+<!-- The Color Picker Modal -->
+<div class="modal fade" id="colorPickModal" tabindex="-1" role="dialog" aria-labelledby="colorPickModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="colorPickModalLabel">Choose a Color</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <div class="modal-body">
+        <ul class="color-options">
+          <li data-color="Red">Red</li>
+          <li data-color="Blue">Blue</li>
+          <li data-color="Yellow">Yellow</li>
+          <li data-color="Green">Green</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
   <!-- Bootstrap JS and jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
   <script src="./js/main.js"></script>
 </body>

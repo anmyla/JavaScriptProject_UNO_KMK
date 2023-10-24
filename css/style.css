@@ -37,7 +37,7 @@ h4 {
   font-size: 3.5rem !important;
 }
 
-#openModal1, #colorPickModal {
+#openModal1 {
   padding: 5px 40px;
   font-size: 22px;
   font-family: 'HarryPFont', sans-serif;

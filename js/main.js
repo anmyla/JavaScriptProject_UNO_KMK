@@ -5,13 +5,12 @@ let playersList = [];
 let playersGlobal = [];
 let globalResult = Object();
 let gameID;
-let direction = -1;
+let direction = 1;
 let apiResponseToPlayedCard;
 let apiResponseToDrawCard;
 let apiResponseToUpdatePlayerCards;
 let player1Name, player2Name, player3Name, player4Name;
 let colorPick;
-let newColorPick;
 
 class Card {
     constructor(color, number) {
@@ -400,7 +399,6 @@ async function updateAllPlayersCards(){
             globalResult.Players[i].Cards = apiResponseToUpdatePlayerCards.Cards;
             globalResult.Players[i].Cards.sort(compareCard);
             globalResult.Players[i].Score = apiResponseToUpdatePlayerCards.Score;
-            console.log(name + 's hand has been updated');
         } else {
             alert("HTTP-Error: " + response.status);
         }
@@ -418,6 +416,7 @@ function updateGameState() {
 }
 
 async function drawCardFromAPI() {
+    let playerID = getCurrentPlayerID();
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/Game/DrawCard/" + gameID, {
         method: "PUT",
         headers: {
@@ -427,10 +426,11 @@ async function drawCardFromAPI() {
 
     if (response.ok) {
         apiResponseToDrawCard = await response.json();
-        globalResult.Players[playerID].Cards.push(apiResponseToDrawCard.Card);
+        let drawnCard = apiResponseToDrawCard.Card;
+        globalResult.Players[playerID].Cards.push(drawnCard);
         globalResult.Players[playerID].Cards.sort(compareCard);
+        globalResult.Player = apiResponseToDrawCard.Player;
         globalResult.NextPlayer = apiResponseToDrawCard.NextPlayer;
-        proceedToGivenPlayerByTheAPI(apiResponseToDrawCard.Player);
         updateGameState();
 
     } else {
@@ -439,16 +439,21 @@ async function drawCardFromAPI() {
 }
 
 async function changeDirection(currentPlayerIndex) {
-    let previousPlayerIndex = currentPlayerIndex;
-    let newPlayerIndex = previousPlayerIndex + direction;
+    let newPlayerIndex;
+    
+    if( direction === 1) { //if clockwise so we set it to counter cloackwise
+        newPlayerIndex = currentPlayerIndex - 1;
+    } else { // else set to clockwise
+        newPlayerIndex = currentPlayerIndex + 1;
+    }
 
     if (newPlayerIndex > 3) {
         newPlayerIndex = 0;
     } else if (newPlayerIndex < 0) {
         newPlayerIndex = 3;
     }
-
-    direction = direction * (-1); //change the value of the direction
+ 
+    direction = direction * (-1); //reverse the direction by changing this value
 
     globalResult.NextPlayer = globalResult.Players[newPlayerIndex].Player;
     globalResult.Player = globalResult.Players[newPlayerIndex].Player;
@@ -460,32 +465,37 @@ async function changeDirection(currentPlayerIndex) {
 async function skipNextPlayer(thisPlayerIndex) {
     let newPlayerIndex;
     if (thisPlayerIndex == 0) {
-        return newPlayerIndex = 2;
+        newPlayerIndex = 2;
     } else if (thisPlayerIndex == 1) {
-        return newPlayerIndex = 3;
+        newPlayerIndex = 3;
     } else if (thisPlayerIndex == 2) {
-        return newPlayerIndex = 0;
+        newPlayerIndex = 0;
     } else if (thisPlayerIndex == 3) {
-        return newPlayerIndex = 1;
+        newPlayerIndex = 1;
     }
+
     globalResult.NextPlayer = globalResult.Players[newPlayerIndex].Player;
-    globalResult.Player = globalResult.Players[newPlayerIndex].Player;
-    console.log('The player after a SKIP CARD is played is:' + globalResult.NextPlayer);
+    console.log('Player to play next after a SKIP CARD is played is: ' + globalResult.NextPlayer);
 }
+
 
 async function setNextPlayer(thisPlayerIndex) {
     let newPlayerIndex;
-    let maxIndex = 3;
-    let minIndex = 0;
 
-    if (direction !== 1) {
+    if (direction === 1) { //if clockwise
         newPlayerIndex = thisPlayerIndex + 1;
-        if (newPlayerIndex > maxIndex) {
+        if (newPlayerIndex > 3) {
             newPlayerIndex = 0;
         }
-    } else {
+        if (newPlayerIndex < 0) {
+            newPlayerIndex = 3;
+        }
+    } else { //if counterclockwise
         newPlayerIndex = thisPlayerIndex - 1;
-        if (newPlayerIndex < minIndex) {
+        if (newPlayerIndex > 3) {
+            newPlayerIndex = 0;
+        }
+        if (newPlayerIndex < 0) {
             newPlayerIndex = 3;
         }
     }
@@ -495,13 +505,6 @@ async function setNextPlayer(thisPlayerIndex) {
     console.log('Player after SetNextPlayer function: ' + globalResult.Players[newPlayerIndex].Player);
 }
 
-
-// saves player and next player
-function proceedToGivenPlayerByTheAPI(playerName) {
-    globalResult.Player = playerName;
-    globalResult.NextPlayer = playerName;
-    console.log('According to API, this is the next player: ' + playerName);
-}
 
 //-------------------------when wild card is played----------------
 // Open the color picker modal
@@ -521,9 +524,9 @@ function showColorPicker() {
 
 // Handle user's color selection
 function selectColor(color) {
-    newColorPick = color;
+    colorPick = color;
     closeColorPickModal();
-    console.log('User chose: ' + newColorPick);
+    console.log('User chose: ' + colorPick);
 }
 
 // Add event listener to close the modal when a color is clicked
@@ -544,7 +547,7 @@ async function checkIfPlayerCanOnlyPlayDraw4() {
     let currentPlayersHand = globalResult.Players[currentPlayerIndex].Cards;
 
     for (let i = 0; i < currentPlayersHand.length; i++) {
-        if (globalResult[currentPlayerIndex].Cards[i].Color === color || globalResult[currentPlayerIndex].Cards[i].Value === value) {
+        if (globalResult.Players[currentPlayerIndex].Cards[i].Color === color || globalResult.Players[currentPlayerIndex].Cards[i].Value === value) {
             return false;
         }
     }
@@ -558,6 +561,8 @@ async function checkplayedCardValiditiyBeforeSendingToAPI(card) {
 
     if (topCard.Value === card.Value || topCard.Color === card.Color) {
         console.log('card VALID based on global result');
+        return true;
+    } else if (colorPick === card.Color) {
         return true;
     } else if (card.Value === 14) {
         showColorPicker();
@@ -583,7 +588,7 @@ function catchError(result) {
 
 // if player clicks on a card they're allowed to play, send request to server
 async function sendPlayedCardToAPI(card) {
-    let wildColor = newColorPick;
+    let wildColor = colorPick;
     let value = card.Value;
     let color = card.Color;
     let URL = `https://nowaunoweb.azurewebsites.net/api/Game/PlayCard/${gameID}?value=${value}&color=${color}&wildColor=${wildColor}`;
@@ -603,10 +608,10 @@ async function sendPlayedCardToAPI(card) {
     if (response.ok) {
         console.log("received response");
         console.log(response);
+        
 
         if (catchError(response) === undefined) { //there is no error
             afterSuccessfulTransmissionOfAValidCardToAPI(card);
-            proceedToGivenPlayerByTheAPI(apiResponseToPlayedCard.Player);
             //update the gamecourt
             updateGameState();
 
@@ -634,7 +639,6 @@ function removePlayedCardFromPlayersHand(currentPlayerID, card) {
 function playerPlaysACard(card) {
     if (checkplayedCardValiditiyBeforeSendingToAPI(card)) {
         let currentPlayerID = getCurrentPlayerID();
-
         sendPlayedCardToAPI(card);
         console.log('playedCard sent to API');
 
@@ -642,7 +646,7 @@ function playerPlaysACard(card) {
         console.log('removed played card');
 
     } else {
-        alert('Player played an invalid card!');
+        alert('Player played an invalid card! Draw a Card from the darw pile if you have no card to play');
         return;
     }
 }
@@ -661,8 +665,8 @@ function compareCard(a, b) {
 }
 
 // gets cards from server for a given player
-async function getUpdatedPlayerCardsFromAPI(playerID) {
-    let name = globalResult.Players[playerID].Player;
+async function getPenaltyCardsFromAPI(playerID) {
+    let name = globalResult.NextPlayer;
     let URL = `https://nowaunoweb.azurewebsites.net/api/Game/GetCards/${gameID}?playerName=${name}`;
 
     let response = await fetch(URL,
@@ -677,23 +681,22 @@ async function getUpdatedPlayerCardsFromAPI(playerID) {
         globalResult.Players[playerID].Cards = apiResponseToUpdatePlayerCards.Cards;
         globalResult.Players[playerID].Cards.sort(compareCard);
         globalResult.Players[playerID].Score = apiResponseToUpdatePlayerCards.Score;
-        console.log(name + 'has now the following cards: ' + apiResponseToUpdatePlayerCards.Cards);
+        console.log(name + ' has now the following cards: ' + apiResponseToUpdatePlayerCards.Cards);
     } else {
         alert("HTTP-Error: " + response.status);
     }
+    skipNextPlayer(playerID);
 }
 
 //functions to update state of the game
 async function afterSuccessfulTransmissionOfAValidCardToAPI(card) {
     globalResult.TopCard = card; //put played card on top of the discard pile
     let currentPlayerIndex = getCurrentPlayerID();
-    let wildColor = newColorPick;
-
+    let wildColor = colorPick;
 
     if (card.Value < 10) { //if card is a regular card
         setNextPlayer(currentPlayerIndex);
     }
-
     if (card.Value === 12) { //if card is reverse
         changeDirection(currentPlayerIndex);
     }
@@ -701,8 +704,8 @@ async function afterSuccessfulTransmissionOfAValidCardToAPI(card) {
         skipNextPlayer(currentPlayerIndex);
     }
     if (card.Value === 10 || card.Value === 13) { //if card is +2 or +4
-        getUpdatedPlayerCardsFromAPI(currentPlayerIndex);
-        skipNextPlayer(currentPlayerIndex);
+        getPenaltyCardsFromAPI(currentPlayerIndex);
+
     }
     if (card.Value === 13 || card.Value === 14) { //if card is a wildcard
         colorPick = wildColor;

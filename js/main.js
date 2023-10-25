@@ -411,7 +411,7 @@ async function updateAllPlayersCards(){
 
 function updateGameState() {
     displayTopCard();
-    updateAllPlayersCards();
+    //updateAllPlayersCards();
     showCurrentPlayer();
 }
 
@@ -424,8 +424,8 @@ async function drawCardFromAPI() {
         }
     });
 
+    apiResponseToDrawCard = await response.json();
     if (response.ok) {
-        apiResponseToDrawCard = await response.json();
         let drawnCard = apiResponseToDrawCard.Card;
         globalResult.Players[playerID].Cards.push(drawnCard);
         globalResult.Players[playerID].Cards.sort(compareCard);
@@ -666,6 +666,7 @@ function compareCard(a, b) {
 
 // gets cards from server for a given player
 async function getPenaltyCardsFromAPI(playerID) {
+    skipNextPlayer(playerID);
     let name = globalResult.NextPlayer;
     let URL = `https://nowaunoweb.azurewebsites.net/api/Game/GetCards/${gameID}?playerName=${name}`;
 
@@ -685,7 +686,6 @@ async function getPenaltyCardsFromAPI(playerID) {
     } else {
         alert("HTTP-Error: " + response.status);
     }
-    skipNextPlayer(playerID);
 }
 
 //functions to update state of the game

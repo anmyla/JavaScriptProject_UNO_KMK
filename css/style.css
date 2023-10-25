@@ -236,13 +236,14 @@ h5{
 
 /*Myla: einfacherer CSS code für Color Picker */
 .modalColorPicker {
+  background-image: url(../img/CCmodalBG.png);
   display: none;
   position: fixed;
   top: 50%; /* Vertically center the modal */
   left: 50%; /* Horizontally center the modal */
   transform: translate(-50%, -50%); /* Center the modal precisely */
   width: 300px; /* Adjust the width as needed */
-  background: rgba(20, 19, 19, 0.928); /* Adjust the background color and opacity */
+  /*background: rgba(20, 19, 19, 0.928); /* Adjust the background color and opacity */
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
@@ -250,7 +251,7 @@ h5{
 }
 
 .modalColorPicker-content {
-  background-image: url(./img/CCmodalBG.png);
+
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

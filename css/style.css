@@ -217,5 +217,58 @@ nav {
   }
 }
 
+.CCmodal-background{
+  background-image: url(../img/CCmodalBG.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+h5{
+  font-family: 'HarryPFont', sans-serif;
+}
+
+.color-options li img{
+  width: 120px; 
+  height: auto; 
+}
 
 
+/*Myla: einfacherer CSS code für Color Picker */
+.modalColorPicker {
+  display: none;
+  position: fixed;
+  top: 50%; /* Vertically center the modal */
+  left: 50%; /* Horizontally center the modal */
+  transform: translate(-50%, -50%); /* Center the modal precisely */
+  width: 300px; /* Adjust the width as needed */
+  background: rgba(20, 19, 19, 0.928); /* Adjust the background color and opacity */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.modalColorPicker-content {
+  background-image: url(./img/CCmodalBG.png);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.color-image {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+#modalHeader {
+  position: 
+  padding: 10px;
+  color: #fff;
+  text-align: justify;
+}
+
+/*-----------Ende: ColorPickerModal */

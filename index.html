@@ -25,14 +25,14 @@
   <nav>
     <div></div>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-      <button id="audioButton" onclick="playAudioLoop()"><i id="audioIcon" class="fas fa-volume-up"></i></button>
+      <button id="audioButton" onclick="playAudioLoop()"><i id="audioIcon" class="fas fa-volume-off"></i></button>
       <button onclick="window.location.href='index.html'" type="button" class="home">Home</button>
       <button class="help" id="testButton" onclick="window.location.href='help.html'">Help</button>
-      <button class="credits" id="testButton">Credits</button>
+      <button class="credits" id="testButton" onclick="window.location.href='credits.html'">Credits</button>
     </div>
   </nav>
 
-<br>
+  <br>
   <div id="greet">
     <h1 id="gameMessage">Welcome to the Wizarding World!</h1>
   </div>
@@ -54,7 +54,7 @@
       <div class="modal-background" style="border-radius: 15px;">
         <div class="modal-content" style="background-color: transparent;">
           <!-- Modal Header -->
-          <div class="modal-header" style="border: none;">
+          <div class="modal-header" style="border: none; text-align: center;">
             <h4 class="modal-title">Enter Player Names</h4>
             <button type="button" class="close" data-dismiss="modal">
               &times;
@@ -131,31 +131,16 @@
     </div>
   </div>
 
-<!-- The Color Picker Modal -->
-<div class="modal fade" id="colorPickModal" tabindex="-1" role="dialog" aria-labelledby="colorPickModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="colorPickModalLabel">Choose a Color</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <ul class="color-options">
-          <li data-color="Red">Red</li>
-          <li data-color="Blue">Blue</li>
-          <li data-color="Yellow">Yellow</li>
-          <li data-color="Green">Green</li>
-        </ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 
+  <div id="colorModal" class="modalColorPicker">
+    <div id="modalHeader"><h2>Pick a Color!</h2></div>
+    <div class="modalColorPicker-content">
+        <img src="./img/Red.png" data-color="Red" alt="Red" class="color-image" >
+        <img src="./img/Blue.png" data-color="Blue" alt="Blue" class="color-image" >
+        <img src="./img/Green.png" data-color="Green" alt="Green" class="color-image">
+        <img src="./img/Yellow.png" data-color="Yellow" alt="Yellow" class="color-image">
+    </div>
+</div>
 
   <!-- Bootstrap JS and jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

@@ -242,7 +242,7 @@ h5{
   top: 50%; /* Vertically center the modal */
   left: 50%; /* Horizontally center the modal */
   transform: translate(-50%, -50%); /* Center the modal precisely */
-  width: 300px; /* Adjust the width as needed */
+  width: 400px; /* Adjust the width as needed */
   /*background: rgba(20, 19, 19, 0.928); /* Adjust the background color and opacity */
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -261,7 +261,7 @@ h5{
 .color-image {
   width: 100px;
   height: 100px;
-  margin: 10px;
+  margin: 30px;
   cursor: pointer;
 }
 

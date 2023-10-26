@@ -217,33 +217,17 @@ nav {
   }
 }
 
-.CCmodal-background{
-  background-image: url(../img/CCmodalBG.png);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-h5{
-  font-family: 'HarryPFont', sans-serif;
-}
-
-.color-options li img{
-  width: 120px; 
-  height: auto; 
-}
-
 
 /*Myla: einfacherer CSS code für Color Picker */
 .modalColorPicker {
-  background-image: url(../img/CCmodalBG.png);
+  /*background-image: url(../img/CCmodalBG.png); */
   display: none;
   position: fixed;
   top: 50%; /* Vertically center the modal */
   left: 50%; /* Horizontally center the modal */
   transform: translate(-50%, -50%); /* Center the modal precisely */
-  width: 400px; /* Adjust the width as needed */
-  /*background: rgba(20, 19, 19, 0.928); /* Adjust the background color and opacity */
+  width: 350px; /* Adjust the width as needed */
+  background: rgba(20, 19, 19, 0.928); /* Adjust the background color and opacity */
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
@@ -261,7 +245,7 @@ h5{
 .color-image {
   width: 100px;
   height: 100px;
-  margin: 30px;
+  margin: 20px;
   cursor: pointer;
 }
 

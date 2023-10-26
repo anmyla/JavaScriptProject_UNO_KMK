@@ -268,21 +268,21 @@ function displayPlayerDivHeaders() {
     let pl4Name = document.getElementById("pl4Name");
     pl4Name.innerHTML = player4Name;
 
-   /* let scoreOne = document.getElementById("score1");
-    score1.innerHTML = scoreOne;
-    scoreOne.textContent = 'Score';
-
-    let scoreTwo = document.getElementById("score2");
-    score2.innerHTML = scoreTwo;
-    scoreTwo.textContent = 'Score';
-
-    let scoreThree = document.getElementById("score3");
-    score3.innerHTML = scoreThree;
-    scoreThree.textContent = 'Score';
-
-    let scoreFour = document.getElementById("score4");
-    score4.innerHTML = scoreFour;
-    scoreFour.textContent = 'Score'; */
+    /* let scoreOne = document.getElementById("score1");
+     score1.innerHTML = scoreOne;
+     scoreOne.textContent = 'Score';
+ 
+     let scoreTwo = document.getElementById("score2");
+     score2.innerHTML = scoreTwo;
+     scoreTwo.textContent = 'Score';
+ 
+     let scoreThree = document.getElementById("score3");
+     score3.innerHTML = scoreThree;
+     scoreThree.textContent = 'Score';
+ 
+     let scoreFour = document.getElementById("score4");
+     score4.innerHTML = scoreFour;
+     scoreFour.textContent = 'Score'; */
 }
 
 function showPlayerScores() {
@@ -290,12 +290,13 @@ function showPlayerScores() {
     let scoreDiv;
     let playerScore;
     for (let i = 0; i < 4; i++) {
+        scoreDiv = document.getElementById('score' + (i + 1));
+        scoreDiv.innerHTML = '';
         playerScore = 0;
         for (let j = 0; j < globalResult.Players[i].Cards.length; j++) {
             playerScore = playerScore += globalResult.Players[i].Cards[j].Score;
         }
         span = document.createElement('span');
-        scoreDiv = document.getElementById('score' + (i + 1));
         scoreDiv.appendChild(span);
         span.textContent = "Score: " + playerScore;
     }
@@ -386,7 +387,6 @@ async function playerDrawsACard() {
 }
 
 
-
 function setupDrawPile() { //Construct draw pile and create div for draw pile
     let playerID = getCurrentPlayerID();
     let gameCourt = document.getElementById('gameCourt');
@@ -404,7 +404,6 @@ function setupDrawPile() { //Construct draw pile and create div for draw pile
         playerDrawsACard();
     })
 }
-
 
 
 // show the cards of this player
@@ -736,6 +735,7 @@ async function sendPlayedCardToAPI(card, colorPick) {
         displayTopCard();
         await updateAllPlayersCards();
         showCurrentPlayer();
+        showPlayerScores();
     } else {
         alert("HTTP-Error: " + response.status);
     }

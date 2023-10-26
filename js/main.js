@@ -232,7 +232,7 @@ function getCardID(playerID, card) {
 }
 
 
-async function displayTopCard() { //Construct a discard pile and create div for discard pile
+function displayTopCard() { //Construct a discard pile and create div for discard pile
     const baseUrl = "./img/cards/";
 
     //construct card image
@@ -258,7 +258,7 @@ async function displayTopCard() { //Construct a discard pile and create div for 
     discardCardDiv.appendChild(discardCardImageDiv);
 }
 
-async function displayPlayerDivHeaders() {
+function displayPlayerDivHeaders() {
     let pl1Name = document.getElementById("pl1Name");
     pl1Name.innerHTML = player1Name;
 
@@ -446,7 +446,8 @@ function showThisPlayerCards(playerID) {
         currentPlayerCardDiv.appendChild(cardimg);
 
         cardimg.addEventListener('click', function () { //we add an eventListener for each image.
-            playerPlaysACard(globalResult.Players[playerID].Cards[i]);
+                playerPlaysACard(globalResult.Players[playerID].Cards[i]);
+            
         });
     }
 
@@ -557,7 +558,7 @@ async function openColorPickModal() {
 //--------------------------------------------------------------
 
 
-async function changeDirection(currentPlayerIndex) {
+function changeDirection(currentPlayerIndex) {
     let newPlayerIndex;
 
     if (direction === 1) { //if clockwise so we set it to counter cloackwise
@@ -582,7 +583,7 @@ async function changeDirection(currentPlayerIndex) {
 }
 
 
-async function skipNextPlayer(thisPlayerIndex) {
+function skipNextPlayer(thisPlayerIndex) {
     let newPlayerIndex;
     if (thisPlayerIndex == 0) {
         newPlayerIndex = 2;
@@ -598,7 +599,7 @@ async function skipNextPlayer(thisPlayerIndex) {
     console.log('Player to play next after a SKIP CARD is played is: ' + globalResult.NextPlayer);
 }
 
-async function setNextPlayer(thisPlayerIndex) {
+function setNextPlayer(thisPlayerIndex) {
     let newPlayerIndex;
 
     if (direction === 1) { //if clockwise
@@ -624,7 +625,7 @@ async function setNextPlayer(thisPlayerIndex) {
     console.log('Player after SetNextPlayer function: ' + globalResult.Players[newPlayerIndex].Player);
 }
 
-async function getNextTurn(thisPlayerIndex) { //player to play next
+function getNextTurn(thisPlayerIndex) { //player to play next
     let newPlayerIndex;
     if (direction === 1) { //if clockwise
         newPlayerIndex = thisPlayerIndex + 1;
@@ -704,7 +705,7 @@ async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
     } else if (card.Value === 13) { //changeColor and +4 
         if (checkIfPlayerCanOnlyPlayDraw4()) {
             console.log('this player has no other cards to play except +4');
-            await openColorPickModal();
+             await openColorPickModal();
             cardValid = true;
         } else {
             console.log('Card is invalid because player has other cards to play.');
@@ -767,7 +768,7 @@ async function sendPlayedCardToAPI(card) {
         console.log("received response");
         console.log(apiResponseToPlayedCard);
 
-        await determineTheNextPlayer(card);
+        determineTheNextPlayer(card);
         displayTopCard();
         showCurrentPlayer();
     } else {
@@ -827,42 +828,35 @@ async function determineTheNextPlayer(card) {
     let currentPlayerIndex = getCurrentPlayerID();
 
     if (card.Value < 10) {
-        await setNextPlayer(currentPlayerIndex);
+        setNextPlayer(currentPlayerIndex);
+        colorPick = card.Color;
     }
     if (card.Value === 12) {
-        await changeDirection(currentPlayerIndex);
+        changeDirection(currentPlayerIndex);
         colorPick = card.Color;
     }
     if (card.Value === 11) {
-        await skipNextPlayer(currentPlayerIndex);
+       skipNextPlayer(currentPlayerIndex);
         colorPick = card.Color;
     }
     if (card.Value === 10) {
         await updateAllPlayersCards();
-        await skipNextPlayer(currentPlayerIndex);
+        skipNextPlayer(currentPlayerIndex);
         console.log('next player got penalized and is skipped');
         colorPick = card.Color;
     }
     if (card.Value === 13) {
         await updateAllPlayersCards();
-        await skipNextPlayer(currentPlayerIndex);
+        skipNextPlayer(currentPlayerIndex);
         console.log('next player got penalized and is skipped');
     }
     if (card.Value === 14) {
-        await setNextPlayer(currentPlayerIndex);
+        setNextPlayer(currentPlayerIndex);
     } else {
         colorPick = card.Color;
     }
 
     showCurrentPlayer();
-}
-
-function blackCardIsPlayed(card) {
-
-    let wildCard = new Card;
-    wildCard.Color = colorPick;
-    wildCard.Value = card.Value;
-    return wildCard;
 }
 
 
@@ -892,14 +886,16 @@ function blackCardIsPlayed(card) {
 async function playerPlaysACard(card) {
     let cardValid = await checkPlayedCardValiditiyBeforeSendingToAPI(card);
     if (cardValid) {
-        let currentPlayerID = getCurrentPlayerID();
+        await sendPlayedCardToAPI(card);
+
+        /*let currentPlayerID = getCurrentPlayerID();
         removePlayedCardFromPlayersHand(currentPlayerID, card);
         if (card.Value === 13 || card.Value === 14) {
             let wildCard = blackCardIsPlayed(card);
             await sendPlayedCardToAPI(wildCard);
         } else {
             await sendPlayedCardToAPI(card);
-        }
+        } */
         console.log('card transmission to API successful');
     } else {
         alert('Player played an invalid card!');

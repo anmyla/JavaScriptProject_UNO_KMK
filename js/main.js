@@ -18,7 +18,6 @@ class Card {
     }
 }
 
-
 //START: Modal and other functions to collect players' names------------------------------
 function hasDuplicates(array) { // Function to check for duplicate names
     const lowerCaseNames = array.map(name => name.toLowerCase());
@@ -81,8 +80,6 @@ document.getElementById('nameForm').addEventListener('submit', function (e) { //
     // Display assigned teams in the modal
     displayTeams(teams);
 });
-
-
 
 
 //START: Functions for Design Elements---------------------------------Kata: start
@@ -271,7 +268,7 @@ function displayPlayerDivHeaders() {
     let pl4Name = document.getElementById("pl4Name");
     pl4Name.innerHTML = player4Name;
 
-    let scoreOne = document.getElementById("score1");
+   /* let scoreOne = document.getElementById("score1");
     score1.innerHTML = scoreOne;
     scoreOne.textContent = 'Score';
 
@@ -285,7 +282,7 @@ function displayPlayerDivHeaders() {
 
     let scoreFour = document.getElementById("score4");
     score4.innerHTML = scoreFour;
-    scoreFour.textContent = 'Score';
+    scoreFour.textContent = 'Score'; */
 }
 
 function showPlayerScores() {

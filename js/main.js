@@ -743,8 +743,8 @@ async function getPenaltyCardsFromAPI(name) {
     }
 }
 
-// if player clicks on a card they're allowed to play, send request to server
-async function sendPlayedCardToAPI(card) {
+// send played/chosen card to the server
+async function sendPlayedCardToAPI(card, colorPick) {
 
     console.log('initiating card transmission to API...' + card.Color + card.Value);
     let value = card.Value;
@@ -770,6 +770,7 @@ async function sendPlayedCardToAPI(card) {
 
         determineTheNextPlayer(card);
         displayTopCard();
+        await updateAllPlayersCards();
         showCurrentPlayer();
     } else {
         alert("HTTP-Error: " + response.status);
@@ -785,44 +786,7 @@ function removePlayedCardFromPlayersHand(currentPlayerID, card) {
     console.log(globalResult.Players[currentPlayerID].Cards);
 }
 
-/*functions to update state of the game
-async function determineTheNextPlayer(card) {
-    globalResult.TopCard = card; //put played card on top of the discard pile
-    let currentPlayerIndex = getCurrentPlayerID();
-
-    if (card.Value < 10) { //if card is a regular card
-        setNextPlayer(currentPlayerIndex);
-    }
-    if (card.Value === 12) { //if card is reverse
-        changeDirection(currentPlayerIndex);
-        colorPick = card.Color;
-    }
-    if (card.Value === 11) { //if card is skip
-        skipNextPlayer(currentPlayerIndex);
-        colorPick = card.Color;
-    }
-    if (card.Value === 10) { //just +2 penalty
-        await updateAllPlayersCards();
-        skipNextPlayer(currentPlayerIndex);
-        console.log('next player got penalized and is skipped');
-        colorPick = card.Color;
-    }
-    if (card.Value === 13) { //colorChange  and +4 penalty
-        await updateAllPlayersCards();
-        skipNextPlayer(currentPlayerIndex);
-        console.log('next player got penalized and is skipped');
-    }
-    if (card.Value === 14) { //just colorchange
-        setNextPlayer(currentPlayerIndex);
-    } else {
-        colorPick = card.Color;
-    }
-
-    showCurrentPlayer();
-}
-*/
-
-// 
+// determines next turn
 async function determineTheNextPlayer(card) {
     globalResult.TopCard = card;
     let currentPlayerIndex = getCurrentPlayerID();
@@ -855,47 +819,16 @@ async function determineTheNextPlayer(card) {
     } else {
         colorPick = card.Color;
     }
-
     showCurrentPlayer();
 }
 
 
 //LOGIC for when a player plays a card
-
-/*async function playerPlaysACard(card) {
-    let cardValid = checkPlayedCardValiditiyBeforeSendingToAPI(card);
-    if (cardValid) {
-        let currentPlayerID = getCurrentPlayerID();
-        removePlayedCardFromPlayersHand(currentPlayerID, card);
-        if (card.Value === 13 || card.Value === 14) {
-            let wildCard = blackCardIsPlayed(card);
-            await sendPlayedCardToAPI(wildCard);
-        } else {
-            await sendPlayedCardToAPI(card);
-        }
-        console.log('card transmition to API succeful');
-        //console.log('removed played card');
-
-    } else {
-        alert('Player played an invalid card!');
-        return;
-    }
-}
-*/
-
 async function playerPlaysACard(card) {
     let cardValid = await checkPlayedCardValiditiyBeforeSendingToAPI(card);
+    let chosenColor = colorPick; 
     if (cardValid) {
-        await sendPlayedCardToAPI(card);
-
-        /*let currentPlayerID = getCurrentPlayerID();
-        removePlayedCardFromPlayersHand(currentPlayerID, card);
-        if (card.Value === 13 || card.Value === 14) {
-            let wildCard = blackCardIsPlayed(card);
-            await sendPlayedCardToAPI(wildCard);
-        } else {
-            await sendPlayedCardToAPI(card);
-        } */
+        await sendPlayedCardToAPI(card, chosenColor);
         console.log('card transmission to API successful');
     } else {
         alert('Player played an invalid card!');

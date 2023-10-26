@@ -218,6 +218,34 @@ nav {
 }
 
 
+#directionContainer {
+  position: absolute;
+    top: 52%; 
+    left: 32%;
+    transform: translate(-50%, -50%);
+    animation: rotateClockwise 5s linear infinite;
+}
+@keyframes rotateClockwise {
+  0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+      transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes rotateCounterclockwise {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+
+
+
 /*Myla: einfacherer CSS code für Color Picker */
 .modalColorPicker {
   /*background-image: url(../img/CCmodalBG.png); */

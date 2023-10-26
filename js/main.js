@@ -288,6 +288,22 @@ function displayPlayerDivHeaders() {
     scoreFour.textContent = 'Score';
 }
 
+function showPlayerScores() {
+    let span;
+    let scoreDiv;
+    let playerScore;
+    for (let i = 0; i < 4; i++) {
+        playerScore = 0;
+        for (let j = 0; j < globalResult.Players[i].Cards.length; j++) {
+            playerScore = playerScore += globalResult.Players[i].Cards[j].Score;
+        }
+        span = document.createElement('span');
+        scoreDiv = document.getElementById('score' + (i + 1));
+        scoreDiv.appendChild(span);
+        span.textContent = "Score: " + playerScore;
+    }
+}
+
 // hide the cards of this player
 function putThisPlayerCardsUpsideDown(playerID) {
     let notCurrentPlayerCardDiv = document.getElementById('cardContainer' + playerID);
@@ -333,31 +349,7 @@ function checkIfWinner(currentPlayerID) {
 }
 
 
-
-/*
-async function checksIfPlayerHasCardToPlay(playerIndex) {
-    let topCard = globalResult.TopCard;
-    let playersHand = globalResult.Players[playerIndex].Cards;
-    let playerCard;
-    let hasCardToPlay = false;
-
-    for (let i = 0; i < playersHand.length; i++) {
-        playerCard = playersHand[i];
-
-        if (topCard.Color === playerCard.Color ||
-            colorPick === playerCard.Color ||
-            topCard.Value === playerCard.Value ||
-            playerCard.Value === 14) {
-            hasCardToPlay = true;
-        } else if (topCard.Value !== 13 && playerCard.Value === 13) {
-            hasCardToPlay = true;
-        } 
-    }
-    return hasCardToPlay;
-} */
-
 async function drawCardFromAPI(playerID) {
-    //let playerID = getCurrentPlayerID();
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/Game/DrawCard/" + gameID, {
         method: "PUT",
         headers: {
@@ -382,10 +374,6 @@ async function drawCardFromAPI(playerID) {
 
 
 async function playerDrawsACard() {
-    /*  let hasCards = checksIfPlayerHasCardToPlay(playerID);
-      if (hasCards) {
-          alert('You have a card to play! You dont need to draw a card!');
-      } else { */
     let playerID = getCurrentPlayerID();
     let topCard = globalResult.TopCard;
     if (topCard.Value === 10 || topCard.Value === 11 || topCard.Value === 13) {
@@ -446,8 +434,8 @@ function showThisPlayerCards(playerID) {
         currentPlayerCardDiv.appendChild(cardimg);
 
         cardimg.addEventListener('click', function () { //we add an eventListener for each image.
-                playerPlaysACard(globalResult.Players[playerID].Cards[i]);
-            
+            playerPlaysACard(globalResult.Players[playerID].Cards[i]);
+
         });
     }
 
@@ -489,6 +477,7 @@ document.getElementById('okButton').addEventListener('click', async function () 
     displayTopCard();
     setupDrawPile();
     showCurrentPlayer();
+    showPlayerScores();
 });
 
 async function updateAllPlayersCards() {
@@ -540,7 +529,6 @@ async function updatePlayerCardsAfterPenalty(name) {
 
 //START: Functions for game rules and logic------------------------------------------
 
-//-------------------------when wild card is played----------------
 async function openColorPickModal() {
     let colorModal = document.getElementById('colorModal');
     let colorImages = document.querySelectorAll('.color-image');
@@ -555,7 +543,6 @@ async function openColorPickModal() {
         });
     });
 }
-//--------------------------------------------------------------
 
 
 function changeDirection(currentPlayerIndex) {
@@ -599,6 +586,7 @@ function skipNextPlayer(thisPlayerIndex) {
     console.log('Player to play next after a SKIP CARD is played is: ' + globalResult.NextPlayer);
 }
 
+
 function setNextPlayer(thisPlayerIndex) {
     let newPlayerIndex;
 
@@ -625,6 +613,7 @@ function setNextPlayer(thisPlayerIndex) {
     console.log('Player after SetNextPlayer function: ' + globalResult.Players[newPlayerIndex].Player);
 }
 
+
 function getNextTurn(thisPlayerIndex) { //player to play next
     let newPlayerIndex;
     if (direction === 1) { //if clockwise
@@ -646,6 +635,7 @@ function getNextTurn(thisPlayerIndex) { //player to play next
     }
     return newPlayerIndex;
 }
+
 
 function playerToReceivePenaltyCards(playerWhoPlayedPenaltyCards) {
     let playerToGetPenaltyCards;
@@ -705,7 +695,7 @@ async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
     } else if (card.Value === 13) { //changeColor and +4 
         if (checkIfPlayerCanOnlyPlayDraw4()) {
             console.log('this player has no other cards to play except +4');
-             await openColorPickModal();
+            await openColorPickModal();
             cardValid = true;
         } else {
             console.log('Card is invalid because player has other cards to play.');
@@ -719,29 +709,6 @@ async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
     return cardValid;
 }
 
-//gets cards from server for a given player
-async function getPenaltyCardsFromAPI(name) {
-    let playerID = getIdOfThisPlayer(name);
-
-    let URL = `https://nowaunoweb.azurewebsites.net/api/Game/GetCards/${gameID}?playerName=${name}`;
-
-    let response = await fetch(URL,
-        {
-            method: "GET", headers: {
-                "Content-type": "application/json; charset=UTF-8",
-            }
-        });
-
-    let apiResponseToUpdatePlayerCards = await response.json();
-
-    if (response.ok) {
-        globalResult.Players[playerID].Cards = apiResponseToUpdatePlayerCards.Cards;
-        globalResult.Players[playerID].Score = apiResponseToUpdatePlayerCards.Score;
-        console.log(name + ' has now the following cards: ' + apiResponseToUpdatePlayerCards.Cards);
-    } else {
-        alert("HTTP-Error: " + response.status);
-    }
-}
 
 // send played/chosen card to the server
 async function sendPlayedCardToAPI(card, colorPick) {
@@ -778,13 +745,16 @@ async function sendPlayedCardToAPI(card, colorPick) {
 
 }
 
+
 function removePlayedCardFromPlayersHand(currentPlayerID, card) {
     let cardToRemove = getCardID(currentPlayerID, card);
     globalResult.Players[currentPlayerID].Cards.splice(cardToRemove, 1);
 
     console.log('this card is successfully removed from players hand: ' + cardToRemove);
     console.log(globalResult.Players[currentPlayerID].Cards);
+    checkIfWinner(currentPlayerID);
 }
+
 
 // determines next turn
 async function determineTheNextPlayer(card) {
@@ -800,7 +770,7 @@ async function determineTheNextPlayer(card) {
         colorPick = card.Color;
     }
     if (card.Value === 11) {
-       skipNextPlayer(currentPlayerIndex);
+        skipNextPlayer(currentPlayerIndex);
         colorPick = card.Color;
     }
     if (card.Value === 10) {
@@ -826,7 +796,7 @@ async function determineTheNextPlayer(card) {
 //LOGIC for when a player plays a card
 async function playerPlaysACard(card) {
     let cardValid = await checkPlayedCardValiditiyBeforeSendingToAPI(card);
-    let chosenColor = colorPick; 
+    let chosenColor = colorPick;
     if (cardValid) {
         await sendPlayedCardToAPI(card, chosenColor);
         console.log('card transmission to API successful');
@@ -834,6 +804,7 @@ async function playerPlaysACard(card) {
         alert('Player played an invalid card!');
         return;
     }
+
 }
 
 

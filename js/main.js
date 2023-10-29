@@ -264,7 +264,8 @@ function displayTopCard() { //Construct a discard pile and create div for discar
     discardimg.classList.add('discardCard'); // Apply a CSS class for styling
 
     let colorInput = globalResult.TopCard.Color;
-    let numberInput = Number(globalResult.TopCard.Value);
+    let numberInput = globalResult.TopCard.Value;
+
     discardCard = new Card(colorInput, numberInput);
     let discardImageUrl = `${baseUrl}${discardCard.Color}${discardCard.Number}.png`;
     discardimg.src = discardImageUrl;
@@ -485,14 +486,10 @@ async function playerDrawsACard() {
     if (topCard.Value === 10 || topCard.Value === 11 || topCard.Value === 13) {
         let playerToDrawCard = getNextTurn(playerID);
         await drawCardFromAPI(playerToDrawCard);
-
-        //Remove value of TOPCARD so it will not do double penalty
-        globalResult.TopCard.Value = '';
-
     } else {
         await drawCardFromAPI(playerID);
     }
-}
+} 
 
 
 function setupDrawPile() { //Construct draw pile and create div for draw pile
@@ -765,9 +762,6 @@ async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
     if (topCard.Value === card.Value || topCard.Color === card.Color) {
         console.log('Card is valid!');
         cardValid = true;
-    } else if (topCard.Text === 'Skip' && card.Value === 11) { //somehow the topCard.Value is '' for skip cards so we use topCard.Text
-        console.log('Card is valid!');
-        cardValid = true;
     } else if (colorPick === card.Color) {
         console.log('Card is valid based on colorPick');
         cardValid = true;
@@ -798,7 +792,7 @@ async function sendPlayedCardToAPI(card, colorPick) {
     let playerID = getCurrentPlayerID();
     console.log('initiating card transmission to API...' + card.Color + card.Value);
     let value = card.Value;
-    let color = card.color;
+    let color = card.Color;
 
     /*if (value === 13 || value === 14) {
     color = colorPick;
@@ -821,6 +815,7 @@ async function sendPlayedCardToAPI(card, colorPick) {
     let apiResponseToPlayedCard = await response.json();
 
     if (response.ok) {
+        console.log(response.status);
         console.log("received response");
         console.log(apiResponseToPlayedCard);
 

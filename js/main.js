@@ -455,6 +455,24 @@ async function checkIfWinner(currentPlayerID) {
 
 }
 
+async function getTopCardFromAPI() {
+    let URL = `https://nowaunoweb.azurewebsites.net/api/game/topCard/${gameID}`;
+    let response = await fetch(URL,
+        {
+            method: "GET", headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            }
+        });
+
+    let apiTopCard = await response.json();
+
+    if (response.ok) {
+        globalResult.TopCard = apiTopCard;
+    } else {
+        alert("HTTP-Error: " + response.status);
+    }
+}
+
 
 async function drawCardFromAPI(playerID) {
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/Game/DrawCard/" + gameID, {
@@ -479,7 +497,6 @@ async function drawCardFromAPI(playerID) {
     showCurrentPlayer();
 }
 
-
 async function playerDrawsACard() {
     let playerID = getCurrentPlayerID();
     let topCard = globalResult.TopCard;
@@ -491,9 +508,8 @@ async function playerDrawsACard() {
     }
 } 
 
-
 function setupDrawPile() { //Construct draw pile and create div for draw pile
-    let playerID = getCurrentPlayerID();
+
     let gameCourt = document.getElementById('gameCourt');
     let drawPileDiv = document.createElement('div');
     drawPileDiv.id = 'drawPileDiv';
@@ -898,20 +914,4 @@ async function playerPlaysACard(card) {
 
 }
 
-async function getTopCardFromAPI() {
-    let URL = `https://nowaunoweb.azurewebsites.net/api/game/topCard/${gameID}`;
-    let response = await fetch(URL,
-        {
-            method: "GET", headers: {
-                "Content-type": "application/json; charset=UTF-8",
-            }
-        });
 
-    let apiTopCard = await response.json();
-
-    if (response.ok) {
-        globalResult.TopCard = apiTopCard;
-    } else {
-        alert("HTTP-Error: " + response.status);
-    }
-}

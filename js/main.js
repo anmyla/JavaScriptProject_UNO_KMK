@@ -107,7 +107,7 @@ function changeBGAfterStart() { //change background when entering Game Court
 
     // translucent black background
     let container = document.querySelector('#playground');
-    container.classList.add('container1'); 
+    container.classList.add('container1');
 
 
     let directionContainer = document.getElementById("directionContainer");
@@ -503,7 +503,7 @@ async function checkIfWinner(currentPlayerID) {
     if (globalResult.Players[currentPlayerID].Cards.length === 0) {
         winnerOfThisRound = globalResult.Players[currentPlayerID].Player;
         console.log(winnerOfThisRound + ' has no more cards left!');
-        alert(winnerOfThisRound + ' has won this round!');
+        openWinnerModal(winnerOfThisRound);
         return true;
     } else {
         return false;
@@ -976,4 +976,34 @@ async function playerPlaysACard(card, colorPick) {
 
 }
 
+function displayWinner(player) { // Function to display assigned houses in the modal
+    let formSection = document.querySelector('#formSection');
+    formSection.innerHTML = '';
+    const teamsDisplay = teams.join('<br>'); // Use '<br>' for line breaks
+    document.getElementById('playerTeamMessage').innerHTML = teamsDisplay;
+    document.getElementById('okButton').style.display = 'block';
+}
 
+async function openWinnerModal(playerName) {
+    let winnerModal = document.getElementById('winnerModal');
+    let nameDiv = document.getElementById('winnerName');
+    let h1 = document.createElement('h1');
+
+    winnerModal.style.display = 'block';
+    h1.innerText = playerName;
+
+    nameDiv.appendChild(h1);
+
+    let anotherRound = document.getElementById('anotherRound');
+    let endGame = document.getElementById('endGame');
+
+    anotherRound.addEventListener('click', function () {
+        winnerModal.style.display = 'none';
+        startNewGame();
+    });
+
+    endGame.addEventListener('click', function () {
+        winnerModal.style.display = 'none';
+    });
+
+}

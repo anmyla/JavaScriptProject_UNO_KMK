@@ -352,3 +352,22 @@ th {
   padding-left: 5px; 
   text-align: center; 
 }
+
+/* winner modal----------------------------*/
+
+.announceWinner {
+background-image: url(../img/BGModal.jpg);
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+display: none;
+position: fixed;
+top: 50%; /* Vertically center the modal */
+left: 50%; /* Horizontally center the modal */
+transform: translate(-50%, -50%); /* Center the modal precisely */
+width: 350px; /* Adjust the width as needed */
+border: 1px solid #ccc;
+border-radius: 5px;
+padding: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}

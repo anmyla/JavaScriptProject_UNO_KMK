@@ -144,9 +144,9 @@ okButton.addEventListener("click", function () {
     flyingImage.style.display = "none";
 });
 
-function wrongCardAnimation(card) {
+async function wrongCardAnimation(card) {
     let playerID = getCurrentPlayerID();
-    let cardID = getCardID(playerID, card);
+    let cardID = await getCardID(playerID, card);
     const discardCard = document.getElementById("discardCardDiv");
     discardCard.classList.add("wrongCard")
     const wrongCardDiv = document.getElementById('cardContainer' + playerID).children;
@@ -160,7 +160,7 @@ function wrongCardAnimation(card) {
 }
 
 async function correctCardAnimation(currentPlayerId, card) {
-    let cardId = getCardID(currentPlayerId, card);
+    let cardId = await getCardID(currentPlayerId, card);
     const correctCardDiv = document.getElementById('cardContainer' + currentPlayerId).children;
     const correctCard = correctCardDiv.item(cardId);
     correctCard.classList.add("bigcard");
@@ -238,7 +238,7 @@ function getIdOfThisPlayer(nameOfPlayer) {
 }
 
 //search and return index of card
-function getCardID(playerID, card) {
+async function getCardID(playerID, card) {
     let searchedCard;
 
     for (let i = 0; i < globalResult.Players[playerID].Cards.length; i++) {
@@ -265,8 +265,13 @@ function displayTopCard() { //Construct a discard pile and create div for discar
     let colorInput = globalResult.TopCard.Color;
     let numberInput = globalResult.TopCard.Value;
 
-    discardCard = new Card(colorInput, numberInput);
+    if (numberInput > 12) {
+        discardCard = new Card(colorPick, numberInput);
+    } else {
+        discardCard = new Card(colorInput, numberInput);
+    }
     let discardImageUrl = `${baseUrl}${discardCard.Color}${discardCard.Number}.png`;
+
     discardimg.src = discardImageUrl;
 
     let gameCourt = document.getElementById('gameCourt');
@@ -335,6 +340,52 @@ function initializePlayerScores() {
     }
 }
 
+
+async function initializeScoreBoard() {
+    const scoreBoard = document.getElementById("scoreBoard");
+
+    initializePlayerScores();
+
+    let table = document.createElement("table");
+
+    // Create a row for the table title "Score Board"
+    let titleRow = document.createElement("tr");
+    let titleCell = document.createElement("th");
+    titleCell.textContent = "Score Board";
+    titleCell.setAttribute("colspan", "2"); // Spanning across the two columns
+    titleRow.appendChild(titleCell);
+    table.appendChild(titleRow);
+
+    // Create a row for column headings
+    let headingRow = document.createElement("tr");
+    let playerHeading = document.createElement("th");
+    playerHeading.textContent = "Player Names";
+    let scoreHeading = document.createElement("th");
+    scoreHeading.textContent = "Scores";
+    headingRow.appendChild(playerHeading);
+    headingRow.appendChild(scoreHeading);
+    table.appendChild(headingRow);
+
+    // Iterate through player data and create rows for each player
+    for (let i = 0; i < globalResult.Players.length; i++) {
+        let player = globalResult.Players[i];
+
+        let row = document.createElement("tr");
+
+        let playerNameCell = document.createElement("td");
+        playerNameCell.textContent = player.Player;
+
+        let scoreCell = document.createElement("td");
+        scoreCell.textContent = playerScores[i];
+
+        row.appendChild(playerNameCell);
+        row.appendChild(scoreCell);
+
+        table.appendChild(row);
+    }
+
+    scoreBoard.appendChild(table);
+}
 
 async function updateScoreboard() {
     // Clear the scoreboard div before updating it with the new content
@@ -592,7 +643,7 @@ document.getElementById('okButton').addEventListener('click', async function () 
     $('#nameModal').modal('hide');
     await startNewGame();
     changeBGAfterStart();
-    initializePlayerScores(); //set all scores on scoreboard to 0;
+    initializeScoreBoard(); //set all scores on scoreboard to 0;
     distributeCardsAfterGameStarts();
     displayTopCard();
     setupDrawPile();
@@ -856,8 +907,8 @@ async function sendPlayedCardToAPI(card, colorPick) {
 
 }
 
-function removePlayedCardFromPlayersHand(currentPlayerID, card) {
-    let cardToRemove = getCardID(currentPlayerID, card);
+async function removePlayedCardFromPlayersHand(currentPlayerID, card) {
+    let cardToRemove = await getCardID(currentPlayerID, card);
     globalResult.Players[currentPlayerID].Cards.splice(cardToRemove, 1);
     console.log('this card is successfully removed from players hand: ' + cardToRemove);
     console.log(globalResult.Players[currentPlayerID].Cards);
@@ -893,10 +944,10 @@ async function determineTheNextPlayer(card) {
     } else {
     }
 
-    if(card.Value < 13 || card.value ) {
+    if (card.Value < 13 || card.value) {
         colorPick = card.Color;
     }
-    
+
     showCurrentPlayer();
 }
 

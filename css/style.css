@@ -310,3 +310,34 @@ nav {
 .bigcard {
   transform: scale(3.3) !important;
 }
+
+/*SCOREBOARD-----------------------------*/
+
+
+table {
+  align-self: center;
+  background-color: rgba(3, 2, 2, 0.693); /* White translucent background */
+  color: white; /* Black text color */
+  border-collapse: collapse; /* To remove the space between table cells */
+  width: 80%; /* Full width of the container */
+  height: 80%;
+  margin: 0 auto; /* Center the table */
+}
+
+tr, td {
+  font-family: sans-serif;
+  font-size: 12px;
+  border: 1px solid white; /* Solid black border */
+  padding-right: 5px;
+  padding-left: 5px; /* Adjust padding for better spacing */
+  text-align: center; /* Center-align text in cells */
+}
+
+th {
+  font-family: 'HarryPFont', sans-serif;
+  font-size: large;
+  border: 1px solid white; /* Solid black border */
+  padding-right: 5px;
+  padding-left: 5px; /* Adjust padding for better spacing */
+  text-align: center; /* Center-align text in cells */
+}

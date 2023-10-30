@@ -11,7 +11,6 @@ let colorPick;
 let winnerOfThisRound;
 let playerScores = [];
 
-
 class Card {
     constructor(color, number) {
         this.Color = color;
@@ -506,7 +505,7 @@ async function playerDrawsACard() {
     } else {
         await drawCardFromAPI(playerID);
     }
-} 
+}
 
 function setupDrawPile() { //Construct draw pile and create div for draw pile
 
@@ -551,7 +550,11 @@ function showThisPlayerCards(playerID) {
         currentPlayerCardDiv.appendChild(cardimg);
 
         cardimg.addEventListener('click', function () { //we add an eventListener for each image.
-            playerPlaysACard(globalResult.Players[playerID].Cards[i]);
+            if (colorInput === 'Black') {
+                openColorPickModal(globalResult.Players[playerID].Cards[i]);
+            } else {
+                playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
+            }
         });
     }
 
@@ -647,7 +650,7 @@ async function updatePlayerCardsAfterPenalty(name) {
 
 //START: Functions for game rules and logic------------------------------------------
 
-async function openColorPickModal() {
+async function openColorPickModal(card) {
     let colorModal = document.getElementById('colorModal');
     let colorImages = document.querySelectorAll('.color-image');
 
@@ -656,8 +659,9 @@ async function openColorPickModal() {
     colorImages.forEach(function (image) {
         image.addEventListener('click', function () {
             colorPick = image.getAttribute('data-color');
-            colorModal.style.display = 'none';
             console.log('Selected color: ' + colorPick);
+            colorModal.style.display = 'none';
+            playerPlaysACard(card, colorPick);
         });
     });
     return colorPick;
@@ -783,12 +787,12 @@ async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
         cardValid = true;
     } else if (card.Value === 14) { // just changeColor
         console.log('Card is valid because its a joker');
-        colorPick = await openColorPickModal();
+        //colorPick = await openColorPickModal();
         cardValid = true;
     } else if (card.Value === 13) { //changeColor and +4 
         if (checkIfPlayerCanOnlyPlayDraw4()) {
             console.log('this player has no other cards to play except +4');
-            colorPick = await openColorPickModal();
+            //colorPick = await openColorPickModal();
             cardValid = true;
         } else {
             console.log('Card is invalid because player has other cards to play.');
@@ -867,21 +871,17 @@ async function determineTheNextPlayer(card) {
 
     if (card.Value < 10) { //0-9 regular cards
         setNextPlayer(currentPlayerIndex);
-        colorPick = card.Color;
     }
     if (card.Value === 12) { //reverse card
         changeDirection(currentPlayerIndex);
-        colorPick = card.Color;
     }
     if (card.Value === 11) {//skip card
         skipNextPlayer(currentPlayerIndex);
-        colorPick = card.Color;
     }
     if (card.Value === 10) { //+2 cards
         await updateAllPlayersCards();
         skipNextPlayer(currentPlayerIndex);
         console.log('next player got penalized and is skipped');
-        colorPick = card.Color;
     }
     if (card.Value === 13) {// +4 and changeColor card
         await updateAllPlayersCards();
@@ -891,14 +891,17 @@ async function determineTheNextPlayer(card) {
     if (card.Value === 14) { // only changeColor card
         setNextPlayer(currentPlayerIndex);
     } else {
+    }
+
+    if(card.Value < 13 || card.value ) {
         colorPick = card.Color;
     }
+    
     showCurrentPlayer();
 }
 
-
 //LOGIC for when a player plays a card
-async function playerPlaysACard(card) {
+async function playerPlaysACard(card, colorPick) {
     let cardValid = await checkPlayedCardValiditiyBeforeSendingToAPI(card);
     let chosenColor = colorPick;
     let playerID = getCurrentPlayerID();

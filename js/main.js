@@ -18,6 +18,8 @@ class Card {
     }
 }
 
+
+
 //START: Modal and other functions to collect players' names------------------------------
 function hasDuplicates(array) { // Function to check for duplicate names
     const lowerCaseNames = array.map(name => name.toLowerCase());
@@ -103,13 +105,17 @@ function changeBGAfterStart() { //change background when entering Game Court
     let gameMessageElement = document.getElementById("gameMessage");
     gameMessageElement.textContent = "No magic! Just logic!";
 
+    // translucent black background
+    let container = document.querySelector('#playground');
+    container.classList.add('container1'); 
+
+
     let directionContainer = document.getElementById("directionContainer");
     let imageElement = document.createElement("img");
     imageElement.src = "./img/direction.png";
     directionContainer.appendChild(imageElement);
     imageElement.style.width = "100px";
     imageElement.style.height = "auto";
-
 }
 
 
@@ -144,9 +150,9 @@ okButton.addEventListener("click", function () {
     flyingImage.style.display = "none";
 });
 
-async function wrongCardAnimation(card) {
+function wrongCardAnimation(card) {
     let playerID = getCurrentPlayerID();
-    let cardID = await getCardID(playerID, card);
+    let cardID = getCardID(playerID, card);
     const discardCard = document.getElementById("discardCardDiv");
     discardCard.classList.add("wrongCard")
     const wrongCardDiv = document.getElementById('cardContainer' + playerID).children;
@@ -159,8 +165,8 @@ async function wrongCardAnimation(card) {
     }, 2000);
 }
 
-async function correctCardAnimation(currentPlayerId, card) {
-    let cardId = await getCardID(currentPlayerId, card);
+function correctCardAnimation(currentPlayerId, card) {
+    let cardId = getCardID(currentPlayerId, card);
     const correctCardDiv = document.getElementById('cardContainer' + currentPlayerId).children;
     const correctCard = correctCardDiv.item(cardId);
     correctCard.classList.add("bigcard");
@@ -238,7 +244,7 @@ function getIdOfThisPlayer(nameOfPlayer) {
 }
 
 //search and return index of card
-async function getCardID(playerID, card) {
+function getCardID(playerID, card) {
     let searchedCard;
 
     for (let i = 0; i < globalResult.Players[playerID].Cards.length; i++) {
@@ -907,6 +913,7 @@ async function sendPlayedCardToAPI(card, colorPick) {
 
 }
 
+/*
 async function removePlayedCardFromPlayersHand(currentPlayerID, card) {
     let cardToRemove = await getCardID(currentPlayerID, card);
     globalResult.Players[currentPlayerID].Cards.splice(cardToRemove, 1);
@@ -914,6 +921,7 @@ async function removePlayedCardFromPlayersHand(currentPlayerID, card) {
     console.log(globalResult.Players[currentPlayerID].Cards);
 
 }
+*/
 
 // determines next turn
 async function determineTheNextPlayer(card) {

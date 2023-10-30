@@ -30,7 +30,6 @@ h4 {
 #pl2Name,
 #pl3Name,
 #pl4Name{
-  background-color: rgba(3, 2, 2, 0.284);
   text-align: center;
   font-size: 30px;
 }
@@ -204,9 +203,9 @@ nav {
   /* Versteckt das Audio-Steuerungselement */
 }
 
-.container{
+.container1 {
+  background: rgba(20, 19, 19, 0.844);
   font-family: 'HarryPFont', sans-serif;
-  background-color: rgba(3, 2, 2, 0.772);
   padding: 15px;
 }
 

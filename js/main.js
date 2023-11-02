@@ -257,9 +257,6 @@ function getCardID(playerID, card) {
             return i;
         }
     }
-    if (searchedCard.Color !== 'Black' && searchedCard == undefined) {
-        alert('For some unknown reason, this card cant be found!');
-    }
 }
 
 
@@ -442,7 +439,7 @@ async function updateScoreboard() {
     }
 
     scoreBoard.appendChild(table);
-    delay(500);
+    delay(300);
 }
 
 
@@ -464,7 +461,7 @@ async function calculateWinnerScore() {
         }
 
     }
-    delay(500);
+    delay(300);
     return playerScores;
 }
 
@@ -509,10 +506,10 @@ async function checkIfWinner(currentPlayerID) {
         winnerOfThisRound = globalResult.Players[currentPlayerID].Player;
         console.log(winnerOfThisRound + ' has no more cards left!');
         openWinnerModal(winnerOfThisRound);
-        delay(500);
+        delay(300);
         return true;
     } else {
-        delay(500);
+        delay(300);
         return false;
     }
 
@@ -534,7 +531,7 @@ async function getTopCardFromAPI() {
     } else {
         alert("HTTP-Error: " + response.status);
     }
-    delay(1000);
+    delay(300);
 }
 
 
@@ -557,7 +554,7 @@ async function drawCardFromAPI(playerID) {
     } else {
         alert("HTTP-Error: " + response.status);
     }
-    delay(1000);
+    delay(300);
     showCurrentPlayer();
 }
 
@@ -570,7 +567,7 @@ async function playerDrawsACard() {
     } else {
         await drawCardFromAPI(playerID);
     }
-    delay(1000);
+    delay(300);
 }
 
 function setupDrawPile() { //Construct draw pile and create div for draw pile
@@ -623,7 +620,7 @@ function showThisPlayerCards(playerID) {
             }
         });
     }
-    delay(200);
+    delay(500);
 }
 
 
@@ -652,7 +649,7 @@ async function startNewGame() { // Async function necessary for Promise
     catch {
         console.error("Error in startNewGame:", error);
     }
-    delay(1000);
+    delay(500);
 }
 
 document.getElementById('okButton').addEventListener('click', async function () { // Handle "OK" button click to close the modal and start game
@@ -692,7 +689,7 @@ async function updateAllPlayersCards() {
             alert("HTTP-Error: " + response.status);
         }
     }
-    delay(500);
+    delay(300);
 }
 
 //START: Functions for game rules and logic------------------------------------------
@@ -816,7 +813,7 @@ function checkIfPlayerCanOnlyPlayDraw4() {
 
     for (let i = 0; i < currentPlayersHand.length; i++) {
         if (globalResult.Players[currentPlayerIndex].Cards[i].Color === color || globalResult.Players[currentPlayerIndex].Cards[i].Value === value) {
-            delay(200);
+            delay(300);
             return false;
         }
     }
@@ -850,7 +847,7 @@ async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
         console.log('You cant play this invalid card!');
         cardValid = false;
     }
-    delay(200);
+    delay(300);
     return cardValid;
 }
 
@@ -878,7 +875,6 @@ async function sendPlayedCardToAPI(card, colorPick) {
 
     if (response.ok) {
         console.log(response.status);
-        console.log("received response");
         console.log(apiResponseToPlayedCard);
 
         determineTheNextPlayer(card);
@@ -895,7 +891,7 @@ async function sendPlayedCardToAPI(card, colorPick) {
     } else {
         alert("HTTP-Error: " + response.status);
     }
-    delay(1000);
+    delay(300);
 
 }
 
@@ -933,7 +929,7 @@ async function determineTheNextPlayer(card) {
     }
 
     showCurrentPlayer();
-    delay(500);
+    delay(300);
 }
 
 //LOGIC for when a player plays a card
@@ -950,7 +946,7 @@ async function playerPlaysACard(card, colorPick) {
         wrongCardAnimation(card);
         return;
     }
-    delay(500);
+    delay(300);
 }
 
 function displayWinner(player) { // Function to display assigned houses in the modal

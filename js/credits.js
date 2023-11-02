@@ -1,26 +1,30 @@
 
-function before(){
-    document.getElementById('myImage')
-    .src="./img/kata_b.jpg";
-    document.getElementById('myImage1')
-    .src="./img/myla_b.jpg";
-    document.getElementById('myImage2')
-    .src="./img/ksenija_b.jpg";
-    document.getElementById('message')
-    .innerHTML="This Game is presented to you by these bitches!";
-}
-     
-function afterr(){
+
+function after(){
     document.getElementById('myImage')
     .src="./img/kata.jpeg";
     document.getElementById('myImage1')
     .src="./img/myla.jpeg";
     document.getElementById('myImage2')
     .src="./img/ksenija.jpeg";
-    document.getElementById('message')
-    .innerHTML="... sorry, we mean witches ! ...";
+    const h1 = document.getElementById("message2");
+ 
+    const newH1 = document.createElement("h1");
+    newH1.textContent = "... sorry, we mean witches!";
+   
+    // Füge das neue h1-Element zum Dokument hinzu
+    h1.appendChild(newH1);
 }
 
+
+let messageAdded = false;
+ 
+document.addEventListener('click', function () {
+    if (!messageAdded) {
+       after();
+        messageAdded = true;
+    }
+});
 
 let audio = document.getElementById("myAudio");
 let audioIcon = document.getElementById("audioIcon");

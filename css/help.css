@@ -17,24 +17,22 @@ body {
   background: url(../img/BGStart.png) no-repeat center center fixed;
   background-size: contain;
   background-size: cover;
-
-    
 }
 
 .text {
 
   margin-bottom: 250px !important; 
-  margin-right: 50px !important;
-  margin-left: 450px !important;
+  margin-right: 350px !important;
+  margin-left: 350px !important;
 }
-
-
 
 
 
 nav > div {
   font-family: 'HarryPFont', sans-serif;
 }
+
+
 
 
 h1,
@@ -61,7 +59,7 @@ h5 {
 }
 
 div {
-  margin-right: 300px;
+ 
   font-family: 'help', sans-serif;
   font-size: x-large;
   
@@ -80,6 +78,7 @@ td {
 .home,
 .help,
 .credits,
+.help_deu,
 #audioButton {
   margin-top: 2%;
   margin: 5px;

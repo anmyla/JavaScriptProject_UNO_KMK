@@ -3,6 +3,7 @@
 //START: Global variables-----------------------------------------------------------------
 let playersList = [];
 let playersGlobal = [];
+
 let globalResult = Object();
 let gameID;
 let direction = 1;

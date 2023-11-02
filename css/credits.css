@@ -14,7 +14,7 @@
 }
 
 body {
-  background: url(../img/BGStart.png) no-repeat center center fixed;
+  background: url(../img/CCmodalBG.png) no-repeat center center fixed;
   background-size: contain;
   background-size: cover;
 
@@ -26,8 +26,9 @@ body {
 
 .image-container {
   display: flex;
-  justify-content: center; /* Zentrierung horizontal */
+  justify-content: center !important; /* Zentrierung horizontal */
   margin-left: 300px;
+  margin-right: 300px;
   
 }
 
@@ -53,41 +54,11 @@ h1 {
   font-size: 6rem !important;
   margin-left: 50px;
   text-align: center;
+  color: azure;
 }
 
 
-h2,
-h3,
-h4 {
-  font-family: 'HarryPFont', sans-serif;
-}
 
-h4 {
-  font-size: 1.5rem !important;
-  font-family: 'HarryPFont', sans-serif;
-}
-
-h5 {
-  font-family: 'HarryPFont', sans-serif;
-  font-size: 2.5rem !important;
-}
-
-div {
-  margin-right: 300px;
-  font-family: 'help', sans-serif;
-  font-size: x-large;
-  
-}
-
-th {
-  font-family: 'help', sans-serif;
-  font-size: x-large;
-}
-
-td {
-  font-family: 'help', sans-serif;
-  font-size: x-large;
-}
 
 .home,
 .help,

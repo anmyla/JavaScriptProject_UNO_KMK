@@ -1,40 +1,45 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="./css/help.css" />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
   </head>
 
   <body>
+
+    <div id="audioContainer">
+      <audio id="myAudio" controls loop>
+        <source src="css/introSong.mp3" type="audio/mpeg">
+        Dein Browser unterstützt das Audio-Element nicht.
+      </audio>
+    </div>
+   
+  
     <nav>
       <div></div>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button
-          onclick="window.location.href='index.html'"
-          type="button"
-          class="btn btn-outline-dark btn-lg"
-        >
-          Home
-        </button>
-        <button id="testButton">Help</button>
-        <button id="testButton">Credits</button>
-        <button id="testButton">Test</button>
+        <button id="audioButton" onclick="playAudioLoop()"><i id="audioIcon" class="fas fa-volume-off"></i></button>
+        <button onclick="window.location.href='index.html'" type="button" class="home">Home</button>
+        <button class="help" id="testButton" onclick="window.location.href='help.html'">Help</button>
+        <button class="credits" id="testButton" onclick="window.location.href='credits.html'">Credits</button>
       </div>
     </nav>
 
-    <body>
-      <h1>Game Rules</h1>
 
+    <div class="text">
+      <h1>Game Rules</h1>
+      <br />
       <h5>Goal of the game</h5>
       <div>
         In the classic UNO game, the goal is to be the first player to score 500
         points. Each round, the player earns points by being the first to play
         all their cards from their hand. Points are awarded for all the cards
-        remaining in the hands of the other players (see points).
+        remaining in the hands of the other players.
       </div>
       <br />
 
@@ -46,6 +51,7 @@
         over and placed next to it. This stack becomes the discard pile. A
         player is randomly selected to start the round.
       </div>
+      <br />
       <h5>Progression of the game</h5>
       <div>
         The first player places a card from their hand on the discard pile. The
@@ -68,7 +74,7 @@
         In the game, there are black action cards with different functions,
         which are explained below.
       </div>
-      <h4>DRAW TO CARDS</h4>
+      <h4>Draw Two Cards</h4>
       <div>
         When this card is played, the next player must draw 2 cards and is not
         allowed to play any cards during their turn. This card can only be
@@ -77,7 +83,7 @@
         same rules apply.
       </div>
       <br />
-      <h4>REVERSE CARD</h4>
+      <h4>Reverse Card</h4>
       <div>
         When this card is played, the direction of play changes. If the game was
         previously going clockwise, it will now go counterclockwise, and vice
@@ -87,7 +93,7 @@
         continues the game instead of the player to their left.
       </div>
       <br />
-      <h4>SKIP CARD</h4>
+      <h4>Skip Card</h4>
       <div>
         After this card is played, the next player is "skipped," meaning they
         lose their turn. This card can only be placed on a card of the same
@@ -96,7 +102,7 @@
         player to the left of that player continues the game.
       </div>
       <br />
-      <h4>WILD CARD</h4>
+      <h4>Wild Card</h4>
       <div>
         The player who plays this card gets to decide which color should be
         played next. They can even choose the same color that is already in
@@ -106,7 +112,7 @@
         play.
       </div>
       <br />
-      <h4>WILD DRAW FOUR CARD</h4>
+      <h4>Wild Draw Four Card</h4>
       <div>
         This card is the most powerful one. The player who plays it gets to
         choose the color that continues the game, and the next player must draw
@@ -121,7 +127,7 @@
         to the pile, and another card should be drawn.
       </div>
       <br />
-      <h5>PENALTY CARDS</h5>
+      <h4>Penalty Cards</h4>
       <div>
         When a player does not follow the rules, they must draw one or more
         penalty cards. The penalty rules are as follows:
@@ -192,14 +198,19 @@
         The player who reaches 500 points first wins the game. In addition to
         the standard rules of UNO, there are many modifications and variants.
       </div>
+    </div>
       <br />
 
-      <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"
-      ></script>
-    </body>
-    <script src="./script/main.js"></script>
-  </body>
+      
+
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+<script src="./js/credits.js"></script>
+
+</body>
 </html>

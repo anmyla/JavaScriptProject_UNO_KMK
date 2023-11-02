@@ -8,21 +8,29 @@
 @font-face {
   /*----------------------------dazugeschrieben--------------*/
   font-family: 'help';
-  src: url('magic.otf') format('opentype');
+  src: url('HarryPotter.ttf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
 
 body {
-  background: url(../img/hp_uno_bg1.png) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+  background: url(../img/BGStart.png) no-repeat center center fixed;
+  background-size: contain;
   background-size: cover;
-  margin-bottom: 250px;
-  margin-right: 300px;
-  margin-left: 50px;
+
+    
 }
+
+.text {
+
+  margin-bottom: 250px !important; 
+  margin-right: 50px !important;
+  margin-left: 450px !important;
+}
+
+
+
+
 
 nav > div {
   font-family: 'HarryPFont', sans-serif;
@@ -32,7 +40,8 @@ nav > div {
 h1,
 .h1 {
   font-family: 'HarryPFont', sans-serif;
-  font-size: 6rem !important;
+  font-size: 5rem !important;
+
 }
 
 h2,
@@ -42,18 +51,20 @@ h4 {
 }
 
 h4 {
-  font-size: 3.5rem !important;
+  font-size: 1.5rem !important;
+  font-family: 'HarryPFont', sans-serif;
 }
 
 h5 {
   font-family: 'HarryPFont', sans-serif;
-  font-size: 3rem !important;
+  font-size: 2.5rem !important;
 }
 
 div {
   margin-right: 300px;
   font-family: 'help', sans-serif;
   font-size: x-large;
+  
 }
 
 th {
@@ -68,11 +79,27 @@ td {
 
 .home,
 .help,
-.credits {
+.credits,
+#audioButton {
   margin-top: 2%;
-  margin: 10px;
+  margin: 5px;
+  
   border-radius: 10px;
   width: 75px;
   height: 40px;
   font-size: 22px;
+}
+
+#audioButton {
+  width: 45px;
+  height: 40px;
+}
+
+.custom-margin {
+  margin-bottom: 0;
+}
+
+#audioContainer audio {
+  display: none;
+  /* Versteckt das Audio-Steuerungselement */
 }

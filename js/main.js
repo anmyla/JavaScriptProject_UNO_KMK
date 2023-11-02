@@ -18,7 +18,9 @@ class Card {
     }
 }
 
-
+async function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 //START: Modal and other functions to collect players' names------------------------------
 function hasDuplicates(array) { // Function to check for duplicate names
@@ -439,6 +441,7 @@ async function updateScoreboard() {
     }
 
     scoreBoard.appendChild(table);
+    delay(500);
 }
 
 
@@ -460,6 +463,7 @@ async function calculateWinnerScore() {
         }
 
     }
+    delay(500);
     return playerScores;
 }
 
@@ -504,8 +508,10 @@ async function checkIfWinner(currentPlayerID) {
         winnerOfThisRound = globalResult.Players[currentPlayerID].Player;
         console.log(winnerOfThisRound + ' has no more cards left!');
         openWinnerModal(winnerOfThisRound);
+        delay(500);
         return true;
     } else {
+        delay(500);
         return false;
     }
 
@@ -527,6 +533,7 @@ async function getTopCardFromAPI() {
     } else {
         alert("HTTP-Error: " + response.status);
     }
+    delay(1000);
 }
 
 
@@ -549,7 +556,7 @@ async function drawCardFromAPI(playerID) {
     } else {
         alert("HTTP-Error: " + response.status);
     }
-
+    delay(1000);
     showCurrentPlayer();
 }
 
@@ -562,6 +569,7 @@ async function playerDrawsACard() {
     } else {
         await drawCardFromAPI(playerID);
     }
+    delay(1000);
 }
 
 function setupDrawPile() { //Construct draw pile and create div for draw pile
@@ -614,7 +622,7 @@ function showThisPlayerCards(playerID) {
             }
         });
     }
-
+    delay(200);
 }
 
 
@@ -643,6 +651,7 @@ async function startNewGame() { // Async function necessary for Promise
     catch {
         console.error("Error in startNewGame:", error);
     }
+    delay(1000);
 }
 
 document.getElementById('okButton').addEventListener('click', async function () { // Handle "OK" button click to close the modal and start game
@@ -682,27 +691,7 @@ async function updateAllPlayersCards() {
             alert("HTTP-Error: " + response.status);
         }
     }
-}
-
-async function updatePlayerCardsAfterPenalty(name) {
-    let URL = `https://nowaunoweb.azurewebsites.net/api/Game/GetCards/${gameID}?playerName=${name}`;
-
-    let response = await fetch(URL,
-        {
-            method: "GET", headers: {
-                "Content-type": "application/json; charset=UTF-8",
-            }
-        });
-
-    let apiResponseToUpdatePlayerCards = await response.json();
-
-    if (response.ok) {
-        globalResult.Players[i].Cards = apiResponseToUpdatePlayerCards.Cards;
-        globalResult.Players[i].Score = apiResponseToUpdatePlayerCards.Score;
-    } else {
-        alert("HTTP-Error: " + response.status);
-    }
-    console.log('next player is  got penalty cards');
+    delay(500);
 }
 
 //START: Functions for game rules and logic------------------------------------------
@@ -721,6 +710,7 @@ async function openColorPickModal(card) {
             playerPlaysACard(card, colorPick);
         });
     });
+    delay(500);
     return colorPick;
 }
 
@@ -825,6 +815,7 @@ function checkIfPlayerCanOnlyPlayDraw4() {
 
     for (let i = 0; i < currentPlayersHand.length; i++) {
         if (globalResult.Players[currentPlayerIndex].Cards[i].Color === color || globalResult.Players[currentPlayerIndex].Cards[i].Value === value) {
+            delay(200);
             return false;
         }
     }
@@ -844,12 +835,10 @@ async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
         cardValid = true;
     } else if (card.Value === 14) { // just changeColor
         console.log('Card is valid because its a joker');
-        //colorPick = await openColorPickModal();
         cardValid = true;
     } else if (card.Value === 13) { //changeColor and +4 
         if (checkIfPlayerCanOnlyPlayDraw4()) {
             console.log('this player has no other cards to play except +4');
-            //colorPick = await openColorPickModal();
             cardValid = true;
         } else {
             console.log('Card is invalid because player has other cards to play.');
@@ -860,6 +849,7 @@ async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
         console.log('You cant play this invalid card!');
         cardValid = false;
     }
+    delay(200);
     return cardValid;
 }
 
@@ -870,12 +860,6 @@ async function sendPlayedCardToAPI(card, colorPick) {
     console.log('initiating card transmission to API...' + card.Color + card.Value);
     let value = card.Value;
     let color = card.Color;
-
-    /*if (value === 13 || value === 14) {
-    color = colorPick;
-    } else {
-    color = card.Color;   
-    }    */
 
     let URL = `https://nowaunoweb.azurewebsites.net/api/Game/PlayCard/${gameID}?value=${value}&color=${color}&wildColor=${colorPick}`;
 
@@ -910,18 +894,9 @@ async function sendPlayedCardToAPI(card, colorPick) {
     } else {
         alert("HTTP-Error: " + response.status);
     }
+    delay(1000);
 
 }
-
-/*
-async function removePlayedCardFromPlayersHand(currentPlayerID, card) {
-    let cardToRemove = await getCardID(currentPlayerID, card);
-    globalResult.Players[currentPlayerID].Cards.splice(cardToRemove, 1);
-    console.log('this card is successfully removed from players hand: ' + cardToRemove);
-    console.log(globalResult.Players[currentPlayerID].Cards);
-
-}
-*/
 
 // determines next turn
 async function determineTheNextPlayer(card) {
@@ -952,11 +927,12 @@ async function determineTheNextPlayer(card) {
     } else {
     }
 
-    if (card.Value < 13 || card.value) {
+    if (card.Value < 13) {
         colorPick = card.Color;
     }
 
     showCurrentPlayer();
+    delay(500);
 }
 
 //LOGIC for when a player plays a card
@@ -973,7 +949,7 @@ async function playerPlaysACard(card, colorPick) {
         alert('Player played an invalid card!');
         return;
     }
-
+    delay(500);
 }
 
 function displayWinner(player) { // Function to display assigned houses in the modal

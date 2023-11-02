@@ -3,11 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/credits.css">
+    <link rel="stylesheet" type="text/css" href="./css/credits.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 
     <title>Credits</title>
 </head>
 <body>
+
+  <div id="audioContainer">
+    <audio id="myAudio" controls loop>
+      <source src="css/introSong.mp3" type="audio/mpeg">
+      Dein Browser unterstützt das Audio-Element nicht.
+    </audio>
+  </div>
+ 
+
+  <nav>
+    <div></div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <button id="audioButton" onclick="playAudioLoop()"><i id="audioIcon" class="fas fa-volume-off"></i></button>
+      <button onclick="window.location.href='index.html'" type="button" class="home">Home</button>
+      <button onclick="window.location.href='help.html'" type="button" class="help">Help</button>
+          <button  onclick=before() type="button" class="credits">Credits</button>
+          <button onclick=afterr() type="btn btn-success" class="credits">?</button>
+    </div>
+  </nav>
+
+
+
+      <body>
+
+        <h1 id="message">
+          This Game is presented to you by these bitches!
+        </h1>
+        <div class="image-container">
+            
+                  <img id="myImage" src="./img/kata_b.jpg" alt="Kata" >
+                  <img id="myImage1" src="./img/myla_b.jpg" alt="Myla" >
+                  <img id="myImage2" src="./img/ksenija_b.jpg" alt="Ksenija" >
+
+              </div>
+              
     
-</body>
-</html>
+  
+
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+<script src="./js/credits.js"></script>
+
+
+    </body>
+
+
+    </html>
+
+
+
+
+
+

@@ -21,17 +21,12 @@ body {
     
 }
 
-
-
-
 .image-container {
   display: flex;
   justify-content: center !important; /* Zentrierung horizontal */
   margin-left: 300px;
   margin-right: 300px;
-  
 }
-
 
 .image-container img {
   width: 300px; /* Breite der Bilder anpassen */
@@ -40,14 +35,9 @@ body {
   margin: 10px; /* Abstand zwischen den Bildern anpassen */
 }
 
-
-
-
-
 nav > div {
   font-family: 'HarryPFont', sans-serif;
 }
-
 
 h1 {
   font-family: 'HarryPFont', sans-serif;
@@ -56,9 +46,6 @@ h1 {
   text-align: center;
   color: azure;
 }
-
-
-
 
 .home,
 .help,

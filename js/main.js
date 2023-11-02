@@ -256,7 +256,7 @@ function getCardID(playerID, card) {
             return i;
         }
     }
-    if (searchedCard == undefined) {
+    if (searchedCard.Color !== 'Black' && searchedCard == undefined) {
         alert('For some unknown reason, this card cant be found!');
     }
 }
@@ -842,7 +842,7 @@ async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
             cardValid = true;
         } else {
             console.log('Card is invalid because player has other cards to play.');
-            alert('You cannot play this card because you have other options. Choose another one!');
+            wrongCardAnimation(card);
             cardValid = false;
         }
     } else {
@@ -919,8 +919,8 @@ async function determineTheNextPlayer(card) {
     }
     if (card.Value === 13) {// +4 and changeColor card
         await updateAllPlayersCards();
-        skipNextPlayer(currentPlayerIndex);
         console.log('next player got penalized and is skipped');
+        skipNextPlayer(currentPlayerIndex);
     }
     if (card.Value === 14) { // only changeColor card
         setNextPlayer(currentPlayerIndex);
@@ -946,7 +946,7 @@ async function playerPlaysACard(card, colorPick) {
         await sendPlayedCardToAPI(card, chosenColor);
         console.log('card transmission to API successful');
     } else {
-        alert('Player played an invalid card!');
+        wrongCardAnimation(card);
         return;
     }
     delay(500);

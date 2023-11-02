@@ -152,7 +152,8 @@ nav {
   flex-grow: 1;
 }
 
-.discardCard {
+.discardCard,
+#discardCardDiv {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -162,7 +163,8 @@ nav {
   margin-left: 80px;
 }
 
-.drawPileCard {
+.drawPileCard,
+#drawPileDiv {
   position: absolute;
   top: 50%;
   left: 40%;

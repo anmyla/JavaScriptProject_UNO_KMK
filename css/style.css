@@ -30,7 +30,7 @@ h4 {
 #pl2Name,
 #pl3Name,
 #pl4Name{
-  text-align: center;
+  text-align: left;
   font-size: 30px;
 }
 
@@ -38,8 +38,7 @@ h4 {
 #score2,
 #score3,
 #score4{
-  background-color: rgba(3, 2, 2, 0.284);
-  text-align: center;
+  text-align: left;
   font-size: 20px;
 }
 
@@ -156,7 +155,7 @@ nav {
 #discardCardDiv {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 30%;
   transform: translate(-50%, -50%);
   text-align: center;
   max-width: 75px;
@@ -167,7 +166,7 @@ nav {
 #drawPileDiv {
   position: absolute;
   top: 50%;
-  left: 40%;
+  left: 30%;
   transform: translate(-50%, -50%);
   text-align: center;
   max-width: 85px;
@@ -358,18 +357,16 @@ th {
 /* winner modal----------------------------*/
 
 .announceWinner {
-background-image: url(../img/CCmodalBG.png);
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-display: none;
-position: fixed;
-top: 50%; /* Vertically center the modal */
-left: 50%; /* Horizontally center the modal */
-transform: translate(-50%, -50%); /* Center the modal precisely */
-width: 350px; /* Adjust the width as needed */
-border: 1px solid #ccc;
-border-radius: 5px;
-padding: 10px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
+  background-image: url(../img/CCmodalBG.png);
+  background-size: cover;
+  display: none;
+  position: fixed;
+  top: 50%; /* Vertically center the modal */
+  left: 50%; /* Horizontally center the modal */
+  transform: translate(-50%, -50%); /* Center the modal precisely */
+  width: 450px; /* Adjust the width as needed */
+  height: 450px;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }

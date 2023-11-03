@@ -100,6 +100,7 @@ function setDirection(direction) {
 function changeBGAfterStart() { //change background when entering Game Court
     // Hier setzt du das neue Hintergrundbild
     document.body.style.backgroundImage = 'url("./img/BGSpiel.jpg")';
+  
     // neue schriftfarbe
     document.body.style.color = "white";
     //neue h1

@@ -779,12 +779,6 @@ async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
 // send played/chosen card to the server
 async function sendPlayedCardToAPI(playerID, card, colorPick) {
 
-    if (isAPIQuerryInProgress) {
-        return;
-    }
-
-    isAPIQuerryInProgress = true;
-
     let URL = `https://nowaunoweb.azurewebsites.net/api/Game/PlayCard/${gameID}?value=${card.Value}&color=${card.Color}&wildColor=${colorPick}`;
 
     try {
@@ -827,10 +821,7 @@ async function sendPlayedCardToAPI(playerID, card, colorPick) {
     catch (error) {
         console.log(error);
 
-    } finally {
-        isAPIQuerryInProgress = false;
     }
-
 }
 
 async function updatePlayersHand(card, playerID) {
@@ -869,9 +860,7 @@ async function playerPlaysACard(card, colorPick) {
 
     if (cardValid) {
         correctCardAnimation(playerID, card);
-        if (!isAPIQuerryInProgress) {
-            await sendPlayedCardToAPI(playerID, card, chosenColor);
-        }
+        await sendPlayedCardToAPI(playerID, card, chosenColor);
     } else {
         wrongCardAnimation(card);
         console.log('INVALID CARD!');

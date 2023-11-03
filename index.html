@@ -136,68 +136,83 @@
   <!-- Color Modal -->
   <div id="colorModal" class="modalColorPicker">
     <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: transparent;">
-          <!-- Modal Header -->
-          <div id="modalHeader" class="modal-header2" style="border: none; text-align: center;">
-            <h2 class="modal-title2">Pick a Color!</h2>
-          </div>
-          <!-- Modal body -->
-          <div class="modalColorPicker-content">
-            <div id="row-color-1" class="row color-row">
-              <div class="col-6">
-                <button type="submit" id="Red" class="color-buttons">
-                  <img src="./img/Red.png" data-color="Red" alt="Red" class="color-image">
-                </button>
-              </div>
-              <div class="col-6">
-                <button type="submit" id="Blue" class="color-buttons">
-                  <img src="./img/Blue.png" data-color="Blue" alt="Blue" class="color-image"> </button>
-              </div>
+      <div class="modal-content" style="background-color: transparent;">
+        <!-- Modal Header -->
+        <div id="modalHeader" class="modal-header2" style="border: none; text-align: center;">
+          <h2 class="modal-title2">Pick a Color!</h2>
+        </div>
+        <!-- Modal body -->
+        <div class="modalColorPicker-content">
+          <div id="row-color-1" class="row color-row">
+            <div class="col-6">
+              <button type="submit" id="Red" class="color-buttons">
+                <img src="./img/Red.png" data-color="Red" alt="Red" class="color-image">
+              </button>
             </div>
+            <div class="col-6">
+              <button type="submit" id="Blue" class="color-buttons">
+                <img src="./img/Blue.png" data-color="Blue" alt="Blue" class="color-image"> </button>
+            </div>
+          </div>
 
-            <div id="row-color-2" class="row color-row">
-              <div class="col-6">
-                <button type="submit" id="Green" class="color-buttons">
-                  <img src="./img/Green.png" data-color="Green" alt="Green" class="color-image">
-                </button>
-              </div>
-              <div class="col-6">
-                <button type="submit" id="Yellow" class="color-buttons">
-                  <img src="./img/Yellow.png" data-color="Yellow" alt="Yellow" class="color-image">
-                </button>
-              </div>
+          <div id="row-color-2" class="row color-row">
+            <div class="col-6">
+              <button type="submit" id="Green" class="color-buttons">
+                <img src="./img/Green.png" data-color="Green" alt="Green" class="color-image">
+              </button>
+            </div>
+            <div class="col-6">
+              <button type="submit" id="Yellow" class="color-buttons">
+                <img src="./img/Yellow.png" data-color="Yellow" alt="Yellow" class="color-image">
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
 
-    <div id="winnerModal" class="announceWinner">
-      <div id="greetWinner">
-        <h2>Congratulations</h2>
-      </div>
-      <div id="winnerName"></div>
-      <div id="message2winner">
-        <h2>You've brought points to your house!</h2>
-      </div>
-      <div id="scoreBoard"></div>
-      <div id="winnerChoice">
-        <button id="anotherRound" class="btn btn-success">Play</button>
-        <button id="endGame" class="btn btn-success">End</button>
+  <!-- Winner Modal -->
+  <div class="announceWinner" id="winnerModal">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: transparent;">
+          <!-- Modal Header -->
+          <div class="modal-header2" style="border: none; text-align: center;">
+            <h2 class="modal-title2">Congratulations</h2>
+            <div id="winnerName"></div>
+            <div id="message2winner">
+              <h2>You've brought points to your house!</h2>
+            </div>
+            <button type="button" class="close" data-dismiss="modal">
+            </button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <div id="scoreBoard"></div>
+          </div>
+
+          <!-- Modal footer -->
+          <div id="winnerChoice">
+            <button id="anotherRound" class="btn btn-success">Play</button>
+            <button id="endGame" class="btn btn-success">End</button>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
 
 
-    <!-- Bootstrap JS and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
 
-    <script src="./js/main.js"></script>
+  <script src="./js/main.js"></script>
 </body>
 
 </html>

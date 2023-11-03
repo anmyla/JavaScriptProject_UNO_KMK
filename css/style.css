@@ -335,6 +335,7 @@ tr, td {
 th {
   font-family: 'HarryPFont', sans-serif;
   font-size: large;
+  font-weight: 250; /* oder font-weight: 400; */
   border: 1px solid white; 
   padding-right: 5px;
   padding-left: 5px; 
@@ -360,16 +361,12 @@ th {
 
   #anotherRound,
   #endGame {
-    margin-top: 35px;
+    margin-top: 15px;
     margin-left: 100px;
     background-color: black;
     width: 15%;
     height: auto;
     font-size: 22px;
-  }
-
-  #scoreBoard{
-    margin-top: 10%;
   }
 
   #greetWinner {

@@ -942,6 +942,7 @@ function openWinnerModal(playerName) {
     let h1 = document.createElement('h1');
 
     winnerModal.style.display = 'block';
+    h1.innerText = '';
     h1.innerText = playerName;
 
     nameDiv.appendChild(h1);

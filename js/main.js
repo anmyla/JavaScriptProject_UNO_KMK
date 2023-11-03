@@ -15,6 +15,8 @@ let playersGlobal = [];
 let player1Name, player2Name, player3Name, player4Name;
 
 
+
+
 class Card {
     constructor(color, value) {
         this.Color = color;
@@ -900,6 +902,8 @@ async function openWinnerModal(playerName) {
 
     nameDiv.appendChild(h1);
     initializeScoreBoard();
+    let winnerSong = new Audio("./css/winnerSong.mp3");
+    winnerSong.play();
 
     let anotherRound = document.getElementById('anotherRound');
     let endGame = document.getElementById('endGame');

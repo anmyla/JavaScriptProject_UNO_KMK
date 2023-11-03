@@ -7,16 +7,13 @@ let direction = 1;
 
 let colorPick;
 let winnerOfThisRound;
+let ultimateWinner;
 let playerScores = [];
 let round = 0;
-
-let isAPIQuerryInProgress;
 
 let playersList = [];
 let playersGlobal = [];
 let player1Name, player2Name, player3Name, player4Name;
-
-
 
 
 class Card {
@@ -444,7 +441,7 @@ function showCurrentPlayer() {
 }
 
 function updateScoreboard() {
-    if(round === 0) {
+    if (round === 0) {
         initializePlayerScores();
     }
 
@@ -938,7 +935,7 @@ function displayWinner(player) { // Function to display assigned houses in the m
 
 function openWinnerModal(playerName) {
 
-    document.getElementById('winnerName').innerHTML= '';
+    document.getElementById('winnerName').innerHTML = '';
 
     let winnerModal = document.getElementById('winnerModal');
     let nameDiv = document.getElementById('winnerName');
@@ -960,13 +957,10 @@ function openWinnerModal(playerName) {
         winnerModal.style.display = 'none';
         resetPlayground();
         await startNewGame();
-        changeBGAfterStart();
-        //distributeCardsAfterGameStarts();
-    
         if (globalResult.TopCard.Value === 12) {
             changeDirection();
         }
-    
+
         displayTopCard();
         setupDrawPile();
         showCurrentPlayer();
@@ -984,23 +978,38 @@ function openWinnerModal(playerName) {
 //----------------------------------------EXTRAS--------------------------------------------//
 
 function resetPlayground() {
-    // Remove the dynamically created elements
-    let directionContainer = document.getElementById("directionContainer");
-    while (directionContainer.firstChild) {
-        directionContainer.removeChild(directionContainer.firstChild);
-    }
-    document.body.style.backgroundImage = ''; 
+    document.body.style.backgroundImage = '';
     document.body.style.color = '';
 
     let gameMessageElement = document.getElementById("gameMessage");
-    gameMessageElement.textContent = ""; 
+    gameMessageElement.textContent = "";
 
     let container = document.querySelector('#playground');
-    container.classList.remove('container1'); 
+    container.classList.remove('container1');
+
+    // Hier setzt du das neue Hintergrundbild
+    document.body.style.backgroundImage = 'url("./img/BGSpiel.jpg")';
+    // neue schriftfarbe
+    document.body.style.color = "white";
+    //neue h1
+    gameMessageElement = document.getElementById("gameMessage");
+    gameMessageElement.textContent = "No magic! Just logic!";
+
+    // translucent black background
+    container = document.querySelector('#playground');
+    container.classList.add('container1');
 }
 
 
-
+function isUltimateWinner() {
+    for(let i = 0; i < 4; i++) {
+        if (playerScores[i] >= 500) {
+            ultimateWinner = playersList[i];
+            return true;
+        }
+    }
+    return false;
+}
 
 
 

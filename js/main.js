@@ -860,6 +860,29 @@ async function updatePlayersHand(card, playerID) {
 }
 */
 
+function penalizedPlayer(previousPlayerIndex) {
+    let penalizedPlayerID;
+
+    if (direction === 1) { //if clockwise
+        penalizedPlayerID = previousPlayerIndex + 1;
+        if (penalizedPlayerID > 3) {
+            penalizedPlayerID = 0;
+        }
+        if (penalizedPlayerID < 0) {
+            penalizedPlayerID = 3;
+        }
+    } else { //if counterclockwise
+        penalizedPlayerID = previousPlayerIndex - 1;
+        if (penalizedPlayerID > 3) {
+            penalizedPlayerID = 0;
+        }
+        if (penalizedPlayerID < 0) {
+            penalizedPlayerID = 3;
+        }
+    }
+    return penalizedPlayerID;
+}
+
 async function updateFrontEnd(card, playerID) {
     if (card.Value === 10 || card.Value === 13) {
         let getsPenaltyCards = penalizedPlayer(playerID);
@@ -913,7 +936,7 @@ function displayWinner(player) { // Function to display assigned houses in the m
 }
 
 
-async function openWinnerModal(playerName) {
+function openWinnerModal(playerName) {
     let winnerModal = document.getElementById('winnerModal');
     let nameDiv = document.getElementById('winnerName');
     let h1 = document.createElement('h1');
@@ -929,9 +952,21 @@ async function openWinnerModal(playerName) {
     let anotherRound = document.getElementById('anotherRound');
     let endGame = document.getElementById('endGame');
 
-    anotherRound.addEventListener('click', function () {
+    anotherRound.addEventListener('click', async function () {
         winnerModal.style.display = 'none';
-        startNewGame();
+        resetPlayground();
+        await startNewGame();
+        changeBGAfterStart();
+        //distributeCardsAfterGameStarts();
+    
+        if (globalResult.TopCard.Value === 12) {
+            changeDirection();
+        }
+    
+        displayTopCard();
+        setupDrawPile();
+        showCurrentPlayer();
+        showPlayerScores();
     });
 
     endGame.addEventListener('click', function () {
@@ -942,7 +977,46 @@ async function openWinnerModal(playerName) {
 
 
 
+//----------------------------------------EXTRAS--------------------------------------------//
 
+function resetPlayground() {
+    // Remove the dynamically created elements
+    let directionContainer = document.getElementById("directionContainer");
+    while (directionContainer.firstChild) {
+        directionContainer.removeChild(directionContainer.firstChild);
+    }
+
+    // Other elements and styles you might want to reset can be similarly removed or reset.
+    // For example:
+    document.body.style.backgroundImage = ''; // Reset background image
+    document.body.style.color = ''; // Reset text color
+
+    let gameMessageElement = document.getElementById("gameMessage");
+    gameMessageElement.textContent = ""; // Reset game message
+
+    let container = document.querySelector('#playground');
+    container.classList.remove('container1'); // Remove added class
+
+    // Rebuild the playground exactly as it was initially
+    //changeBGAfterStart(); // Call your function to rebuild the playground
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 
 function setNextPlayer(thisPlayerIndex) {
     let newPlayerIndex;
@@ -970,173 +1044,9 @@ function setNextPlayer(thisPlayerIndex) {
     console.log('Player after SetNextPlayer function: ' + globalResult.Players[newPlayerIndex].Player);
 }
 
-function penalizedPlayer(previousPlayerIndex) {
-    let penalizedPlayerID;
 
-    if (direction === 1) { //if clockwise
-        penalizedPlayerID = previousPlayerIndex + 1;
-        if (penalizedPlayerID > 3) {
-            penalizedPlayerID = 0;
-        }
-        if (penalizedPlayerID < 0) {
-            penalizedPlayerID = 3;
-        }
-    } else { //if counterclockwise
-        penalizedPlayerID = previousPlayerIndex - 1;
-        if (penalizedPlayerID > 3) {
-            penalizedPlayerID = 0;
-        }
-        if (penalizedPlayerID < 0) {
-            penalizedPlayerID = 3;
-        }
-    }
-    return penalizedPlayerID;
 
 }
 
 
-
-
-
-
-
-
-
-//---Don't delete yet, i might need to recycle some of it-------
-
-/*
-
-async function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-
-//retrieve playerID based on player's name
-function getIdOfThisPlayer(nameOfPlayer) {
-    for (let i = 0; i <= 3; i++) {
-        if (globalResult.Players[i].Player === nameOfPlayer) {
-            return i;
-        }
-    }
-} */
-
-/* determines next turn
-async function determineTheNextPlayer(card) {
-    globalResult.TopCard = card;
-    let currentPlayerIndex = getCurrentPlayerID();
-
-    if (card.Value < 10) { //0-9 regular cards
-        setNextPlayer(currentPlayerIndex);
-    }
-    if (card.Value === 12) { //reverse card
-        changeDirection(currentPlayerIndex);
-    }
-    if (card.Value === 11) {//skip card
-        skipNextPlayer(currentPlayerIndex);
-    }
-    if (card.Value === 10) { //+2 cards
-        await updateAllPlayersCards();
-        skipNextPlayer(currentPlayerIndex);
-        console.log('next player got penalized and is skipped');
-    }
-    if (card.Value === 13) {// +4 and changeColor card
-        await updateAllPlayersCards();
-        console.log('next player got penalized and is skipped');
-        skipNextPlayer(currentPlayerIndex);
-    }
-    if (card.Value === 14) { // only changeColor card
-        setNextPlayer(currentPlayerIndex);
-    } else {
-    }
-
-    if (card.Value < 13) {
-        colorPick = card.Color;
-    }
-
-    showCurrentPlayer();
-    delay(300);
-}
-*/
-
-/*
-
-function skipNextPlayer(thisPlayerIndex) {
-    let newPlayerIndex;
-    if (thisPlayerIndex == 0) {
-        newPlayerIndex = 2;
-    } else if (thisPlayerIndex == 1) {
-        newPlayerIndex = 3;
-    } else if (thisPlayerIndex == 2) {
-        newPlayerIndex = 0;
-    } else if (thisPlayerIndex == 3) {
-        newPlayerIndex = 1;
-    }
-
-    globalResult.NextPlayer = globalResult.Players[newPlayerIndex].Player;
-    console.log('Player to play next after a SKIP CARD is played is: ' + globalResult.NextPlayer);
-}
-
-function getNextTurn(thisPlayerIndex) { //player to play next
-    let newPlayerIndex;
-    if (direction === 1) { //if clockwise
-        newPlayerIndex = thisPlayerIndex + 1;
-        if (newPlayerIndex > 3) {
-            newPlayerIndex = 0;
-        }
-        if (newPlayerIndex < 0) {
-            newPlayerIndex = 3;
-        }
-    } else { //if counterclockwise
-        newPlayerIndex = thisPlayerIndex - 1;
-        if (newPlayerIndex > 3) {
-            newPlayerIndex = 0;
-        }
-        if (newPlayerIndex < 0) {
-            newPlayerIndex = 3;
-        }
-    }
-    return newPlayerIndex;
-}
-*/
-
-/*
-function changeDirection(currentPlayerIndex) {
-    let newPlayerIndex;
-
-    if (direction === 1) { //if clockwise so we set it to counter cloackwise
-        newPlayerIndex = currentPlayerIndex - 1;
-    } else { // else set to clockwise
-        newPlayerIndex = currentPlayerIndex + 1;
-    }
-
-    if (newPlayerIndex > 3) {
-        newPlayerIndex = 0;
-    } else if (newPlayerIndex < 0) {
-        newPlayerIndex = 3;
-    }
-
-    direction = direction * (-1); //reverse the direction by changing this value
-
-    globalResult.NextPlayer = globalResult.Players[newPlayerIndex].Player;
-    globalResult.Player = globalResult.Players[newPlayerIndex].Player;
-    console.log('Next player after ChangeDirection function ' + globalResult.Players[newPlayerIndex].Player);
-
-    setDirection(direction);
-} */
-
-
-/*async function playerDrawsACard() {
-    let playerID = getCurrentPlayerID();
-    let topCard = globalResult.TopCard;
-    
-    
-    if (topCard.Value === 10 || topCard.Value === 11 || topCard.Value === 13) {
-        let playerToDrawCard = getNextTurn(playerID);
-        await drawCardFromAPI(playerToDrawCard);
-    } else {
-        await drawCardFromAPI(playerID);
-    } 
-    console.log('It\'s' + globalResult.Player + '\'s turn now!');
-    delay(300);
-}
 */

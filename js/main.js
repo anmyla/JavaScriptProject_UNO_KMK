@@ -8,6 +8,7 @@ let direction = 1;
 let colorPick;
 let winnerOfThisRound;
 let playerScores = [];
+let round = 0;
 
 let isAPIQuerryInProgress;
 
@@ -319,7 +320,7 @@ function initializeScoreBoard() {
     const scoreBoard = document.getElementById("scoreBoard");
     scoreBoard.innerHTML = '';
 
-    initializePlayerScores();
+
 
     let table = document.createElement("table");
 
@@ -443,6 +444,10 @@ function showCurrentPlayer() {
 }
 
 function updateScoreboard() {
+    if(round === 0) {
+        initializePlayerScores();
+    }
+
     // Clear the scoreboard div before updating it with the new content
     const scoreBoard = document.getElementById("scoreBoard");
     scoreBoard.innerHTML = '';
@@ -867,7 +872,6 @@ async function updateFrontEnd(card, playerID) {
     //await updatePlayersHand(card, playerID);
     let isWinner = await checkIfWinner();
     if (isWinner) {
-        updateScoreboard();
         openWinnerModal(winnerOfThisRound); //after this part we can decide how to end the game
     }
     else {
@@ -933,7 +937,7 @@ async function openWinnerModal(playerName) {
     endGame.addEventListener('click', function () {
         winnerModal.style.display = 'none';
     });
-
+    round++;
 }
 
 

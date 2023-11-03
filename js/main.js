@@ -687,7 +687,7 @@ async function openColorPickModal(card) {
             console.log('Selected color: ' + colorPick);
             colorModal.style.display = 'none';
             playerPlaysACard(card, colorPick);
-        }, 500);
+        }, 1000);
 
         image.addEventListener('click', debouncedClick);
     });

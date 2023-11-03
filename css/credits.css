@@ -30,8 +30,9 @@ body {
 
 .image-container img {
   width: 300px; /* Breite der Bilder anpassen */
-  height: 250px; /* Höhe der Bilder anpassen */
+  height: 270px; /* Höhe der Bilder anpassen */
   border-radius: 300px;
+  border: 3px solid #0a061c;
   margin: 10px; /* Abstand zwischen den Bildern anpassen */
 }
 

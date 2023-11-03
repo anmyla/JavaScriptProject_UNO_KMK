@@ -1,27 +1,27 @@
 
 
-function after(){
+function after() {
     document.getElementById('myImage')
-    .src="./img/kata.jpeg";
+        .src = "./img/kata.jpg";
     document.getElementById('myImage1')
-    .src="./img/myla.jpeg";
+        .src = "./img/myla.jpg";
     document.getElementById('myImage2')
-    .src="./img/ksenija.jpeg";
+        .src = "./img/ksenija.jpg";
     const h1 = document.getElementById("message2");
- 
+
     const newH1 = document.createElement("h1");
     newH1.textContent = "... sorry, we mean witches!";
-   
+
     // Füge das neue h1-Element zum Dokument hinzu
     h1.appendChild(newH1);
 }
 
 
 let messageAdded = false;
- 
+
 document.addEventListener('click', function () {
     if (!messageAdded) {
-       after();
+        after();
         messageAdded = true;
     }
 });

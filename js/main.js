@@ -509,7 +509,7 @@ function calculateWinnerScore() {
 }
 
 
-function checkIfWinner() {
+async function checkIfWinner() {
     for (let i = 0; i < 4; i++) {
         if (globalResult.Players[i].Cards.length === 0) {
             winnerOfThisRound = globalResult.Players[i].Player;
@@ -819,9 +819,11 @@ async function sendPlayedCardToAPI(playerID, card, colorPick) {
                 changeDirection();
             }
 
+            /*
             if (card.Value === 14) { //because this is such a problematic card it has its own steNextPlayer Function
                 setNextPlayer(playerID);
             }
+            */
 
 
         } else {
@@ -847,7 +849,7 @@ async function updatePlayersHand(card, playerID) {
 
 async function updateFrontEnd(card, playerID) {
     await updatePlayersHand(card, playerID);
-    let isWinner = checkIfWinner();
+    let isWinner = await checkIfWinner();
     if (isWinner) {
         updateScoreboard();
         openWinnerModal(winnerOfThisRound); //after this part we can decide how to end the game

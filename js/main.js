@@ -387,8 +387,8 @@ function showThisPlayerCards(playerID) {
 
         cardimg.addEventListener('click', async function () { //we add an eventListener for each image.
             if (color === 'Black') {
-                let plus4CardCheck = await checkIfPlayerCanOnlyPlayDraw4();
-                if((number === 13 && plus4CardCheck)|| number === 14) {
+                let canOnlyPlayPlus4 = await checkIfPlayerCanOnlyPlayDraw4();
+                if((number === 13 && canOnlyPlayPlus4 )|| number === 14) {
                 openColorPickModal(globalResult.Players[playerID].Cards[i])
                     .then(selectedColor => {
                         playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
@@ -398,10 +398,9 @@ function showThisPlayerCards(playerID) {
                         console.error(error);
                     });
                 } else {
-                    console.log('Player has other cards to play')
                     wrongCardAnimation();
+                    console.log('Player has other cards to play');
                 }
-                // await openColorPickModal(globalResult.Players[playerID].Cards[i]);
             } else {
                 playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
             }

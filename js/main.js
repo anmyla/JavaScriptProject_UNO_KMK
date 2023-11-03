@@ -727,6 +727,37 @@ async function checkIfPlayerCanOnlyPlayDraw4() {
 
 async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
     let topCard = globalResult.TopCard;
+    let canOnlyPlayDraw4 = await checkIfPlayerCanOnlyPlayDraw4();
+
+    if (card.Value === 13) { // changeColor and +4
+        if (canOnlyPlayDraw4) {
+            console.log('This player HAS NO other cards to play except +4');
+            return true;
+        } else {
+            wrongCardAnimation(card);
+            console.log('Card is invalid because the player has other cards to play.');
+            return false;
+        }
+    } else if (card.Value === 14) { // just changeColor
+        console.log('Card is valid because it\'s a joker');
+        return true;
+    } else if (topCard.Value === card.Value || topCard.Color === card.Color) {
+        console.log('Card is valid based on color or value!');
+        return true;
+    } else if (colorPick === card.Color) {
+        console.log('Card is valid based on colorPick');
+        return true;
+    } else {
+        console.log('You can\'t play this invalid card!');
+        return false;
+    }
+}
+
+
+
+/*
+async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
+    let topCard = globalResult.TopCard;
 
     if (card.Value === 13) { //changeColor and +4 
         if (await checkIfPlayerCanOnlyPlayDraw4()) {
@@ -752,9 +783,8 @@ async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
         console.log('You cant play this invalid card!');
         return false;
     }
-    //await delay(300);
 }
-
+*/
 
 // send played/chosen card to the server
 async function sendPlayedCardToAPI(playerID, card, colorPick) {

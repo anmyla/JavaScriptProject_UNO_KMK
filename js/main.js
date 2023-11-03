@@ -511,6 +511,13 @@ function calculateWinnerScore() {
         }
 
     }
+
+    for (let i = 0; i < 4; i++) {
+        if (playerScores[i] >= 500) {
+            ultimateWinner = playersList[i];
+        }
+    }
+
     return playerScores;
 }
 
@@ -947,32 +954,42 @@ function openWinnerModal(playerName) {
 
     nameDiv.appendChild(h1);
     updateScoreboard();
+
     let winnerSong = new Audio("./css/winnerSong.mp3");
     winnerSong.play();
 
     let anotherRound = document.getElementById('anotherRound');
     let endGame = document.getElementById('endGame');
 
-    anotherRound.addEventListener('click', async function () {
-        winnerModal.style.display = 'none';
-        resetPlayground();
-        await startNewGame();
-        if (globalResult.TopCard.Value === 12) {
-            changeDirection();
-        }
+    if (ultimateWinner) {
+        document.getElementById('housePoints').innerHTML = '';
+        document.getElementById('housePoints').innerHTML = 'What an impressive win for a real champion!';
 
-        displayTopCard();
-        setupDrawPile();
-        showCurrentPlayer();
-        showPlayerScores();
-    });
+        anotherRound.addEventListener('click', function () {
+            winnerModal.style.display = 'none';
+        });
+
+    } else {
+        anotherRound.addEventListener('click', async function () {
+            winnerModal.style.display = 'none';
+            resetPlayground();
+            await startNewGame();
+            if (globalResult.TopCard.Value === 12) {
+                changeDirection();
+            }
+
+            displayTopCard();
+            setupDrawPile();
+            showCurrentPlayer();
+            showPlayerScores();
+        });
+    }
 
     endGame.addEventListener('click', function () {
         winnerModal.style.display = 'none';
     });
     round++;
 }
-
 
 
 //----------------------------------------EXTRAS--------------------------------------------//
@@ -1001,15 +1018,6 @@ function resetPlayground() {
 }
 
 
-function isUltimateWinner() {
-    for(let i = 0; i < 4; i++) {
-        if (playerScores[i] >= 500) {
-            ultimateWinner = playersList[i];
-            return true;
-        }
-    }
-    return false;
-}
 
 
 

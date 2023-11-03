@@ -387,6 +387,8 @@ function showThisPlayerCards(playerID) {
 
         cardimg.addEventListener('click', async function () { //we add an eventListener for each image.
             if (color === 'Black') {
+                let plus4CardCheck = await checkIfPlayerCanOnlyPlayDraw4();
+                if((number === 13 && plus4CardCheck)|| number === 14) {
                 openColorPickModal(globalResult.Players[playerID].Cards[i])
                     .then(selectedColor => {
                         playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
@@ -395,7 +397,10 @@ function showThisPlayerCards(playerID) {
                         console.log('error after color modal');
                         console.error(error);
                     });
-
+                } else {
+                    console.log('Player has other cards to play')
+                    wrongCardAnimation();
+                }
                 // await openColorPickModal(globalResult.Players[playerID].Cards[i]);
             } else {
                 playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
@@ -717,7 +722,9 @@ async function checkIfPlayerCanOnlyPlayDraw4() {
     let currentPlayersHand = globalResult.Players[currentPlayerIndex].Cards;
 
     for (let i = 0; i < currentPlayersHand.length; i++) {
-        if (globalResult.Players[currentPlayerIndex].Cards[i].Color === color || globalResult.Players[currentPlayerIndex].Cards[i].Value === value) {
+        if (globalResult.Players[currentPlayerIndex].Cards[i].Color === color
+            || globalResult.Players[currentPlayerIndex].Cards[i].Value === value
+            || globalResult.Players[currentPlayerIndex].Cards[i].Color === colorPick) {
             return false;
         }
     }
@@ -727,19 +734,22 @@ async function checkIfPlayerCanOnlyPlayDraw4() {
 
 async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
     let topCard = globalResult.TopCard;
-    let canOnlyPlayDraw4 = await checkIfPlayerCanOnlyPlayDraw4();
+    //let canOnlyPlayDraw4 = await checkIfPlayerCanOnlyPlayDraw4();
 
-    if (card.Value === 13) { // changeColor and +4
-        if (canOnlyPlayDraw4) {
-            console.log('This player HAS NO other cards to play except +4');
-            return true;
-        } else {
-            wrongCardAnimation(card);
-            console.log('Card is invalid because the player has other cards to play.');
-            return false;
-        }
-    } else if (card.Value === 14) { // just changeColor
-        console.log('Card is valid because it\'s a joker');
+    // if (card.Value === 13) { // changeColor and +4
+    //     if (canOnlyPlayDraw4) {
+    //         console.log('This player HAS NO other cards to play except +4');
+    //         return true;
+    //     } else {
+    //         wrongCardAnimation(card);
+    //         console.log('Card is invalid because the player has other cards to play.');
+    //         return false;
+    //     }
+    // } else if (card.Value === 14) { // just changeColor
+    //     console.log('Card is valid because it\'s a joker');
+    //     return true;
+    if (card.Color === 'Black') {
+        console.log ('Wildcards already checked for validity before colorPick.')
         return true;
     } else if (topCard.Value === card.Value || topCard.Color === card.Color) {
         console.log('Card is valid based on color or value!');

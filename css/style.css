@@ -284,7 +284,9 @@ nav {
   align-items: center;
 }
 
-.color-image {
+
+.color-image
+ {
   width: 100px;
   height: 100px;
   margin: 20px;

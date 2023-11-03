@@ -176,7 +176,7 @@ function correctCardAnimation(currentPlayerId, card) {
 
     setTimeout(() => {
         correctCard.classList.remove("bigcard");
-    }, 2000);
+    }, 500);
 }
 
 function displayPlayerDivHeaders() {

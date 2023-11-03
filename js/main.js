@@ -937,12 +937,15 @@ function displayWinner(player) { // Function to display assigned houses in the m
 
 
 function openWinnerModal(playerName) {
+
+    document.getElementById('winnerName').innerHTML= '';
+    
     let winnerModal = document.getElementById('winnerModal');
     let nameDiv = document.getElementById('winnerName');
     let h1 = document.createElement('h1');
 
+
     winnerModal.style.display = 'block';
-    h1.innerText = '';
     h1.innerText = playerName;
 
     nameDiv.appendChild(h1);

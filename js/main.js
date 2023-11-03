@@ -747,20 +747,6 @@ async function checkIfPlayerMayPlayDraw4() {
 
 async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
     let topCard = globalResult.TopCard;
-    //let canOnlyPlayDraw4 = await checkIfPlayerCanOnlyPlayDraw4();
-
-    // if (card.Value === 13) { // changeColor and +4
-    //     if (canOnlyPlayDraw4) {
-    //         console.log('This player HAS NO other cards to play except +4');
-    //         return true;
-    //     } else {
-    //         wrongCardAnimation(card);
-    //         console.log('Card is invalid because the player has other cards to play.');
-    //         return false;
-    //     }
-    // } else if (card.Value === 14) { // just changeColor
-    //     console.log('Card is valid because it\'s a joker');
-    //     return true;
     if (card.Color === 'Black') {
         console.log('Wildcards already checked for validity before colorPick.')
         return true;
@@ -777,37 +763,6 @@ async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
 }
 
 
-
-/*
-async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
-    let topCard = globalResult.TopCard;
-
-    if (card.Value === 13) { //changeColor and +4 
-        if (await checkIfPlayerCanOnlyPlayDraw4()) {
-            console.log('This player HAS NO other cards to play except +4');
-            return true;
-
-        } else {
-            wrongCardAnimation(card);
-            console.log('Card is invalid because player has other cards to play.');
-            return false;
-
-        }
-    } else if (card.Value === 14) { // just changeColor
-        console.log('Card is valid because its a joker');
-        return true;
-    } else if (topCard.Value === card.Value || topCard.Color === card.Color) {
-        console.log('Card is valid based on color or value!');
-        return true;
-    } else if (colorPick === card.Color) {
-        console.log('Card is valid based on colorPick');
-        return true;
-    } else {
-        console.log('You cant play this invalid card!');
-        return false;
-    }
-}
-*/
 
 // send played/chosen card to the server
 async function sendPlayedCardToAPI(playerID, card, colorPick) {
@@ -853,17 +808,6 @@ async function sendPlayedCardToAPI(playerID, card, colorPick) {
 }
 
 
-/*
-async function updatePlayersHand(card, playerID) {
-    if (card.Value === 10 || card.Value === 13) {
-        let getsPenaltyCards = penalizedPlayer(playerID);
-        await updateThisPlayerCards(getsPenaltyCards);
-        await updateThisPlayerCards(playerID);
-    } else {
-        await updateThisPlayerCards(playerID);
-    }
-}
-*/
 
 function penalizedPlayer(previousPlayerIndex) {
     let penalizedPlayerID;
@@ -994,7 +938,7 @@ function openWinnerModal(playerName) {
 
 
 //----------------------------------------EXTRAS--------------------------------------------//
-
+//if user want to play more rounds
 function resetPlayground() {
     document.body.style.backgroundImage = '';
     document.body.style.color = '';
@@ -1019,7 +963,7 @@ function resetPlayground() {
 }
 
 
-
+//----------------------------------------EXTRAS--------------------------------------------//
 
 
 
@@ -1060,9 +1004,48 @@ function setNextPlayer(thisPlayerIndex) {
     console.log('Player after SetNextPlayer function: ' + globalResult.Players[newPlayerIndex].Player);
 }
 
-
-
 }
+*/
 
+/*
+async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
+    let topCard = globalResult.TopCard;
 
+    if (card.Value === 13) { //changeColor and +4 
+        if (await checkIfPlayerCanOnlyPlayDraw4()) {
+            console.log('This player HAS NO other cards to play except +4');
+            return true;
+
+        } else {
+            wrongCardAnimation(card);
+            console.log('Card is invalid because player has other cards to play.');
+            return false;
+
+        }
+    } else if (card.Value === 14) { // just changeColor
+        console.log('Card is valid because its a joker');
+        return true;
+    } else if (topCard.Value === card.Value || topCard.Color === card.Color) {
+        console.log('Card is valid based on color or value!');
+        return true;
+    } else if (colorPick === card.Color) {
+        console.log('Card is valid based on colorPick');
+        return true;
+    } else {
+        console.log('You cant play this invalid card!');
+        return false;
+    }
+}
+*/
+
+/*
+async function updatePlayersHand(card, playerID) {
+    if (card.Value === 10 || card.Value === 13) {
+        let getsPenaltyCards = penalizedPlayer(playerID);
+        await updateThisPlayerCards(getsPenaltyCards);
+        await updateThisPlayerCards(playerID);
+    } else {
+        await updateThisPlayerCards(playerID);
+    }
+}
 */

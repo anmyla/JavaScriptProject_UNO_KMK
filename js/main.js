@@ -836,6 +836,7 @@ async function sendPlayedCardToAPI(playerID, card, colorPick) {
     }
 }
 
+/*
 async function updatePlayersHand(card, playerID) {
     if (card.Value === 10 || card.Value === 13) {
         let getsPenaltyCards = penalizedPlayer(playerID);
@@ -844,11 +845,19 @@ async function updatePlayersHand(card, playerID) {
     } else {
         await updateThisPlayerCards(playerID);
     }
-
 }
+*/
 
 async function updateFrontEnd(card, playerID) {
-    await updatePlayersHand(card, playerID);
+    if (card.Value === 10 || card.Value === 13) {
+        let getsPenaltyCards = penalizedPlayer(playerID);
+        await updateThisPlayerCards(getsPenaltyCards);
+        await updateThisPlayerCards(playerID);
+    } else {
+        await updateThisPlayerCards(playerID);
+    }
+
+    //await updatePlayersHand(card, playerID);
     let isWinner = await checkIfWinner();
     if (isWinner) {
         updateScoreboard();

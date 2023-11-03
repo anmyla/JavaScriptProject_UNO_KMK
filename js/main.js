@@ -4,6 +4,7 @@
 let globalResult = Object();
 let gameID;
 let direction = 1;
+
 let colorPick;
 let winnerOfThisRound;
 let playerScores = [];
@@ -316,6 +317,7 @@ function initializePlayerScores() {
 
 function initializeScoreBoard() {
     const scoreBoard = document.getElementById("scoreBoard");
+    scoreBoard.innerHTML = '';
 
     initializePlayerScores();
 
@@ -385,7 +387,16 @@ function showThisPlayerCards(playerID) {
 
         cardimg.addEventListener('click', async function () { //we add an eventListener for each image.
             if (color === 'Black') {
-                await openColorPickModal(globalResult.Players[playerID].Cards[i]);
+                openColorPickModal(globalResult.Players[playerID].Cards[i])
+                    .then(selectedColor => {
+                        playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
+                    })
+                    .catch(error => {
+                        console.log('error after color modal');
+                        console.error(error);
+                    });
+
+                // await openColorPickModal(globalResult.Players[playerID].Cards[i]);
             } else {
                 playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
             }
@@ -674,55 +685,24 @@ async function updateThisPlayerCards(playerID) {
     }
 }
 
+function openColorPickModal(card) {
+    return new Promise((resolve, reject) => {
+        let colorModal = document.getElementById('colorModal');
+        let colorImages = document.querySelectorAll('.color-image');
 
-async function openColorPickModal(card) {
-    let colorModal = document.getElementById('colorModal');
-    let colorImages = document.querySelectorAll('.color-image');
+        colorModal.style.display = 'block';
 
-    colorModal.style.display = 'block';
-
-    colorImages.forEach(function (image) {
-        let debouncedClick = debounce(function() {
-            colorPick = image.getAttribute('data-color');
-            console.log('Selected color: ' + colorPick);
-            colorModal.style.display = 'none';
-            playerPlaysACard(card, colorPick);
-        }, 1000);
-
-        image.addEventListener('click', debouncedClick);
-    });
-
-    function debounce(func, delay) {
-        let timeout;
-        return function() {
-            clearTimeout(timeout);
-            timeout = setTimeout(func, delay);
-        };
-    }
-}
-
-
-/*
-async function openColorPickModal(card) {
-    let colorModal = document.getElementById('colorModal');
-    let colorImages = document.querySelectorAll('.color-image');
-
-    colorModal.style.display = 'block';
-
-    colorImages.forEach(function (image) {
-        image.addEventListener('click', function () {
-            colorPick = image.getAttribute('data-color');
-            console.log('Selected color: ' + colorPick);
-            colorModal.style.display = 'none';
-            playerPlaysACard(card, colorPick);
+        colorImages.forEach(function (image) {
+            image.addEventListener('click', function (event) {
+                colorPick = image.getAttribute('data-color');
+                console.log('Selected color: ' + colorPick);
+                image.removeEventListener('click', event);
+                colorModal.style.display = 'none';
+                resolve(colorPick); // Resolve the Promise with the selected color
+            });
         });
     });
-    //delay(500);
-    return colorPick;
 }
-*/
-
-
 
 function changeDirection() {
     direction = direction * (-1);
@@ -890,7 +870,7 @@ async function openWinnerModal(playerName) {
     h1.innerText = playerName;
 
     nameDiv.appendChild(h1);
-    initializeScoreBoard();
+    updateScoreboard();
     let winnerSong = new Audio("./css/winnerSong.mp3");
     winnerSong.play();
 

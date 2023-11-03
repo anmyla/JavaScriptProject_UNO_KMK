@@ -258,45 +258,30 @@ nav {
 }
 
 
-
-
-/*Myla: einfacherer CSS code für Color Picker */
+/*Color Picker */
 .modalColorPicker {
-  /*background-image: url(../img/CCmodalBG.png); */
+  background-image: url(../img/CCmodalBG.png);
+  background-position: center;
   display: none;
   position: fixed;
   top: 50%; /* Vertically center the modal */
   left: 50%; /* Horizontally center the modal */
   transform: translate(-50%, -50%); /* Center the modal precisely */
-  width: 350px; /* Adjust the width as needed */
-  background: rgba(20, 19, 19, 0.928); /* Adjust the background color and opacity */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  width: 450px; /* Adjust the width as needed */
+  border-radius: 10px;
 }
 
-.modalColorPicker-content {
-
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-
-
-.color-image
- {
-  width: 100px;
-  height: 100px;
-  margin: 20px;
+.color-image {
+  width: 150px;
+  height: auto;
   cursor: pointer;
 }
 
-#modalHeader {
-  padding: 10px;
-  color: #fff;
-  text-align: justify;
+.color-buttons{
+  border-radius: 5px;
+  border: none;
+  background-color: white;
+  margin: 15px;
 }
 
 /*-----------Ende: ColorPickerModal */
@@ -363,12 +348,30 @@ th {
   background-size: cover;
   display: none;
   position: fixed;
-  top: 50%; /* Vertically center the modal */
-  left: 50%; /* Horizontally center the modal */
+  top: 50%; 
+  left: 50%; 
   transform: translate(-50%, -50%); /* Center the modal precisely */
-  width: 450px; /* Adjust the width as needed */
-  height: 450px;
+  width: 450px;
+  height: 520px;
   border-radius: 10px;
   padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  #anotherRound,
+  #endGame {
+    margin-top: 35px;
+    margin-left: 100px;
+    background-color: black;
+    width: 15%;
+    height: auto;
+    font-size: 22px;
+  }
+
+  #scoreBoard{
+    margin-top: 10%;
+  }
+
+  #greetWinner {
+    margin-top: 5%;
   }

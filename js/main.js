@@ -624,7 +624,6 @@ document.getElementById('okButton').addEventListener('click', async function () 
 
 });
 
-
 async function updateAllPlayersCards() {
     let name;
     let URL;
@@ -681,6 +680,34 @@ async function openColorPickModal(card) {
     colorModal.style.display = 'block';
 
     colorImages.forEach(function (image) {
+        let debouncedClick = debounce(function() {
+            colorPick = image.getAttribute('data-color');
+            console.log('Selected color: ' + colorPick);
+            colorModal.style.display = 'none';
+            playerPlaysACard(card, colorPick);
+        }, 500);
+
+        image.addEventListener('click', debouncedClick);
+    });
+
+    function debounce(func, delay) {
+        let timeout;
+        return function() {
+            clearTimeout(timeout);
+            timeout = setTimeout(func, delay);
+        };
+    }
+}
+
+
+/*
+async function openColorPickModal(card) {
+    let colorModal = document.getElementById('colorModal');
+    let colorImages = document.querySelectorAll('.color-image');
+
+    colorModal.style.display = 'block';
+
+    colorImages.forEach(function (image) {
         image.addEventListener('click', function () {
             colorPick = image.getAttribute('data-color');
             console.log('Selected color: ' + colorPick);
@@ -691,6 +718,8 @@ async function openColorPickModal(card) {
     //delay(500);
     return colorPick;
 }
+*/
+
 
 
 function changeDirection() {
@@ -810,6 +839,7 @@ async function updatePlayersHand(card, playerID) {
     } else {
         await updateThisPlayerCards(playerID);
     }
+
 }
 
 async function updateFrontEnd(card, playerID) {

@@ -93,7 +93,7 @@
     </div>
   </div>
 
-  <div id ="playground">
+  <div id="playground">
     <!-- erste zeile -->
     <div class="row">
       <div class="col-4"></div>
@@ -102,7 +102,9 @@
         <div id="score1"></div>
         <!-- Hier werden die Karten von Spieler 1 angezeigt -->
       </div>
-      <div class="col-4"><div id="directionContainer"></div></div>
+      <div class="col-4">
+        <div id="directionContainer"></div>
+      </div>
     </div>
 
     <!-- zweite zeile -->
@@ -131,42 +133,71 @@
     </div>
   </div>
 
-
-
+  <!-- Color Modal -->
   <div id="colorModal" class="modalColorPicker">
-    <div id="modalHeader"><h2>Pick a Color!</h2></div>
-    <div class="modalColorPicker-content">
-        <img src="./img/Red.png" data-color="Red" alt="Red" class="color-image" >
-        <img src="./img/Blue.png" data-color="Blue" alt="Blue" class="color-image" >
-        <img src="./img/Green.png" data-color="Green" alt="Green" class="color-image">
-        <img src="./img/Yellow.png" data-color="Yellow" alt="Yellow" class="color-image">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: transparent;">
+          <!-- Modal Header -->
+          <div id="modalHeader" class="modal-header2" style="border: none; text-align: center;">
+            <h2 class="modal-title2">Pick a Color!</h2>
+          </div>
+          <!-- Modal body -->
+          <div class="modalColorPicker-content">
+            <div id="row-color-1" class="row color-row">
+              <div class="col-6">
+                <button type="submit" id="Red" class="color-buttons">
+                  <img src="./img/Red.png" data-color="Red" alt="Red" class="color-image">
+                </button>
+              </div>
+              <div class="col-6">
+                <button type="submit" id="Blue" class="color-buttons">
+                  <img src="./img/Blue.png" data-color="Blue" alt="Blue" class="color-image"> </button>
+              </div>
+            </div>
+
+            <div id="row-color-2" class="row color-row">
+              <div class="col-6">
+                <button type="submit" id="Green" class="color-buttons">
+                  <img src="./img/Green.png" data-color="Green" alt="Green" class="color-image">
+                </button>
+              </div>
+              <div class="col-6">
+                <button type="submit" id="Yellow" class="color-buttons">
+                  <img src="./img/Yellow.png" data-color="Yellow" alt="Yellow" class="color-image">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-
-<div id="winnerModal" class="announceWinner">
-  <div id="greetWinner"><h2>Congratulations</h2></div>
-  <div id="winnerName"></div>
-  <div id="message2winner"><h2>You've brought points to your house!</h2></div>
-  <div id="scoreBoard"></div>
-  <div id="winnerChoice">
-    <button id="anotherRound" class="btn btn-success">
-    play another round!
-  </button>
-  <button id="endGame" class="btn btn-success">OK!</button>
-</div>
-
-</div>
 
 
-
-  <!-- Bootstrap JS and jQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <div id="winnerModal" class="announceWinner">
+      <div id="greetWinner">
+        <h2>Congratulations</h2>
+      </div>
+      <div id="winnerName"></div>
+      <div id="message2winner">
+        <h2>You've brought points to your house!</h2>
+      </div>
+      <div id="scoreBoard"></div>
+      <div id="winnerChoice">
+        <button id="anotherRound" class="btn btn-success">Play</button>
+        <button id="endGame" class="btn btn-success">End</button>
+      </div>
+    </div>
 
 
 
-  <script src="./js/main.js"></script>
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+    <script src="./js/main.js"></script>
 </body>
 
 </html>

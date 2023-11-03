@@ -387,18 +387,18 @@ function showThisPlayerCards(playerID) {
 
         cardimg.addEventListener('click', async function () { //we add an eventListener for each image.
             if (color === 'Black') {
-                let canOnlyPlayPlus4 = await checkIfPlayerCanOnlyPlayDraw4();
-                if((number === 13 && canOnlyPlayPlus4 )|| number === 14) {
-                openColorPickModal(globalResult.Players[playerID].Cards[i])
-                    .then(selectedColor => {
-                        playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
-                    })
-                    .catch(error => {
-                        console.log('error after color modal');
-                        console.error(error);
-                    });
+                let canOnlyPlayPlus4 = await checkIfPlayerMayPlayDraw4();
+                if (canOnlyPlayPlus4 || number === 14) {
+                    openColorPickModal(globalResult.Players[playerID].Cards[i])
+                        .then(selectedColor => {
+                            playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
+                        })
+                        .catch(error => {
+                            console.log('error after color modal');
+                            console.error(error);
+                        });
                 } else {
-                    wrongCardAnimation();
+                    wrongCardAnimation(globalResult.Players[playerID].Cards[i]);
                     console.log('Player has other cards to play');
                 }
             } else {
@@ -713,18 +713,22 @@ function changeDirection() {
     setDirection(direction);
 }
 
-async function checkIfPlayerCanOnlyPlayDraw4() {
+async function checkIfPlayerMayPlayDraw4() {
     let color = globalResult.TopCard.Color;
     let value = globalResult.TopCard.Value;
     let currentPlayerIndex = getCurrentPlayerID();
 
     let currentPlayersHand = globalResult.Players[currentPlayerIndex].Cards;
 
-    for (let i = 0; i < currentPlayersHand.length; i++) {
-        if (globalResult.Players[currentPlayerIndex].Cards[i].Color === color
-            || globalResult.Players[currentPlayerIndex].Cards[i].Value === value
-            || globalResult.Players[currentPlayerIndex].Cards[i].Color === colorPick) {
-            return false;
+    if (color === 'Black') {
+        return false;
+    } else {
+        for (let i = 0; i < currentPlayersHand.length; i++) {
+            if (globalResult.Players[currentPlayerIndex].Cards[i].Color === color
+                || globalResult.Players[currentPlayerIndex].Cards[i].Value === value
+                || globalResult.Players[currentPlayerIndex].Cards[i].Color === colorPick) {
+                return false;
+            }
         }
     }
     return true;
@@ -748,7 +752,7 @@ async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
     //     console.log('Card is valid because it\'s a joker');
     //     return true;
     if (card.Color === 'Black') {
-        console.log ('Wildcards already checked for validity before colorPick.')
+        console.log('Wildcards already checked for validity before colorPick.')
         return true;
     } else if (topCard.Value === card.Value || topCard.Color === card.Color) {
         console.log('Card is valid based on color or value!');
@@ -797,9 +801,7 @@ async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
 
 // send played/chosen card to the server
 async function sendPlayedCardToAPI(playerID, card, colorPick) {
-
     let URL = `https://nowaunoweb.azurewebsites.net/api/Game/PlayCard/${gameID}?value=${card.Value}&color=${card.Color}&wildColor=${colorPick}`;
-
     try {
         let response = await fetch(URL,
             {
@@ -815,35 +817,31 @@ async function sendPlayedCardToAPI(playerID, card, colorPick) {
 
         if (response.ok) {
             console.log(response.status);
+            console.log(apiResponseToPlayedCard);
             globalResult.Player = apiResponseToPlayedCard.Player;
             globalResult.NextPlayer = apiResponseToPlayedCard.Player;
             // console.log(globalResult.Players[playerID].Player + ' is done playing a card!');
             console.log('Next Player:  ' + globalResult.NextPlayer);
 
+            //set colorPick to topCard.Color
             if (card.Value < 12) {
                 colorPick = card.Color;
             }
 
+            //determine direction
             if (card.Value === 12) {
                 changeDirection();
             }
 
-            /*
-            if (card.Value === 14) { //because this is such a problematic card it has its own steNextPlayer Function
-                setNextPlayer(playerID);
-            }
-            */
-
-
         } else {
-            alert("HTTP-Error: " + response.status);
+            console.log("HTTP-Error: " + response.status);
         }
     }
     catch (error) {
         console.log(error);
-
     }
 }
+
 
 /*
 async function updatePlayersHand(card, playerID) {

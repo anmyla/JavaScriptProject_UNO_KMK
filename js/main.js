@@ -939,7 +939,7 @@ function displayWinner(player) { // Function to display assigned houses in the m
 function openWinnerModal(playerName) {
 
     document.getElementById('winnerName').innerHTML= '';
-    
+
     let winnerModal = document.getElementById('winnerModal');
     let nameDiv = document.getElementById('winnerName');
     let h1 = document.createElement('h1');
@@ -989,20 +989,14 @@ function resetPlayground() {
     while (directionContainer.firstChild) {
         directionContainer.removeChild(directionContainer.firstChild);
     }
-
-    // Other elements and styles you might want to reset can be similarly removed or reset.
-    // For example:
-    document.body.style.backgroundImage = ''; // Reset background image
-    document.body.style.color = ''; // Reset text color
+    document.body.style.backgroundImage = ''; 
+    document.body.style.color = '';
 
     let gameMessageElement = document.getElementById("gameMessage");
-    gameMessageElement.textContent = ""; // Reset game message
+    gameMessageElement.textContent = ""; 
 
     let container = document.querySelector('#playground');
-    container.classList.remove('container1'); // Remove added class
-
-    // Rebuild the playground exactly as it was initially
-    //changeBGAfterStart(); // Call your function to rebuild the playground
+    container.classList.remove('container1'); 
 }
 
 

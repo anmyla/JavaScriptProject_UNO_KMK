@@ -734,7 +734,10 @@ async function checkIfPlayerMayPlayDraw4() {
         return false;
     } else {
         for (let i = 0; i < currentPlayersHand.length; i++) {
-            if (currentPlayersHand[i].Color === color
+            if (currentPlayersHand[i].Value === 14) {
+                return false;
+            }
+            else if (currentPlayersHand[i].Color === color
                 || currentPlayersHand[i].Value === value
                 || currentPlayersHand[i].Color === colorPick) {
                 return false;

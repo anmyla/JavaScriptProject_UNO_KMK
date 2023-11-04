@@ -921,6 +921,7 @@ function openWinnerModal(playerName) {
             winnerModal.style.display = 'none';
             resetPlayground();
             await startNewGame();
+            
             if (globalResult.TopCard.Value === 12) {
                 changeDirection();
             }

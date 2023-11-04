@@ -75,3 +75,19 @@ h1 {
   display: none;
   /* Versteckt das Audio-Steuerungselement */
 }
+
+
+#disclaimer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: black;
+  color: white;
+  padding: 20Px;
+  margin: 10px;
+  font-size: 16px;
+  text-align: center;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}

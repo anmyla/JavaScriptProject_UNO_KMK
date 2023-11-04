@@ -10,7 +10,7 @@ function after() {
     const h1 = document.getElementById("message2");
 
     const newH1 = document.createElement("h1");
-    newH1.textContent = "... sorry, we mean witches!";
+    newH1.textContent = "... sorry, we mean WITCHES!";
 
     // Füge das neue h1-Element zum Dokument hinzu
     h1.appendChild(newH1);

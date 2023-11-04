@@ -87,8 +87,8 @@ document.getElementById('nameForm').addEventListener('submit', function (e) { //
 
 
 //START: Functions for Design Elements--------------------------------------------Kata: start
-function setDirection(direction) {
-    const directionContainer = document.getElementById("directionContainer");
+async function setDirection(direction) {
+    let directionContainer = document.getElementById("directionContainer");
 
     if (direction === 1) { // im Uhrzeigersinn (clockwise)
         directionContainer.style.animationName = "rotateClockwise";
@@ -268,7 +268,7 @@ function displayTopCard() { //Construct a discard pile and create div for discar
     let color = globalResult.TopCard.Color;
     let value = globalResult.TopCard.Value;
 
-    if (value > 13) {
+    if (value >= 13) {
         discardCard = new Card(colorPick, value);
     } else {
         discardCard = new Card(color, value);
@@ -718,9 +718,9 @@ function openColorPickModal(card) {
     });
 }
 
-function changeDirection() {
+async function changeDirection() {
     direction = direction * (-1);
-    setDirection(direction);
+    await setDirection(direction);
 }
 
 async function checkIfPlayerMayPlayDraw4() {
@@ -919,10 +919,16 @@ function openWinnerModal(playerName) {
     } else {
         anotherRound.addEventListener('click', async function () {
             winnerModal.style.display = 'none';
-            resetPlayground();
-            await startNewGame();
+           
+            await resetPlayground();
 
-            if (globalResult.TopCard.Value === 12) {
+            if (direction !== 1) { //reset Direction
+                changeDirection();
+            }
+
+            await startNewGame(); //start a new round
+
+            if (globalResult.TopCard.Value === 12) { 
                 changeDirection();
             }
 
@@ -942,9 +948,7 @@ function openWinnerModal(playerName) {
 
 //----------------------------------------EXTRAS--------------------------------------------//
 //if user want to play more rounds
-function resetPlayground() {
-    direction = 1; //reset direction
-
+async function resetPlayground() {
     document.body.style.backgroundImage = '';
     document.body.style.color = '';
 

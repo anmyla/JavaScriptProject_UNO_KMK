@@ -268,7 +268,7 @@ function displayTopCard() { //Construct a discard pile and create div for discar
     let color = globalResult.TopCard.Color;
     let value = globalResult.TopCard.Value;
 
-    if (value > 12) {
+    if (value > 13) {
         discardCard = new Card(colorPick, value);
     } else {
         discardCard = new Card(color, value);

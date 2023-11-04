@@ -32,6 +32,7 @@ h4 {
 #pl4Name{
   text-align: left;
   font-size: 30px;
+  text-align: center;
 }
 
 #score1,
@@ -40,6 +41,7 @@ h4 {
 #score4{
   text-align: left;
   font-size: 20px;
+  text-align: center;
 }
 
 
@@ -141,7 +143,9 @@ nav {
 #cardContainer3 {
   display: flex;
   flex-direction: row; /* Standard: Karten werden in einer Reihe angezeigt */
-  flex-wrap: wrap
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 
 .card {

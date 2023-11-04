@@ -111,7 +111,6 @@ function changeBGAfterStart() { //change background when entering Game Court
     let container = document.querySelector('#playground');
     container.classList.add('container1');
 
-
     let directionContainer = document.getElementById("directionContainer");
     let imageElement = document.createElement("img");
     imageElement.src = "./img/direction.png";

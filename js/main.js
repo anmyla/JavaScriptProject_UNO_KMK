@@ -651,6 +651,7 @@ document.getElementById('okButton').addEventListener('click', async function () 
 
 });
 
+
 async function updateAllPlayersCards() {
     let name;
     let URL;
@@ -726,17 +727,17 @@ function changeDirection() {
 async function checkIfPlayerMayPlayDraw4() {
     let color = globalResult.TopCard.Color;
     let value = globalResult.TopCard.Value;
-    let currentPlayerIndex = getCurrentPlayerID();
+    let playerID = getCurrentPlayerID();
 
-    let currentPlayersHand = globalResult.Players[currentPlayerIndex].Cards;
+    let currentPlayersHand = globalResult.Players[playerID].Cards;
 
     if (color === 'Black') {
         return false;
     } else {
         for (let i = 0; i < currentPlayersHand.length; i++) {
-            if (globalResult.Players[currentPlayerIndex].Cards[i].Color === color
-                || globalResult.Players[currentPlayerIndex].Cards[i].Value === value
-                || globalResult.Players[currentPlayerIndex].Cards[i].Color === colorPick) {
+            if (currentPlayersHand[i].Color === color
+                || currentPlayersHand[i].Value === value
+                || currentPlayersHand[i].Color === colorPick) {
                 return false;
             }
         }
@@ -748,7 +749,7 @@ async function checkIfPlayerMayPlayDraw4() {
 async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
     let topCard = globalResult.TopCard;
     if (card.Color === 'Black') {
-        console.log('Wildcards already checked for validity before colorPick.')
+        console.log('Wildcards are already checked for validity before colorPick.')
         return true;
     } else if (topCard.Value === card.Value || topCard.Color === card.Color) {
         console.log('Card is valid based on color or value!');
@@ -765,7 +766,7 @@ async function checkPlayedCardValiditiyBeforeSendingToAPI(card) {
 
 
 // send played/chosen card to the server
-async function sendPlayedCardToAPI(playerID, card, colorPick) {
+async function sendPlayedCardToAPI(card, colorPick) {
     let URL = `https://nowaunoweb.azurewebsites.net/api/Game/PlayCard/${gameID}?value=${card.Value}&color=${card.Color}&wildColor=${colorPick}`;
     try {
         let response = await fetch(URL,
@@ -864,7 +865,7 @@ async function playerPlaysACard(card, colorPick) {
 
     if (cardValid) {
         correctCardAnimation(playerID, card);
-        await sendPlayedCardToAPI(playerID, card, chosenColor);
+        await sendPlayedCardToAPI(card, chosenColor);
     } else {
         wrongCardAnimation(card);
         console.log('INVALID CARD!');
@@ -872,7 +873,6 @@ async function playerPlaysACard(card, colorPick) {
     }
 
     await updateFrontEnd(card, playerID);
-    //await delay(300);
 }
 
 

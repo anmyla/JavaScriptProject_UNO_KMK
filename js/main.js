@@ -629,6 +629,7 @@ async function startNewGame() { // Async function necessary for Promise
     catch {
         console.error("Error in startNewGame:", error);
     }
+
 }
 
 
@@ -636,7 +637,6 @@ document.getElementById('okButton').addEventListener('click', async function () 
     $('#nameModal').modal('hide');
     await startNewGame();
     changeBGAfterStart();
-    //initializeScoreBoard(); //set all scores on scoreboard to 0;
     distributeCardsAfterGameStarts();
 
     if (globalResult.TopCard.Value === 12) {
@@ -943,6 +943,7 @@ function openWinnerModal(playerName) {
 //----------------------------------------EXTRAS--------------------------------------------//
 //if user want to play more rounds
 function resetPlayground() {
+    direction = 1; //reset direction
     document.body.style.backgroundImage = '';
     document.body.style.color = '';
 

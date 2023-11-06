@@ -411,12 +411,12 @@ async function showThisPlayerCards(playerID) {
         cardimg.addEventListener('click', async function () { //we add an eventListener for each image.
             if ((globalResult.Players[playerID].Cards.length === 1 && playersCall[playerID] === 'uno')
                 || globalResult.Players[playerID].Cards.length > 1) {
-                if (color === 'Black') {
-                    let canOnlyPlayPlus4 = await checkIfPlayerMayPlayDraw4();
+                if (value === '13') {
+                    let canOnlyPlayPlus4 = await checkIfPlayerMayPlayDraw4(playerID);
                     if (canOnlyPlayPlus4 || number === 14) {
-                        openColorPickModal(globalResult.Players[playerID].Cards[i])
-                            .then(selectedColor => {
-                                playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
+                        await openColorPickModal(globalResult.Players[playerID].Cards[i])
+                            .then(async selectedColor => {
+                                await playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
                             })
                             .catch(error => {
                                 console.log('error after color modal');
@@ -732,7 +732,7 @@ async function updateThisPlayerCards(playerID) {
     }
 }
 
-function openColorPickModal(card) {
+async function openColorPickModal(card) {
     return new Promise((resolve, reject) => {
         let colorModal = document.getElementById('colorModal');
         let colorImages = document.querySelectorAll('.color-image');
@@ -756,7 +756,7 @@ async function changeDirection() {
     await setDirection(direction);
 }
 
-async function checkIfPlayerMayPlayDraw4() {
+async function checkIfPlayerMayPlayDraw4(playerID) {
     let color = globalResult.TopCard.Color;
     let value = globalResult.TopCard.Value;
     let playerID = await getCurrentPlayerID();

@@ -763,14 +763,13 @@ async function checkIfPlayerMayPlayDraw4() {
 
     let currentPlayersHand = globalResult.Players[playerID].Cards;
 
-    if (color.Value === 'Black') {
+    if (color === 'Black') {
         return false;
     } else {
         for (let i = 0; i < currentPlayersHand.length; i++) {
             if (currentPlayersHand[i].Value === 14) {
                 return false;
-            }
-            else if (currentPlayersHand[i].Color === color
+            } else if (currentPlayersHand[i].Color === color
                 || currentPlayersHand[i].Value === value
                 || currentPlayersHand[i].Color === colorPick) {
                 return false;
@@ -779,7 +778,6 @@ async function checkIfPlayerMayPlayDraw4() {
             }
         }
     }
-
     return true;
 }
 

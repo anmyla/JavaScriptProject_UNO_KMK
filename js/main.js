@@ -1070,8 +1070,8 @@ function thanksForPlaying() {
     gameMessageElement.textContent = "";
 
     let container = document.querySelector('#playground');
-    container.classList.remove('container1');
-
+    container.innerHTML = '';
+    
     // Hier setzt du das neue Hintergrundbild
     document.body.style.backgroundImage = 'url("./img/BGSpiel.jpg")';
     // neue schriftfarbe
@@ -1080,8 +1080,6 @@ function thanksForPlaying() {
     gameMessageElement = document.getElementById("gameMessage");
     gameMessageElement.textContent = "No magic! Just logic!";
 
-    // translucent black background
-    container = document.querySelector('#playground');
     container.classList.add('container1');
 
     let byeDiv = document.createElement('div');

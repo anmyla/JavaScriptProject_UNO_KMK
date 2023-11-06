@@ -893,8 +893,6 @@ async function updateFrontEnd(card, playerID) {
     }
 }
 
-
-
 //LOGIC for when a player plays a card
 async function playerPlaysACard(card, colorPick) {
     let cardValid = await checkPlayedCardValiditiyBeforeSendingToAPI(card);
@@ -923,7 +921,7 @@ function displayWinner(player) { // Function to display assigned houses in the m
 }
 
 
-function openWinnerModal(playerName) {
+function openWinnerModal(playerName) { //dialog box to show player points and winner
 
     document.getElementById('winnerName').innerHTML = '';
 
@@ -1043,8 +1041,6 @@ async function callUNO(playerID) {
 }
 
 
-
-
 async function cardCheck(card) { //check if card can be played 
     let topCard = globalResult.TopCard;
 
@@ -1065,7 +1061,7 @@ async function cardCheck(card) { //check if card can be played
     }
 }
 
-function thanksForPlaying() {
+function thanksForPlaying() { //closing message
     document.body.style.backgroundImage = '';
     document.body.style.color = '';
 

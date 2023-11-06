@@ -773,12 +773,10 @@ async function checkIfPlayerMayPlayDraw4(playerID) {
                 || currentPlayersHand[i].Value === value
                 || currentPlayersHand[i].Color === colorPick) {
                 return false;
-            } else {
-                return true;
             }
         }
+        return true;
     }
-    return true;
 }
 
 

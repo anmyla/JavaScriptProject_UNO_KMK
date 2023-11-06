@@ -4,34 +4,64 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="./css/help.css" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
   </head>
 
   <body>
-
     <div id="audioContainer">
       <audio id="myAudio" controls loop>
-        <source src="css/introSong.mp3" type="audio/mpeg">
+        <source src="css/introSong.mp3" type="audio/mpeg" />
         Dein Browser unterstützt das Audio-Element nicht.
       </audio>
     </div>
-   
-  
+
     <nav>
       <div></div>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button id="audioButton" onclick="playAudioLoop()"><i id="audioIcon" class="fas fa-volume-off"></i></button>
-        <button onclick="window.location.href='index.html'" type="button" class="home">Home</button>
-        <button class="help" id="testButton" onclick="window.location.href='help.html'">Help</button>
-        <button class="help_deu" id="testButton" onclick="window.location.href='help_deu.html'">Hilfe</button>
-        <button class="credits" id="testButton" onclick="window.location.href='credits.html'">Credits</button>
+        <button id="audioButton" onclick="playAudioLoop()">
+          <i id="audioIcon" class="fas fa-volume-off"></i>
+        </button>
+        <button
+          onclick="window.location.href='index.html'"
+          type="button"
+          class="home"
+        >
+          Home
+        </button>
+        <button
+          class="help"
+          id="testButton"
+          onclick="window.location.href='help.html'"
+        >
+          Help
+        </button>
+        <button
+          class="help_deu"
+          id="testButton"
+          onclick="window.location.href='help_deu.html'"
+        >
+          Hilfe
+        </button>
+        <button
+          class="credits"
+          id="testButton"
+          onclick="window.location.href='credits.html'"
+        >
+          Credits
+        </button>
       </div>
     </nav>
-    <br>
+    <br />
 
     <div class="text">
       <h1>Spielregeln</h1>
@@ -66,7 +96,7 @@
         „Eins“) rufen und signalisiert damit, dass er nur noch eine Karte auf
         der Hand hat. Vergisst ein Spieler das und ein anderer bekommt es
         rechtzeitig mit (bevor der nächste Spieler eine Karte gezogen oder
-        abgeworfen hat) so muss er 2 Strafkarten ziehen. Die Runde gewinnt
+        abgeworfen hat) so muss er 1 Strafkarte ziehen. Die Runde gewinnt
         derjenige, welcher die letzte Karte abgelegt hat. Die Punkte werden
         addiert und eine neue Runde wird gespielt.
       </div>
@@ -121,14 +151,11 @@
         welche Farbe als nächstes gelegt werden soll. Zudem muss der nächste
         Spieler 4 Karten von dem Kartenstapel nehmen. Er darf in dieser Runde
         keine Karte ablegen. Leider darf die Karte nur dann gelegt werden, wenn
-        der Spieler der sie hat, keine Karte in der Hand hält, die der Farbe auf
-        dem Ablegestapel entspricht. Hat der Spieler eine Karte mit der
-        entsprechenden Nummer oder Aktionskarten, kann die Zieh Vier
-        Farbenwahlkarte dennoch gelegt werden. Ein Spieler der eine
-        Zieh-Vier-Farbenwahlkarte hat, kann bluffen und die Karte „unerlaubt“
-        legen. Wird er jedoch dabei „erwischt“ gelten bestimmte Regeln (siehe
-        Strafkarten). Wird diese Karte zu Beginn des Spiels gezogen,wird sie auf
-        den Stapel zurückgelegt und eine andere Karte wird gezogen.
+        der Spieler der sie hat, keine Karte in der Hand hält, die der Farbe
+        oder der Nummer auf dem Ablegestapel entspricht. Außerdem kann diese
+        Karte nicht auf einer anderen +4-Karte oder einer Wildcard gespielt
+        werden. Wird diese Karte zu Beginn des Spiels gezogen,wird sie auf den
+        Stapel zurückgelegt und eine andere Karte wird gezogen.
       </div>
       <br />
       <h5>Strafen</h5>
@@ -202,16 +229,13 @@
         Varianten.
       </div>
     </div>
-      <br />
+    <br />
 
-<!-- Bootstrap JS and jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
-
-<script src="./js/credits.js"></script>
-
-</body>
+    <script src="./js/credits.js"></script>
+  </body>
 </html>

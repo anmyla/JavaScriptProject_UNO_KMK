@@ -948,10 +948,13 @@ function openWinnerModal(playerName) {
     if (ultimateWinner) {
         document.getElementById('housePoints').innerHTML = '';
         document.getElementById('housePoints').innerHTML = 'What an impressive win for a real champion!';
+        anotherRound.innerHTML= '';
+        anotherRound.textContent = 'Congrats!'
 
         anotherRound.addEventListener('click', function () {
             winnerSong.pause(); // Stoppe den Song, wenn der Button geklickt wird
             winnerModal.style.display = 'none';
+            thanksForPlaying();
         });
 
     } else {

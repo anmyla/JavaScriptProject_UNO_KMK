@@ -946,7 +946,7 @@ function openWinnerModal(playerName) { //dialog box to show player points and wi
     if (ultimateWinner) {
         document.getElementById('housePoints').innerHTML = '';
         document.getElementById('housePoints').innerHTML = 'What an impressive win for a real champion!';
-        anotherRound.innerHTML= '';
+        anotherRound.innerHTML = '';
         anotherRound.textContent = 'Congrats!'
 
         anotherRound.addEventListener('click', function () {
@@ -1070,7 +1070,7 @@ function thanksForPlaying() { //closing message
 
     let container = document.querySelector('#playground');
     container.innerHTML = '';
-    
+
     // Hier setzt du das neue Hintergrundbild
     document.body.style.backgroundImage = 'url("./img/BGSpiel.jpg")';
     // neue schriftfarbe

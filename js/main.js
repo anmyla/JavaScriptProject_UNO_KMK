@@ -903,6 +903,7 @@ function openWinnerModal(playerName) {
     updateScoreboard();
 
     let winnerSong = new Audio("./css/winnerSong.mp3");
+    winnerSong.loop = true; // Hier wird das loop-Attribut gesetzt
     winnerSong.play();
 
     let anotherRound = document.getElementById('anotherRound');
@@ -913,13 +914,15 @@ function openWinnerModal(playerName) {
         document.getElementById('housePoints').innerHTML = 'What an impressive win for a real champion!';
 
         anotherRound.addEventListener('click', function () {
+            winnerSong.pause(); // Stoppe den Song, wenn der Button geklickt wird
             winnerModal.style.display = 'none';
         });
 
     } else {
         anotherRound.addEventListener('click', async function () {
+            winnerSong.pause(); // Stoppe den Song, wenn der Button geklickt wird
             winnerModal.style.display = 'none';
-           
+
             await resetPlayground();
 
             if (direction !== 1) { //reset Direction
@@ -928,7 +931,7 @@ function openWinnerModal(playerName) {
 
             await startNewGame(); //start a new round
 
-            if (globalResult.TopCard.Value === 12) { 
+            if (globalResult.TopCard.Value === 12) {
                 changeDirection();
             }
 

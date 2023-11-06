@@ -14,6 +14,7 @@ let round = 0;
 let playersList = [];
 let playersGlobal = [];
 let player1Name, player2Name, player3Name, player4Name;
+let playersCall = [];
 
 
 class Card {
@@ -117,6 +118,18 @@ function changeBGAfterStart() { //change background when entering Game Court
     directionContainer.appendChild(imageElement);
     imageElement.style.width = "100px";
     imageElement.style.height = "auto";
+
+    let unoButton = document.getElementById("unoButtonContainer");
+    let unoImg = document.createElement("img");
+    unoImg.src = "./img/unoButton.png";
+    unoButton.appendChild(unoImg);
+    unoImg.style.width = "100px";
+    unoImg.style.height = "auto";
+
+    unoButton.addEventListener("click", async function () {
+        let playerID = await getCurrentPlayerID();
+        await callUNO(playerID);
+    });
 }
 
 
@@ -151,9 +164,9 @@ okButton.addEventListener("click", function () {
     flyingImage.style.display = "none";
 });
 
-function wrongCardAnimation(card) {
-    let playerID = getCurrentPlayerID();
-    let cardID = getCardID(playerID, card);
+async function wrongCardAnimation(card) {
+    let playerID = await getCurrentPlayerID();
+    let cardID = await getCardID(playerID, card);
     const discardCard = document.getElementById("discardCardDiv");
     discardCard.classList.add("wrongCard")
     const wrongCardDiv = document.getElementById('cardContainer' + playerID).children;
@@ -166,16 +179,26 @@ function wrongCardAnimation(card) {
     }, 2000);
 }
 
-function correctCardAnimation(currentPlayerId, card) {
-    let cardId = getCardID(currentPlayerId, card);
+async function correctCardAnimation(currentPlayerId, card) {
+    let cardId = await getCardID(currentPlayerId, card);
     const correctCardDiv = document.getElementById('cardContainer' + currentPlayerId).children;
     const correctCard = correctCardDiv.item(cardId);
     correctCard.classList.add("bigcard");
 
     setTimeout(() => {
         correctCard.classList.remove("bigcard");
-    }, 500);
+    }, 300);
 }
+
+function wrongUnoCall() {
+    const unoDiv = document.getElementById("unoButtonContainer");
+    unoDiv.classList.add("wrongCard");
+
+    setTimeout(() => {
+        unoDiv.classList.remove("wrongCard");
+    }, 2000);
+}
+
 
 function displayPlayerDivHeaders() {
     let pl1Name = document.getElementById("pl1Name");
@@ -252,8 +275,10 @@ function setupDrawPile() { //Construct draw pile and create div for draw pile
     drawPileDiv.appendChild(drawPileImg)
     gameCourt.appendChild(drawPileDiv);
 
-    drawPileDiv.addEventListener('click', function () {
-        drawCardFromAPI();
+    drawPileDiv.addEventListener('click', async function () {
+        let playerID = await getCurrentPlayerID();
+        await drawCardFromAPI(playerID);
+
     })
 }
 
@@ -361,7 +386,7 @@ function initializeScoreBoard() {
 }
 
 // show the cards of this player
-function showThisPlayerCards(playerID) {
+async function showThisPlayerCards(playerID) {
     let baseUrl = './img/cards/';
     let currentPlayerCardDiv = document.getElementById('cardContainer' + playerID);
     currentPlayerCardDiv.innerHTML = '';
@@ -384,30 +409,37 @@ function showThisPlayerCards(playerID) {
         currentPlayerCardDiv.appendChild(cardimg);
 
         cardimg.addEventListener('click', async function () { //we add an eventListener for each image.
-            if (color === 'Black') {
-                let canOnlyPlayPlus4 = await checkIfPlayerMayPlayDraw4();
-                if (canOnlyPlayPlus4 || number === 14) {
-                    openColorPickModal(globalResult.Players[playerID].Cards[i])
-                        .then(selectedColor => {
-                            playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
-                        })
-                        .catch(error => {
-                            console.log('error after color modal');
-                            console.error(error);
-                        });
+            if ((globalResult.Players[playerID].Cards.length === 1 && playersCall[playerID] === 'uno')
+                || globalResult.Players[playerID].Cards.length > 1) {
+                if (color === 'Black') {
+                    let canOnlyPlayPlus4 = await checkIfPlayerMayPlayDraw4();
+                    if (canOnlyPlayPlus4 || number === 14) {
+                        openColorPickModal(globalResult.Players[playerID].Cards[i])
+                            .then(selectedColor => {
+                                playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
+                            })
+                            .catch(error => {
+                                console.log('error after color modal');
+                                console.error(error);
+                            });
+                    } else {
+                        wrongCardAnimation(globalResult.Players[playerID].Cards[i]);
+                        console.log('Player has other cards to play');
+                    }
                 } else {
-                    wrongCardAnimation(globalResult.Players[playerID].Cards[i]);
-                    console.log('Player has other cards to play');
+                    playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
                 }
             } else {
-                playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
+                alert('YOU FORGOT TO CALL UNO! HERE IS YOU PENALTY CARD!');
+                drawCardFromAPI(playerID);
             }
         });
     }
 }
 
+
 // hide the cards of this player
-function putThisPlayerCardsUpsideDown(playerID) {
+async function putThisPlayerCardsUpsideDown(playerID) {
     let notCurrentPlayerCardDiv = document.getElementById('cardContainer' + playerID);
     notCurrentPlayerCardDiv.innerHTML = '';
 
@@ -427,15 +459,15 @@ function putThisPlayerCardsUpsideDown(playerID) {
 }
 
 // To show/hide players' hand based on whose turn it is
-function showCurrentPlayer() {
-    let playerIndex = getCurrentPlayerID();
+async function showCurrentPlayer() {
+    let playerIndex = await getCurrentPlayerID();
 
     for (let i = 0; i <= 3; i++) {
         if (i === playerIndex) {
-            showThisPlayerCards(i);
+            await showThisPlayerCards(i);
 
         } else {
-            putThisPlayerCardsUpsideDown(i)
+            await putThisPlayerCardsUpsideDown(i)
         }
     }
 }
@@ -553,8 +585,7 @@ async function getTopCardFromAPI() {
 }
 
 
-async function drawCardFromAPI() {
-    let playerID = getCurrentPlayerID();
+async function drawCardFromAPI(playerID) {
     let response = await fetch("https://nowaunoweb.azurewebsites.net/api/Game/DrawCard/" + gameID, {
         method: "PUT",
         headers: {
@@ -574,13 +605,15 @@ async function drawCardFromAPI() {
     } else {
         alert("HTTP-Error: " + response.status);
     }
+
+    playersCall[playerID] = '';
     showCurrentPlayer();
 }
 
 
 
 //return index of Current Player
-function getCurrentPlayerID() {
+async function getCurrentPlayerID() {
     for (let i = 0; i <= 3; i++) {
         if (globalResult.NextPlayer === playersList[i]) {
             return i;
@@ -591,7 +624,7 @@ function getCurrentPlayerID() {
 
 
 //search and return index of card
-function getCardID(playerID, card) {
+async function getCardID(playerID, card) {
     let searchedCard;
 
     for (let i = 0; i < globalResult.Players[playerID].Cards.length; i++) {
@@ -726,11 +759,11 @@ async function changeDirection() {
 async function checkIfPlayerMayPlayDraw4() {
     let color = globalResult.TopCard.Color;
     let value = globalResult.TopCard.Value;
-    let playerID = getCurrentPlayerID();
+    let playerID = await getCurrentPlayerID();
 
     let currentPlayersHand = globalResult.Players[playerID].Cards;
 
-    if (color === 'Black') {
+    if (color.Value === 'Black') {
         return false;
     } else {
         for (let i = 0; i < currentPlayersHand.length; i++) {
@@ -741,9 +774,12 @@ async function checkIfPlayerMayPlayDraw4() {
                 || currentPlayersHand[i].Value === value
                 || currentPlayersHand[i].Color === colorPick) {
                 return false;
+            } else {
+                return true;
             }
         }
     }
+
     return true;
 }
 
@@ -863,10 +899,10 @@ async function updateFrontEnd(card, playerID) {
 async function playerPlaysACard(card, colorPick) {
     let cardValid = await checkPlayedCardValiditiyBeforeSendingToAPI(card);
     let chosenColor = colorPick;
-    let playerID = getCurrentPlayerID();
+    let playerID = await getCurrentPlayerID();
 
     if (cardValid) {
-        correctCardAnimation(playerID, card);
+        await correctCardAnimation(playerID, card);
         await sendPlayedCardToAPI(card, chosenColor);
     } else {
         wrongCardAnimation(card);
@@ -944,6 +980,7 @@ function openWinnerModal(playerName) {
 
     endGame.addEventListener('click', function () {
         winnerModal.style.display = 'none';
+        thanksForPlaying();
     });
     round++;
 }
@@ -975,5 +1012,86 @@ async function resetPlayground() {
 }
 
 
+async function callUNO(playerID) {
+    let notGood = new Audio('./css/notGood.mp3');
+    let brilliant = new Audio('./css/brilliant.mp3');
+
+    // Refactored to return true if any of the two cards can be played
+    let canCallUno = async function (playerID) {
+        if (globalResult.Players[playerID].Cards.length === 2) {
+            for (let i = 0; i < 2; i++) {
+                const isValid = await cardCheck(globalResult.Players[playerID].Cards[i]);
+                if (isValid) {
+                    return true; // Returns true if at least one card is playable
+                }
+            }
+        }
+        return false; // Returns false if no cards are playable
+    }
+
+    // Ensure 'canCallUno' is awaited to get the boolean result
+    if (globalResult.Players[playerID].Cards.length === 2 && await canCallUno(playerID)) {
+        playersCall[playerID] = 'uno';
+        brilliant.play();
+    } else {
+        wrongUnoCall();
+        notGood.play();
+    }
+}
+
+
+
+
+async function cardCheck(card) { //check if card can be played 
+    let topCard = globalResult.TopCard;
+
+    if (card.Color === 'Black') {
+        if (card.Value === 14) {
+            return true;
+        } else if (card.Value === 13 && topCard.Color !== 'Black') {
+            return true;
+        } else {
+            return false;
+        }
+    } else if (topCard.Value === card.Value || topCard.Color === card.Color) {
+        return true;
+    } else if (colorPick === card.Color) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function thanksForPlaying() {
+    document.body.style.backgroundImage = '';
+    document.body.style.color = '';
+
+    let gameMessageElement = document.getElementById("gameMessage");
+    gameMessageElement.textContent = "";
+
+    let container = document.querySelector('#playground');
+    container.classList.remove('container1');
+
+    // Hier setzt du das neue Hintergrundbild
+    document.body.style.backgroundImage = 'url("./img/BGSpiel.jpg")';
+    // neue schriftfarbe
+    document.body.style.color = "white";
+    //neue h1
+    gameMessageElement = document.getElementById("gameMessage");
+    gameMessageElement.textContent = "No magic! Just logic!";
+
+    // translucent black background
+    container = document.querySelector('#playground');
+    container.classList.add('container1');
+
+    let byeDiv = document.createElement('div');
+    let thanksForPlaying = document.createElement('h1');
+    thanksForPlaying.textContent = 'Thanks for Playing! Goodbye!'
+    byeDiv.classList.add('byeDiv');
+    byeDiv.appendChild(thanksForPlaying);
+    container.appendChild(byeDiv);
+
+
+}
 //--------------------------------------------------------------------------------------------//
 

@@ -376,3 +376,21 @@ th {
   #greetWinner {
     margin-top: 5%;
   }
+
+  
+  #unoButtonContainer {
+    position: absolute;
+    top: 36%;
+    left: 25%;
+  }
+
+  #unoButtonContainer img:hover{
+  transform: scale(1.06);
+  cursor: pointer;
+  }
+
+  .byeDiv h1 {
+  font-family: 'HarryPFont', sans-serif;
+  font-size: 7rem !important;
+  text-align: center;
+  }

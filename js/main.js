@@ -759,7 +759,6 @@ async function changeDirection() {
 async function checkIfPlayerMayPlayDraw4(playerID) {
     let color = globalResult.TopCard.Color;
     let value = globalResult.TopCard.Value;
-    let playerID = await getCurrentPlayerID();
 
     let currentPlayersHand = globalResult.Players[playerID].Cards;
 

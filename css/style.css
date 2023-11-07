@@ -318,9 +318,21 @@ nav {
   transform: scale(1.8) !important;
 }
 
-.bigbutton{
-  transform: scale(1.2) !important;
+
+.goodCall {
+  animation: spin 2s linear infinite; /* Adjust duration, timing, and iteration count as needed */
+  transform-origin: center; /* Sets the center of the element as the rotation point */
 }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg); /* Change the degree to control the number of spins */
+  }
+}
+
 
 /*SCOREBOARD-----------------------------*/
 table {

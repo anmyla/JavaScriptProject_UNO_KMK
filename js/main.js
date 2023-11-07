@@ -413,7 +413,7 @@ async function showThisPlayerCards(playerID) {
   currentPlayerCardDiv.innerHTML = "";
 
   currentPlayerCardDiv.id = "cardContainer" + playerID;
-  currentPlayerCardDiv.classList.add = "card-container";
+  currentPlayerCardDiv.classList.add("card-container");
 
   let newCard;
 

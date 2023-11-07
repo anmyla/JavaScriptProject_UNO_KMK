@@ -643,6 +643,7 @@ async function drawCardFromAPI(playerID) {
   if (response.ok) {
     let drawnCard = apiResponseToDrawCard.Card;
     globalResult.Players[playerID].Cards.push(drawnCard);
+    globalResult.Players[playerID].Cards.sort(sortPlayersCards);
     globalResult.Player = apiResponseToDrawCard.Player;
     globalResult.NextPlayer = apiResponseToDrawCard.NextPlayer;
     console.log(globalResult.Players[playerID].Player + " drawn a card!");
@@ -750,6 +751,7 @@ async function updateAllPlayersCards() {
     if (response.ok) {
       globalResult.Players[i].Cards = apiResponseToUpdatePlayerCards.Cards;
       globalResult.Players[i].Score = apiResponseToUpdatePlayerCards.Score;
+      globalResult.Players[i].Cards.sort(sortPlayersCards);
     } else {
       alert("HTTP-Error: " + response.status);
     }
@@ -772,6 +774,7 @@ async function updateThisPlayerCards(playerID) {
   if (response.ok) {
     globalResult.Players[playerID].Cards = apiResponseToUpdatePlayerCards.Cards;
     globalResult.Players[playerID].Score = apiResponseToUpdatePlayerCards.Score;
+    globalResult.Players[playerID].Cards.sort(sortPlayersCards);
   } else {
     alert("HTTP-Error: " + response.status);
   }
@@ -820,8 +823,8 @@ async function checkIfPlayerMayPlayDraw4(playerID) {
       ) {
         return false;
       }
-      return true;
     }
+    return true;
   }
 }
 
@@ -1127,3 +1130,14 @@ function thanksForPlaying() {
   container.appendChild(byeDiv);
 }
 //--------------------------------------------------------------------------------------------//
+
+// sort cards in players hand
+function sortPlayersCards(card1, card2) {
+    if (card1.Color < card2.Color) {
+        return 1;
+    }
+    if (card1.Color > card2.Color) {
+        return -1;
+    }
+    return 0;
+}

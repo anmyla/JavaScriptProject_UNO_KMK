@@ -1054,7 +1054,7 @@ function badUnoCall() {
 
   function goodUnoCall() {
     const unoDiv = document.getElementById("unoButtonContainer");
-    unoDiv.classList.add("bigcard");
+    unoDiv.classList.add("bigbutton");
   
     setTimeout(() => {
       unoDiv.classList.remove("bigcard");

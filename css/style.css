@@ -317,6 +317,10 @@ nav {
   transform: scale(1.8) !important;
 }
 
+.bigbutton{
+  transform: scale(1.2) !important;
+}
+
 /*SCOREBOARD-----------------------------*/
 table {
   align-self: center;

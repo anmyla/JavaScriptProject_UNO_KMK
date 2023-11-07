@@ -41,8 +41,6 @@ Description: Performs an animation when a correct card is played by the current 
 Parameters: card -> the card being played/clicked.
 : currentPlayerId: The ID of the current player.
 
-Function: wrongUnoCall()
-Description: Handles the visual indication when a player fails to call UNO.
 
 Function: displayPlayerDivHeaders()
 Description: Updates the player names in their respective HTML elements.
@@ -198,10 +196,15 @@ Description: Validates if a card can be played or not based on the top card and 
 Checks the validity of a card against the top card, colorPick, and game rules.
 Returns true if the card can be played; otherwise, returns false.
 
+Function: badUnoCall()
+Description: Handles the visual indication when a player calls UNO but the call is invalid
+
+Function: goodUnoCall()
+Description: Handles the visual indication when a player calls UNO and the call is valid.
+
 Function: sortPlayerCards() 
 Description: This function is a comparator used for sorting cards based on their color attribute. 
         It's intended to be used with sorting the cards of a player.
-
 
 Function: thanksForPlaying()
 Description: Displays a closing message and appreciation for playing the game.

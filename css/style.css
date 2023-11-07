@@ -133,8 +133,10 @@ nav {
   display: flex;
   flex-direction: row;
   align-items: center;
-  overflow-y: auto;
-  max-height: 300px;
+  justify-content: flex-start;
+  /*overflow-y: auto;
+  max-height: 400px; */
+  /*overflow: visible; /* Remove the max-height constraint */
 }
 
 #cardContainer0,

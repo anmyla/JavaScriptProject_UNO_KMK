@@ -189,7 +189,8 @@ async function wrongCardAnimation(card) {
   const wrongCardDiv = document.getElementById(
     "cardContainer" + playerID
   ).children;
-  const wrongCard = wrongCardDiv.item(cardID);
+  //const wrongCard = wrongCardDiv.item(cardID);
+  const wrongCard = wrongCardDiv[cardID];
   wrongCard.classList.add("wrongCard");
 
   setTimeout(() => {

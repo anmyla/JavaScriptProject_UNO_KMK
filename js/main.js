@@ -212,14 +212,7 @@ async function correctCardAnimation(currentPlayerId, card) {
   }, 300);
 }
 
-function wrongUnoCall() {
-  const unoDiv = document.getElementById("unoButtonContainer");
-  unoDiv.classList.add("wrongCard");
 
-  setTimeout(() => {
-    unoDiv.classList.remove("wrongCard");
-  }, 2000);
-}
 
 function displayPlayerDivHeaders() {
   let pl1Name = document.getElementById("pl1Name");
@@ -1050,6 +1043,24 @@ async function resetPlayground() {
   container.classList.add("container1");
 }
 
+function badUnoCall() {
+    const unoDiv = document.getElementById("unoButtonContainer");
+    unoDiv.classList.add("wrongCard");
+  
+    setTimeout(() => {
+      unoDiv.classList.remove("wrongCard");
+    }, 2000);
+  }
+
+  function goodUnoCall() {
+    const unoDiv = document.getElementById("unoButtonContainer");
+    unoDiv.classList.add("bigcard");
+  
+    setTimeout(() => {
+      unoDiv.classList.remove("bigcard");
+    }, 2000);
+  }
+
 async function callUNO(playerID) {
   let notGood = new Audio("./css/notGood.mp3");
   let brilliant = new Audio("./css/brilliant.mp3");
@@ -1075,9 +1086,10 @@ async function callUNO(playerID) {
     (await canCallUno(playerID))
   ) {
     playersCall[playerID] = "uno";
+    goodUnoCall();
     brilliant.play();
   } else {
-    wrongUnoCall();
+    badUnoCall();
     notGood.play();
   }
 }
@@ -1101,6 +1113,17 @@ async function cardCheck(card) {
   } else {
     return false;
   }
+}
+
+// sort cards in players hand
+function sortPlayersCards(card1, card2) {
+    if (card1.Color < card2.Color) {
+        return 1;
+    }
+    if (card1.Color > card2.Color) {
+        return -1;
+    }
+    return 0;
 }
 
 function thanksForPlaying() {
@@ -1131,15 +1154,8 @@ function thanksForPlaying() {
   byeDiv.appendChild(thanksForPlaying);
   container.appendChild(byeDiv);
 }
-//--------------------------------------------------------------------------------------------//
 
-// sort cards in players hand
-function sortPlayersCards(card1, card2) {
-    if (card1.Color < card2.Color) {
-        return 1;
-    }
-    if (card1.Color > card2.Color) {
-        return -1;
-    }
-    return 0;
-}
+
+
+
+//--------------------------------------------------------------------------------------------//

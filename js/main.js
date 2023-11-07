@@ -946,6 +946,7 @@ async function playerPlaysACard(card, colorPick) {
   }
 
   await updateFrontEnd(card, playerID);
+  colorPick = card.Color;
 }
 
 function displayWinner(player) {

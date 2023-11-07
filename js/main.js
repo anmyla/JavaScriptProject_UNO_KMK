@@ -473,6 +473,7 @@ async function showThisPlayerCards(playerID) {
           }
         } else {
           playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
+          colorPick = globalResult.Players[playerID].Cards[i].Color;
         }
       } else {
         alert("YOU FORGOT TO CALL UNO! HERE IS YOU PENALTY CARD!");

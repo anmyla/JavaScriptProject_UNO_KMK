@@ -411,9 +411,24 @@ async function showThisPlayerCards(playerID) {
         cardimg.addEventListener('click', async function () { //we add an eventListener for each image.
             if ((globalResult.Players[playerID].Cards.length === 1 && playersCall[playerID] === 'uno')
                 || globalResult.Players[playerID].Cards.length > 1) {
-                if (value === '13') {
-                    let canOnlyPlayPlus4 = await checkIfPlayerMayPlayDraw4(playerID);
-                    if (canOnlyPlayPlus4 || number === 14) {
+                if (color === 'Black') {
+                    if (number === 13) {
+                        let canOnlyPlayPlus4 = await checkIfPlayerMayPlayDraw4(playerID);
+                        if (canOnlyPlayPlus4) {
+                            await openColorPickModal(globalResult.Players[playerID].Cards[i])
+                                .then(async selectedColor => {
+                                    await playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
+                                })
+                                .catch(error => {
+                                    console.log('error after color modal');
+                                    console.error(error);
+                                });
+                        } else {
+                            wrongCardAnimation(globalResult.Players[playerID].Cards[i]);
+                            console.log('Player has other cards to play');
+                        }
+                    }
+                    if (number === 14) {
                         await openColorPickModal(globalResult.Players[playerID].Cards[i])
                             .then(async selectedColor => {
                                 await playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);
@@ -422,9 +437,6 @@ async function showThisPlayerCards(playerID) {
                                 console.log('error after color modal');
                                 console.error(error);
                             });
-                    } else {
-                        wrongCardAnimation(globalResult.Players[playerID].Cards[i]);
-                        console.log('Player has other cards to play');
                     }
                 } else {
                     playerPlaysACard(globalResult.Players[playerID].Cards[i], colorPick);

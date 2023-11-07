@@ -413,6 +413,7 @@ async function showThisPlayerCards(playerID) {
   currentPlayerCardDiv.innerHTML = "";
 
   currentPlayerCardDiv.id = "cardContainer" + playerID;
+  //currentPlayerCardDiv.classList.add = "card-container";
   currentPlayerCardDiv.classList.add("card-container");
 
   let newCard;
@@ -488,7 +489,8 @@ async function putThisPlayerCardsUpsideDown(playerID) {
   notCurrentPlayerCardDiv.innerHTML = "";
 
   notCurrentPlayerCardDiv.id = "cardContainer" + playerID;
-  notCurrentPlayerCardDiv.classList.add = "card-container";
+ // notCurrentPlayerCardDiv.classList.add = "card-container";
+  notCurrentPlayerCardDiv.classList.add("card-container");  
 
   let i = 0;
 

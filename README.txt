@@ -198,6 +198,11 @@ Description: Validates if a card can be played or not based on the top card and 
 Checks the validity of a card against the top card, colorPick, and game rules.
 Returns true if the card can be played; otherwise, returns false.
 
+Function: sortPlayerCards() 
+Description: This function is a comparator used for sorting cards based on their color attribute. 
+        It's intended to be used with sorting the cards of a player.
+
+
 Function: thanksForPlaying()
 Description: Displays a closing message and appreciation for playing the game.
 Sets the game environment to a closing state with a specific background, font color, and a goodbye message.

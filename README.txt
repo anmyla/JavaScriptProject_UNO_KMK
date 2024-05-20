@@ -1,5 +1,7 @@
-DOCUMENTATION: Uno Game Functions
--Kata Szöllösi, Myla Ariaga-Nagl, and Ksenija Trstenjak
+A project by: -Kata Szöllösi, Myla Ariaga-Nagl, and Ksenija Trstenjak
+See it live here: [UNO](http://uno.myla.at/)
+
+DOCUMENTATION: Uno Game Functions---------------------------------------------------
 
 Function: hasDuplicates(array)
 Description: Checks for duplicate names in an array.

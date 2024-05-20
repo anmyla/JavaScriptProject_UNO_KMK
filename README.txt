@@ -1,5 +1,5 @@
 A project by: -Kata Szöllösi, Myla Ariaga-Nagl, and Ksenija Trstenjak
-See it live here: [UNO](http://uno.myla.at/)
+See it live here: (http://uno.myla.at/)
 
 DOCUMENTATION: Uno Game Functions---------------------------------------------------
 
